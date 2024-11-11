@@ -2,48 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-
-// Pages import
-import Home from './pages/Home';
-import ShowTimes from './pages/ShowTimes';
-import ErrorPage from './pages/ErrorPage';
-
-
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-// Front end routing 
-const router = createBrowserRouter([
-  {
-    errorElement: <ErrorPage />
-  },
-  {
-    path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/showtimes",
-    element: <ShowTimes />,
-  },
-  /* Example for later for a route that would need a token check before opening the page 
-  {
-    element: <ProtectedRoute />,
-    children: [
-      {
-        path: "",
-        element: ,
-      }
-    ]
-  } */
-
-])
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
-    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
