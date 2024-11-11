@@ -16,7 +16,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />
   },
 
-  //Navigatino bar pages
+  //Navigation bar pages
   {
     path: "/",
     element: <Home />,
@@ -40,13 +40,12 @@ const router = createBrowserRouter([
     element: <Favorites />,
   },
   {
-    path: "/movie",
+    path: "/movie/:id",
     element: <Movie />,
   },
-  {
-    path: "/movie",
-    element: <Movie />,
-  },
+
+
+
   /* Example for later for a route that would need a token check before opening the page 
   {
     element: <ProtectedRoute />,
