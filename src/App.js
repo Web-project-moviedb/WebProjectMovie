@@ -11,6 +11,8 @@ import Favorites from './pages/Favourites.js';
 import Movie from './pages/Movie.js';
 import Login from './pages/LoginPage.js';
 
+import NavigationBar from './components/NavigationBar.js';
+
 // Front end routing 
 const router = createBrowserRouter([
   {
@@ -67,7 +69,13 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <>
+      <NavigationBar></NavigationBar>
+      <RouterProvider router={router} />
+    </>
+
+
+
   );
 }
 
