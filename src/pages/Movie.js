@@ -1,4 +1,3 @@
-// Movie.js
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieById } from '../api/tmdbFetches.js';
@@ -13,11 +12,11 @@ function Movie() {
     useEffect(() => {
         const getMovie = async () => {
             try {
-                const data = await fetchMovieById(id);  // Fetch the movie data
+                const data = await fetchMovieById(id);  // fetch movie data
                 if (data.success === false) {
                     throw new Error(data.status_message || 'An unknown error occurred');
                 }
-                setMovie(data);  // Set the movie data in state
+                setMovie(data);  // set the movie data in state
             } catch (error) {
                 setError(error.message);
                 console.error('Error fetching movie:', error);
@@ -25,20 +24,20 @@ function Movie() {
                 setLoading(false);
             }
         };
-        getMovie();  // Call the function to fetch the movie data
+        getMovie();  // call function to fetch movie data
     }, [id]);
 
     if (loading) {
-        return <h3>Loading...</h3>;  // Show a loading message while fetching
+        return <h3>Loading...</h3>;  // message while fetching
     }
 
     if (error) {
-        return <h3>Error: {error}</h3>;  // Display the error message
+        return <h3>Error: {error}</h3>;
     }
 
     return (
         <div>
-            {movie && <MovieDetails movie={movie} />}  {/* Pass movie data to MovieDetails */}
+            {movie && <MovieDetails movie={movie} />}  {/* pass movie data to MovieDetails */}
         </div>
     );
 }

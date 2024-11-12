@@ -17,7 +17,6 @@ function Home() {
     const handleSearch = async (fetchFunction, params = {}) => {
         setLoading(true);
         setError(null);
-
         try {
             const data = await fetchFunction(params);
             if (data.results) {
@@ -35,10 +34,12 @@ function Home() {
     return (
         <div>
             <h1>Home</h1>
-            <h3>Search for movies</h3>
+            <h3>Search for movies:</h3>
 
-            <SearchForm
-                label="Enter search term"
+            {/*SearchForm components for searching by term/year/language/genre, props are passed along with event handlers */}
+
+            <SearchForm                          
+                label="Name"
                 placeholder="e.g. Apocalypse Now"
                 value={term}
                 onChange={setTerm}
@@ -49,8 +50,11 @@ function Home() {
                 }}
             />
 
+            <h3>Or browse by:</h3>
+
+
             <SearchForm
-                label="Enter year"
+                label="Year"
                 placeholder="e.g. 2021"
                 value={year}
                 onChange={setYear}
@@ -62,7 +66,7 @@ function Home() {
             />
 
             <SearchForm
-                label="Enter language code"
+                label="Language code"
                 placeholder="e.g. 'sv' for Swedish"
                 value={language}
                 onChange={setLanguage}

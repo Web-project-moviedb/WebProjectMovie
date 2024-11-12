@@ -6,6 +6,14 @@ function MovieList({ movies }) {
         return <p></p>
     }
 
+    // this is the list of movies that will be displayed
+    // the map function will iterate over each movie in the list and create a list item
+    // the key prop is used to uniquely identify each list item
+    // the Link component is used to create a link to the movie details page
+
+    // potential features to add:
+    // - add button+logic to load more pages of search results, currently searching and displaying only page 1 (top 20 results)
+
     return (
         <div>
             <h3>Top 20 Search Results</h3>
