@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieById } from '../api/tmdbFetches.js';
-import MovieDetails from '../components/movies/movieDetails.js'
+import MovieDetails from '../components/movies/MovieDetails.js'
 
 function Movie() {
     const { id } = useParams();  // movie ID from URL
@@ -25,7 +25,6 @@ function Movie() {
                 setLoading(false);
             }
         };
-
         getMovie();  // Call the function to fetch the movie data
     }, [id]);
 
