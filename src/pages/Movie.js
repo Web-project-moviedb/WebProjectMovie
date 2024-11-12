@@ -4,24 +4,29 @@ import { fetchMovieById } from '../api/tmdbFetches.js'
 
 function Movie() {
 
-    const { id } = useParams()  // Get the movie ID from the URL
-    const [movie, setMovie] = useState(null)  // State to store the movie data
-    const [loading, setLoading] = useState(true)  // State to manage loading state
-    const [error, setError] = useState(null)  // State to handle errors
+    const { id } = useParams()  // movie ID from URL
+    const [movie, setMovie] = useState(null)  // state to store movie data
+    const [loading, setLoading] = useState(true)  // state to manage loading state
+    const [error, setError] = useState(null)  // state to handle errors
 
     useEffect(() => {
+
         const getMovie = async () => {
+
             try {
+
                 const data = await fetchMovieById(id)  // Fetch the movie data
 
-                if (data.success === false) {  // Check if the response indicates an error
+                if (data.success === false) {  // Check if the response indicates an error = no such movie ID
                     throw new Error(data.status_message || 'An unknown error occurred')  // Throw an error with the message from the response
                 }
 
                 setMovie(data)  // Set the movie data in state
+
             } catch (error) {
                 setError(error.message)  // Store the error message in the state
                 console.error('Error fetching movie:', error)
+
             } finally {
                 setLoading(false)  // Stop loading once data is fetched or an error occurs
             }
@@ -40,11 +45,11 @@ function Movie() {
 
     return (
         <div>
-            <h3>{movie.title}</h3>  {/* Display movie title */}
+            <h3>{movie.title}</h3> 
             <p><i>{movie.tagline}</i></p>
-            <p>{movie.overview}</p>  {/* Display movie overview */}
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} />  {/* Display movie poster */}
-            <p>Release date: {movie.release_date}</p>  {/* Display movie release date */}
+            <p>{movie.overview}</p> 
+            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} alt={movie.title} /> 
+            <p>Release date: {movie.release_date}</p> 
             <p>Runtime: {movie.runtime} minutes</p>
             <p>Genres: </p>
             <ul>
@@ -52,6 +57,7 @@ function Movie() {
                     <li key={genre.id}>{genre.name}</li>
                 ))}
             </ul>
+            <p>Add drop-down menu and button to pin to group here!</p>
         </div>
     )
 }
