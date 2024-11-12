@@ -1,0 +1,19 @@
+### POST LOGIN
+
+POST http://localhost:3001/user/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username":"admin",
+    "password": "admin123"
+}
+
+### POST REGISTER
+
+POST http://localhost:3001/user/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "username":"admin2",
+    "password": "admin1234"
+}

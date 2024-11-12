@@ -9,6 +9,7 @@ import Groups from './pages/Groups.js'
 import ShowTimes from './pages/ShowTimes.js';
 import Favorites from './pages/Favourites.js';
 import Movie from './pages/Movie.js';
+import Login from './pages/LoginPage.js';
 
 // Front end routing 
 const router = createBrowserRouter([
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
     path: "/movie",
     element: <Movie />,
   },
+  {
+    path: "/login",
+    element: <Login />
+  }
   /* Example for later for a route that would need a token check before opening the page 
   {
     element: <ProtectedRoute />,
