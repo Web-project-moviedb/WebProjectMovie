@@ -4,12 +4,12 @@
 
 const fetchMovieById = async (id) => {
 
-  const api_token = process.env.REACT_APP_API_TOKEN;
+  const tmdb_token = process.env.REACT_APP_TMDB_TOKEN;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: api_token
+      Authorization: tmdb_token
     }
   };
 
@@ -30,12 +30,12 @@ const fetchMovieById = async (id) => {
 
 const fetchMoviesByTerm = async (term) => {
   
-  const api_token = process.env.REACT_APP_API_TOKEN;
+  const tmdb_token = process.env.REACT_APP_TMDB_TOKEN;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: api_token
+      Authorization: tmdb_token
     }
   };
 
@@ -56,12 +56,12 @@ const fetchMoviesByTerm = async (term) => {
 
 const fetchMoviesByYear = async (year) => {
   
-  const api_token = process.env.REACT_APP_API_TOKEN;
+  const tmdb_token = process.env.REACT_APP_TMDB_TOKEN;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: api_token
+      Authorization: tmdb_token
     }
   };
 
@@ -82,12 +82,12 @@ const fetchMoviesByYear = async (year) => {
 
 const fetchMoviesByLanguage = async (lang) => {
   
-  const api_token = process.env.REACT_APP_API_TOKEN;
+  const tmdb_token = process.env.REACT_APP_TMDB_TOKEN;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: api_token
+      Authorization: tmdb_token
     }
   };
 
@@ -108,12 +108,12 @@ const fetchMoviesByLanguage = async (lang) => {
 
 const fetchGenres = async () => {
 
-  const api_token = process.env.REACT_APP_API_TOKEN;
+  const tmdb_token = process.env.REACT_APP_TMDB_TOKEN;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: api_token
+      Authorization: tmdb_token
     }
   };
 
@@ -135,12 +135,12 @@ const fetchGenres = async () => {
 
 const fetchMoviesByGenre = async (genre) => {
   
-  const api_token = process.env.REACT_APP_API_TOKEN;
+  const tmdb_token = process.env.REACT_APP_TMDB_TOKEN;
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: api_token
+      Authorization: tmdb_token
     }
   };
 
