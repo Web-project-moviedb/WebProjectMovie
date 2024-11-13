@@ -16,13 +16,14 @@ export default function Login({ authenticationMode }) {
         try {
             if (authenticationMode === AuthenticationMode.Register) {
                 await register()
-                navigate('/login/signin')
+                navigate('/signin')
             } else {
                 await login()
                 navigate('/')
             }
         } catch (error) {
-            console.log(error)
+            const message = error.response && error.response.data ? error.response.data.error : error
+            alert(message)
         }
     }
 
