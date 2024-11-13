@@ -14,46 +14,51 @@ import Login from './pages/LoginPage.js';
 import NavigationBar from './components/NavigationBar.js';
 
 // Front end routing 
+
 const router = createBrowserRouter([
   {
     errorElement: <ErrorPage />
   },
-
-  //Navigatino bar pages
   {
     path: "/",
-    element: <Home />,
-  },
-  {
-    path: "/reviews",
-    element: <Reviews />,
-  },
-  {
-    path: "/groups",
-    element: <Groups />,
-  },
-  {
-    path: "/showtimes",
-    element: <ShowTimes />,
-  },
+    element: <NavigationBar />,
+    children: [
 
-  // Other pages
-  {
-    path: "/favorites",
-    element: <Favorites />,
-  },
-  {
-    path: "/movie",
-    element: <Movie />,
-  },
-  {
-    path: "/movie",
-    element: <Movie />,
-  },
-  {
-    path: "/login",
-    element: <Login />
+
+      //Navigatino bar pages
+      {
+        path: "",
+        element: <Home />,
+      },
+      {
+        path: "reviews",
+        element: <Reviews />,
+      },
+      {
+        path: "groups",
+        element: <Groups />,
+      },
+      {
+        path: "showtimes",
+        element: <ShowTimes />,
+      },
+
+      // Other pages
+      {
+        path: "favorites",
+        element: <Favorites />,
+      },
+      {
+        path: "movie",
+        element: <Movie />,
+      },
+      {
+        path: "login",
+        element: <Login />
+      }
+    ]
   }
+
   /* Example for later for a route that would need a token check before opening the page 
   {
     element: <ProtectedRoute />,
@@ -64,18 +69,15 @@ const router = createBrowserRouter([
       }
     ]
   } */
+]
 
-])
+
+
+)
 
 function App() {
   return (
-    <>
-      <NavigationBar></NavigationBar>
-      <RouterProvider router={router} />
-    </>
-
-
-
+    <RouterProvider router={router} />
   );
 }
 
