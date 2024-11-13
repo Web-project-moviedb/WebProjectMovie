@@ -1,5 +1,7 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import UserProvider from './context/UserProvider.js';
+import NavigationBar from './components/NavigationBar.js';
 
 // Pages import
 import ErrorPage from './pages/ErrorPage.js';
@@ -7,14 +9,13 @@ import Home from './pages/Home.js';
 import Reviews from './pages/Reviews.js';
 import Groups from './pages/Groups.js'
 import ShowTimes from './pages/ShowTimes.js';
-import Favorites from './pages/Favourites.js';
+import Favorites from './pages/Favorites.js';
 import Movie from './pages/Movie.js';
-import Login from './pages/LoginPage.js';
+import LoginPage, { AuthenticationMode } from './pages/LoginPage.js';
 
-import NavigationBar from './components/NavigationBar.js';
+
 
 // Front end routing 
-
 const router = createBrowserRouter([
   {
     errorElement: <ErrorPage />
@@ -24,37 +25,40 @@ const router = createBrowserRouter([
     element: <NavigationBar />,
     children: [
 
-
       //Navigatino bar pages
       {
-        path: "",
+        path: "/",
         element: <Home />,
       },
       {
-        path: "reviews",
+        path: "/reviews",
         element: <Reviews />,
       },
       {
-        path: "groups",
+        path: "/groups",
         element: <Groups />,
       },
       {
-        path: "showtimes",
+        path: "/showtimes",
         element: <ShowTimes />,
       },
 
       // Other pages
       {
-        path: "favorites",
+        path: "/favorites",
         element: <Favorites />,
       },
       {
-        path: "movie",
+        path: "/movie",
         element: <Movie />,
       },
       {
-        path: "login",
-        element: <Login />
+        path: "/signin",
+        element: <LoginPage authenticationMode={AuthenticationMode.Login} />
+      },
+      {
+        path: "/signup",
+        element: <LoginPage authenticationMode={AuthenticationMode.Register} />
       }
     ]
   }
@@ -69,15 +73,13 @@ const router = createBrowserRouter([
       }
     ]
   } */
-]
-
-
-
-)
+])
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   );
 }
 
