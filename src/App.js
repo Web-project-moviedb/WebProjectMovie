@@ -1,5 +1,6 @@
 import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import UserProvider from './context/UserProvider.js';
 
 // Pages import
 import ErrorPage from './pages/ErrorPage.js';
@@ -10,6 +11,7 @@ import ShowTimes from './pages/ShowTimes.js';
 import Favorites from './pages/Favourites.js';
 import Movie from './pages/Movie.js';
 import Login from './pages/LoginPage.js';
+import LoginPage, { AuthenticationMode } from './pages/LoginPage.js';
 
 // Front end routing 
 const router = createBrowserRouter([
@@ -45,12 +47,12 @@ const router = createBrowserRouter([
     element: <Movie />,
   },
   {
-    path: "/movie",
-    element: <Movie />,
+    path: "signin",
+    element: <LoginPage authenticationMode={AuthenticationMode.Login} />
   },
   {
-    path: "/login",
-    element: <Login />
+    path: "signup",
+    element: <LoginPage authenticationMode={AuthenticationMode.Register} />
   }
   /* Example for later for a route that would need a token check before opening the page 
   {
@@ -67,7 +69,9 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   );
 }
 
