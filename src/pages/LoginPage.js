@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
 
+// Define the authentication mode
 export const AuthenticationMode = Object.freeze({
     Login: 'Login',
     Register: 'Register'
@@ -14,12 +15,12 @@ export default function Login({ authenticationMode }) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            if (authenticationMode === AuthenticationMode.Register) {
+            if (authenticationMode === AuthenticationMode.Register) {       // Check if user is registering or logging in
                 await register()
-                navigate('/signin')
+                navigate('/signin')                                         // Redirect to login page after registration
             } else {
                 await login()
-                navigate('/')
+                navigate('/')                                               // Redirect to home page after login
             }
         } catch (error) {
             const message = error.response && error.response.data ? error.response.data.error : error
