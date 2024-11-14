@@ -13,8 +13,6 @@ import Favorites from './pages/Favorites.js';
 import Movie from './pages/Movie.js';
 import LoginPage, { AuthenticationMode } from './pages/LoginPage.js';
 
-
-
 // Front end routing 
 const router = createBrowserRouter([
   {
@@ -49,7 +47,7 @@ const router = createBrowserRouter([
         element: <Favorites />,
       },
       {
-        path: "/movie",
+        path: "/movie/:id",
         element: <Movie />,
       },
       {

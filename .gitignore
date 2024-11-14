@@ -12,6 +12,7 @@
 /build
 
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local
@@ -26,4 +27,3 @@ yarn-error.log*
 /backend/node_modules
 /backend/.env
 */.DS_Store
-.env
