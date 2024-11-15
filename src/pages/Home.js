@@ -1,9 +1,9 @@
 // pages/Home.js
 import React, { useState } from 'react';
-import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm } from '../api/tmdbFetches';
-import MovieList from '../components/movies/MovieList';
-import SearchForm from '../components/movies/SearchForm';
-import GenreSelect from '../components/movies/GenreSelect';
+import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm } from '../api/tmdbFetches.js';
+import MovieList from '../components/movies/MovieList.js';
+import SearchForm from '../components/movies/SearchForm.js';
+import GenreSelect from '../components/movies/GenreSelect.js';
 
 function Home() {
     const [term, setTerm] = useState('');
