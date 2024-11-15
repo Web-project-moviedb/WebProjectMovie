@@ -54,7 +54,6 @@ const languageMap = {
     'is': 'Icelandic',
     'gl': 'Galician',
     'cy': 'Welsh',
-    'bs': 'Bosnian',
     'tl': 'Tagalog',
     'se': 'Northern Sami',
     'ga': 'Irish',
