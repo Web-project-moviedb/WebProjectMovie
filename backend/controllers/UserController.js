@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcrypt'
-import { insertUser, selectUserByUsername } from '../models/User.js'
+import { insertUser, selectUserByUsername, selectUserByGroup } from '../models/User.js'
 import { ApiError } from '../helpers/ApiError.js'
 import jwt from 'jsonwebtoken'
 
@@ -48,4 +48,13 @@ const postLogin = async (req, res, next) => {
     }
 }
 
-export { postRegistration, postLogin }
+const getUserByGroup = async (req, res, next) => {
+    try {
+        const response = await selectUserByGroup(req.params.id)
+        return res.status(200).json(response.rows);
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
+export { postRegistration, postLogin, getUserByGroup }
