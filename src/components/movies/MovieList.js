@@ -26,7 +26,7 @@ function MovieList({ movies }) {
                         <img 
                             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
                             alt={movie.title} 
-                            style={{ maxWidth: '200px' }}
+                            style={{ maxWidth: '200px' }} /* NOTE remove styling from here in final version, this is just for dev convenience */
                         /> 
                         <p>Release Date: {movie.release_date}</p>
                         {movie.title !== movie.original_title && (
