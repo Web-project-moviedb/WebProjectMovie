@@ -46,9 +46,11 @@ const ShowTimes = () => {
     setLoading(true)
     setError(null)
 
-    
+    const formattedDate = dt.split('-').reverse().join('.') //YYYY-MM-DD -> DD.MM.YYYY, needed for getting right day from API
+
     try{
-      const data = await fetchFinnkinoData(areaId, movieName)
+      const data = await fetchFinnkinoData(areaId, formattedDate)
+      console.log('Fetched data:', data);
       setShows(data)
       setFilteredShows(data)
     }catch(error){
