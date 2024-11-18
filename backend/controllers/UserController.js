@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcrypt'
-import { insertUser, selectUserByUsername, deleteUserById, selectUserByGroup } from '../models/User.js'
+import { insertUser, selectUserByUsername, selectUserByGroup } from '../models/User.js'
 import { ApiError } from '../helpers/ApiError.js'
 import jwt from 'jsonwebtoken'
 
@@ -78,4 +78,33 @@ const getUserByGroup = async (req, res, next) => {
         console.log(error)
     }
 }
-export { postRegistration, postLogin, deleteUser, getUserByGroup }
+
+
+const postInvite = async (req, res, next) => {
+   try {
+     const response = await insertInvite(req.body.account_id, req.body.group_id, req.body.pending)
+    return res.status(200).json(response.rows);
+    }
+    catch (error) {
+        console.log(error)
+}
+}
+// accept invite updates pending status to false
+const acceptInvite = async (req, res, next) => {
+    try {const response = await updateInvite(req.params.id)
+    return res.status(200).json(response.rows);
+    }
+    catch (error) {
+        console.log(error)
+}}
+
+// deletes invite
+const declineInvite = async (req, res, next) => {
+   try {
+     const response = await deleteInvite(req.params.id)
+    return res.status(200).json(response.rows);
+    }
+    catch (error) {
+        console.log(error)
+}}
+export { postRegistration, postLogin, deleteUser, getUserByGroup, postInvite, acceptInvite, declineInvite }
