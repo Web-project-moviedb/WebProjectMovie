@@ -11,7 +11,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 // Routes
-app.use('/user', userRouter)    // Login/Register
+app.use('/user', userRouter)    // Login/Register/Delete
 
 app.use((err,req,res,next) => {
     const statusCode = err.statusCode || 500
