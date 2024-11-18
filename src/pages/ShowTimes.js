@@ -121,6 +121,7 @@ const ShowTimes = () => {
           <tr>
             <th>Show Time</th>
             <th>Theatre</th>
+            <th>Auditorium</th>
             <th>Movie Name</th>
           </tr>
         </thead>
@@ -129,6 +130,7 @@ const ShowTimes = () => {
             <tr key={index}>
               <td>{show.showTime}</td>
               <td>{show.theatreName}</td>
+              <td>{show.theatreAuditorium}</td>
               <td>{show.movieName}</td>
             </tr>
           ))}
