@@ -1,6 +1,6 @@
 
 
-const fetchFinnkinoData = async (areaId, date, movieName) => {
+const fetchFinnkinoData = async (areaId, date) => {
 
     try {
       const response = await fetch(`https://www.finnkino.fi/xml/Schedule/?area=${areaId}&dt=${date}`)
@@ -18,7 +18,7 @@ const fetchFinnkinoData = async (areaId, date, movieName) => {
         const dateTime = show.getElementsByTagName('dttmShowStart')[0]?.textContent
         const theatreName = show.getElementsByTagName('Theatre')[0]?.textContent
         const movieName = show.getElementsByTagName('Title')[0]?.textContent
-        const city = show.getElementsByTagName('Theatre')[0]?.getElementsByTagName('Area')[0]?.textContent
+        const theatreAuditorium = show.getElementsByTagName('TheatreAuditorium')[0]?.textContent
 
         let formattedDateTime = ''
         if(dateTime){
@@ -30,12 +30,11 @@ const fetchFinnkinoData = async (areaId, date, movieName) => {
         }
         return {
         showTime: formattedDateTime,
-        city,
         theatreName,
+        theatreAuditorium,
         movieName,
         }
       })
-
         return showDetails
 
     } catch (error) {
