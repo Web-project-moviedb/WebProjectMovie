@@ -37,8 +37,14 @@ export default function UserProvider({ children }) {
             throw error
         }
     }
+
+    // Logout user
+    const logout = () => {
+        setUser({ id: null, username: '', password: '' })               // Set user and password fields empty
+        setToken(null)                                                  // Set token to null
+    }
     return (
-        <UserContext.Provider value={{ user, setUser, register, login, token }} >
+        <UserContext.Provider value={{ user, setUser, register, login, logout, token }} >
             {children}
         </UserContext.Provider>
     )
