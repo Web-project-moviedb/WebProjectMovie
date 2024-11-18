@@ -12,6 +12,7 @@ import ShowTimes from './pages/ShowTimes.js';
 import Favorites from './pages/Favorites.js';
 import Movie from './pages/Movie.js';
 import LoginPage, { AuthenticationMode } from './pages/LoginPage.js';
+import Collection from './pages/Collection.js';
 
 // Front end routing 
 const router = createBrowserRouter([
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/movie/:id",
         element: <Movie />,
+      },
+      {
+        path: "/collection/:id",
+        element: <Collection />,
       },
       {
         path: "/signin",
