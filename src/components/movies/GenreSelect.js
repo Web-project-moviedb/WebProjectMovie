@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchGenres } from '../../api/tmdbFetches.js';
+import { fetchGenres } from '../../api/fetchTMDB';
 
 // this component is used to select a genre from a list of genres
 // it calls the fetchGenres function to get the up-to-date list of genres+ids from the API
