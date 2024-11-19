@@ -1,9 +1,9 @@
 // pages/Home.js
 import React, { useState } from 'react'
 import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm } from '../api/fetchTMDB'
-import MovieList from '../components/movies/MovieList'
-import SearchForm from '../components/movies/SearchForm'
-import GenreSelect from '../components/movies/GenreSelect'
+import MovieList from '../components/movies/MovieList.js'
+import SearchForm from '../components/movies/SearchForm.js'
+import GenreSelect from '../components/movies/GenreSelect.js'
 
 function Home() {
     const [term, setTerm] = useState('')

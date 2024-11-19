@@ -15,7 +15,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Routes
-app.use('/user', userRouter)    // Login/Register
+app.use('/user', userRouter)    // Login/Register/Delete
 app.use('/groups', groupsRouter)
 app.use('/group', groupRouter)
 app.use('/reviews', reviewRouter)

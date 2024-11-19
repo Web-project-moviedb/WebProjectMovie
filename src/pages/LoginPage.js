@@ -38,7 +38,7 @@ export default function Login({ authenticationMode }) {
                 </div>
                 <div>
                     <label>Password</label>
-                    <input type='text' value={user.password || ''} onChange={e => setUser({ ...user, password: e.target.value })} />
+                    <input type='password' value={user.password || ''} onChange={e => setUser({ ...user, password: e.target.value })} />
                 </div>
                 <div>
                     <button> {authenticationMode === AuthenticationMode.Login ? 'Login' : 'Register'}</button>
