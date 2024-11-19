@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export default function LeaveReview({ movieId }) {
     const { user, token } = UseUser(); // Access the user and token from context
-    const [review, setReview] = useState({ stars: 0, review_body: '' }); // Review state
+    const [review, setReview] = useState({ stars: 0, review_title: '', review_body: '' }); // Review state
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const url = process.env.REACT_APP_API_URL
@@ -17,6 +17,7 @@ export default function LeaveReview({ movieId }) {
             movie_id: movieId,
             user_id: user.id, // Use the user ID from context
             stars: review.stars,
+            review_title: review.review_title,
             review_body: review.review_body,
         };
 

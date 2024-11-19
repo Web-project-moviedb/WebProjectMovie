@@ -9,9 +9,11 @@ function Reviews() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const url = process.env.REACT_APP_API_URL
+
     useEffect(() => {
         // Fetch reviews from the backend
-        axios.get('http://localhost:3001/reviews')
+        axios.get( url + '/reviews')
             .then(response => {
                 setReviews(response.data);  // Set reviews in state
                 fetchMovieNames(response.data);  // Fetch movie names for the reviews
@@ -22,7 +24,7 @@ function Reviews() {
             .finally(() => {
                 setLoading(false);
             });
-    }, []);
+    }, [url]);
 
     // Fetch movie names for each review using movie_id
     const fetchMovieNames = async (reviews) => {
