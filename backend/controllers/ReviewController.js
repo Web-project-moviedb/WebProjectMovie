@@ -1,5 +1,5 @@
 import { ApiError } from '../helpers/ApiError.js'
-import { selectAllReviews, selectAllReviewsByUser, insertReview, deleteReview } from '../models/Review.js'
+import { selectAllReviews, selectAllReviewsByUser, selectAllReviewsByMovie, insertReview, deleteReview } from '../models/Review.js'
 
 const getAllReviews = async (req, res, next) => {
     try {
@@ -21,15 +21,30 @@ const getAllReviewsByUser = async (req, res, next) => {
     }
 }
 
-const postReview = async (req, res, next) => {
+const getAllReviewsByMovie = async (req, res, next) => {
     try {
-        const response = await insertReview(req.body.user_id, req.body.movie_id, req.body.review_title, req.body.review_body, req.body.stars)
+        const response = await selectAllReviewsByMovie(req.params.id)
         return res.status(200).json(response.rows);
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error)
     }
 }
+
+const postReview = async (req, res, next) => {
+    try {
+        console.log('Request body:', req.body); // Debugging line
+        const { user_id, movie_id, review_title, review_body, stars } = req.body;
+
+        if (!user_id || !movie_id || !review_title || !review_body || stars == null) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+
+        const response = await insertReview(user_id, movie_id, review_title, review_body, stars);
+        return res.status(200).json(response.rows);
+    } catch (error) {
+        next(error);
+    }
+};
 
 const removeReview = async (req, res, next) => {
     try {
@@ -42,4 +57,4 @@ const removeReview = async (req, res, next) => {
 }
 
 
-export { getAllReviews, getAllReviewsByUser, postReview, removeReview }
+export { getAllReviews, getAllReviewsByUser, getAllReviewsByMovie, postReview, removeReview }
