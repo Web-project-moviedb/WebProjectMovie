@@ -32,7 +32,6 @@ const getAllReviewsByMovie = async (req, res, next) => {
 
 const postReview = async (req, res, next) => {
     try {
-        console.log('Request body:', req.body); // Debugging line
         const { user_id, movie_id, review_title, review_body, stars } = req.body;
 
         if (!user_id || !movie_id || !review_title || !review_body || stars == null) {
@@ -40,11 +39,11 @@ const postReview = async (req, res, next) => {
         }
 
         const response = await insertReview(user_id, movie_id, review_title, review_body, stars);
-        return res.status(200).json(response.rows);
+        return res.status(200).json(response.rows)
     } catch (error) {
-        next(error);
+        next(error)
     }
-};
+}
 
 const removeReview = async (req, res, next) => {
     try {
