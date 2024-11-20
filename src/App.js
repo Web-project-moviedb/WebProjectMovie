@@ -1,18 +1,20 @@
-import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import UserProvider from './context/UserProvider.js';
-import NavigationBar from './components/NavigationBar.js';
+import './App.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import UserProvider from './context/UserProvider.js'
+import NavigationBar from './components/NavigationBar.js'
 
 // Pages import
-import ErrorPage from './pages/ErrorPage.js';
-import Home from './pages/Home.js';
-import Reviews from './pages/Reviews.js';
+import ErrorPage from './pages/ErrorPage.js'
+import Home from './pages/Home.js'
+import Reviews from './pages/Reviews.js'
 import Groups from './pages/Groups.js'
-import ShowTimes from './pages/ShowTimes.js';
-import Favorites from './pages/Favorites.js';
-import Movie from './pages/Movie.js';
-import LoginPage, { AuthenticationMode } from './pages/LoginPage.js';
-import Collection from './pages/Collection.js';
+import Group from './pages/Group.js'
+import ShowTimes from './pages/ShowTimes.js'
+import Favorites from './pages/Favorites.js'
+import Movie from './pages/Movie.js'
+import LoginPage, { AuthenticationMode } from './pages/LoginPage.js'
+import Collection from './pages/Collection.js'
+
 
 // Front end routing 
 const router = createBrowserRouter([
@@ -54,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/collection/:id",
         element: <Collection />,
+      },
+      {
+        path: "/group/:id",
+        element: <Group />
       },
       {
         path: "/signin",

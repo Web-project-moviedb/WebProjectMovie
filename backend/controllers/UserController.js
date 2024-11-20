@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcrypt'
-import { insertUser, selectUserByUsername, deleteUserById, selectUserByGroup } from '../models/User.js'
+import { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser } from '../models/User.js'
 import { ApiError } from '../helpers/ApiError.js'
 import jwt from 'jsonwebtoken'
 
@@ -57,6 +57,17 @@ const postLogin = async (req, res, next) => {
     }
 }
 
+//Get all groups for specific user_id
+const getAllGroupsByUser = async (req, res, next) => {
+    try {
+        console.log(req.params)
+        const response = await selectAllGroupsByUser(req.params.id)
+        return res.status(200).json(response.rows);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 // Delete user
 const deleteUser = async (req, res, next) => {
     try {
@@ -68,14 +79,5 @@ const deleteUser = async (req, res, next) => {
     }
 }
 
-// Get user by group
-const getUserByGroup = async (req, res, next) => {
-    try {
-        const response = await selectUserByGroup(req.params.id)
-        return res.status(200).json(response.rows);
-    }
-    catch (error) {
-        console.log(error)
-    }
-}
-export { postRegistration, postLogin, deleteUser, getUserByGroup }
+
+export { postRegistration, postLogin, deleteUser, getAllGroupsByUser }

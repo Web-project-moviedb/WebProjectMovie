@@ -1,7 +1,7 @@
 import { pool } from '../helpers/db.js'
 
 
-const selectPinnedMovie = async (group_id) => {
+const selectPinnedMovies = async (group_id) => {
     return await pool.query('Select * from pinnedmovie where group_id = $1', [group_id])
 }
 const selectPinnedShow = async (group_id) => {
@@ -24,4 +24,4 @@ const deletePinnedShow = async (pinned_id) => {
     return await pool.query('delete from pinnedshow WHERE id = $1 returning *', [pinned_id])
 }
 
-export { selectPinnedMovie, selectPinnedShow, insertPinnedMovie, insertPinnedShow, deletePinnedMovie, deletePinnedShow }
+export { selectPinnedMovies, selectPinnedShow, insertPinnedMovie, insertPinnedShow, deletePinnedMovie, deletePinnedShow }

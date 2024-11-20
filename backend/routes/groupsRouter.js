@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { getAllGroups, getAllGroupsByUser } from '../controllers/GroupController.js'
+import { getAllGroups, getAllUsersByGroup } from '../controllers/GroupController.js'
 
 const router = Router()
 
 router.get('/', getAllGroups)
-router.get('/:id', getAllGroupsByUser)
+router.get('/:id', getAllUsersByGroup)
 
 export default router
