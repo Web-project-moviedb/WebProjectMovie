@@ -57,7 +57,7 @@ function ReviewList({ reviews, movies }) {
                                 <td>
                                     {movies[review.movie_id] ? (
                                         <Link to={`/movie/${review.movie_id}`}>
-                                            {movies[review.movie_id]}
+                                            {movies[review.movie_id] || 'Unable to Fetch Title'}
                                         </Link>
                                     ) : (
                                         <span>Loading movie name...</span>
@@ -67,7 +67,7 @@ function ReviewList({ reviews, movies }) {
                                 <td>{review.uname}</td>
                                 <td>{review.review_title}</td>
                                 <td>{review.review_body}</td>
-                                <td>{formatTimestamp(review.created_at)}</td> {/* Format the timestamp here */}
+                                <td>{formatTimestamp(review.created_at)}</td>
                             </tr>
                         ))}
                     </tbody>
