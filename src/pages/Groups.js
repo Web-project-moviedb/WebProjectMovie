@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import AllGroups from '../components/groups/AllGroups.js'
+import { MainHeader } from '../components/Header.js'
 
 const url = process.env.REACT_APP_API_URL
 
@@ -31,14 +32,8 @@ export default function Groups() {
 
     return (
         <div>
-            <h3>Page for all the groups</h3>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <ul> {groups.map((group) => (
-                <li key={group.id} >
-                    <Link to={`/group/${group.id}`}> {group.group_name} </Link>
-                </li>
-            ))}
-            </ul>
+            <MainHeader text={'Groups'} />
+            <AllGroups groups={groups} error={error} />
         </div>
     )
 }

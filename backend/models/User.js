@@ -21,6 +21,9 @@ const selectAllGroupsByUser = async (user_id) => {
 }
 
 
+
+
+// Below are the functions for the invite system and should maybe be moved to a separate file or to group controller
 const insertInvite = async (account_id, group_id, pending) => {
     return await pool.query('insert into account_user_group(account_id, group_id, pending) values ($1,$2,$3)', [account_id, group_id, pending])
 

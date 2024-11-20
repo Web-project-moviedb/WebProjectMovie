@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { json, useParams, Link } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import { fetchMovieById } from '../api/fetchTMDB.js'
+import GroupMembers from '../components/groups/GroupMembers.js'
+import GroupMovies from '../components/groups/GroupMovies.js'
+import { MainHeader, SectionHeader } from '../components/Header.js'
+import GroupDescription from '../components/groups/GroupDescription.js'
 
-const url = process.env.REACT_APP_API_URL
 
 export default function Group() {
     const { id } = useParams() // id from URL
@@ -11,6 +14,8 @@ export default function Group() {
     const [groupUsers, setGroupUsers] = useState([])
     const [movies, setMovies] = useState([])
     const [error, setError] = useState(null)
+
+    const url = process.env.REACT_APP_API_URL
 
     // Get group details
     const getGroupData = async () => {
@@ -56,32 +61,20 @@ export default function Group() {
         getGroupData()
         getGroupMembers()
         getGroupMovies()
-    }, [])
+    })
+
+    if (error) {
+        return <h3>{error}</h3>
+    }
 
     return (
         <div>
-            <h2>Group: {group.group_name}</h2>
-            <p>{group.description}</p>
-            {error && <p>{error}</p>}
-            <h3>Members:</h3>
-            <ul> {groupUsers.map((user) => (
-                <li key={user.account_id} >
-                    {user.pending ? (
-                        <span>{user.uname} (Pending)</span>
-                    ) : (
-
-                        <Link to={`/useraccountpage/${user.account_id}`}>{user.uname}</Link>
-                    )}
-                </li>
-            ))}
-            </ul>
-            <h3>Group Movies</h3>
-            <ul> {movies.map((movie) => (
-                <li key={movie.id}>
-                    <Link to={`/movie/${movie.id}`}> {movie.title}</Link>
-                </li>
-            ))}
-            </ul>
+            <MainHeader text={group.group_name} />
+            <GroupDescription description={group.description} />
+            <SectionHeader text={'Members'} />
+            <GroupMembers groupUsers={groupUsers} />
+            <SectionHeader text={'Movies'} />
+            <GroupMovies movies={movies} />
         </div >
     )
 }

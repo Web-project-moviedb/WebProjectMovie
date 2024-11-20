@@ -21,7 +21,7 @@ const postRegistration = async (req, res, next) => {
         // Check if user exists
         const userExists = await selectUserByUsername(req.body.username)
         if (userExists.rowCount > 0) return next(new ApiError('Username already exists', 400))
-            
+
         const hashedPassword = await hash(req.body.password, 10)
         const userFromDb = await insertUser(req.body.username, hashedPassword)
         const user = userFromDb.rows[0]
@@ -80,30 +80,34 @@ const deleteUser = async (req, res, next) => {
 }
 
 const postInvite = async (req, res, next) => {
-   try {
-     const response = await insertInvite(req.body.account_id, req.body.group_id, req.body.pending)
-    return res.status(200).json(response.rows);
+    try {
+        const response = await insertInvite(req.body.account_id, req.body.group_id, req.body.pending)
+        return res.status(200).json(response.rows);
     }
     catch (error) {
         console.log(error)
-}
+    }
 }
 // accept invite updates pending status to false
 const acceptInvite = async (req, res, next) => {
-    try {const response = await updateInvite(req.params.id)
-    return res.status(200).json(response.rows);
+    try {
+        const response = await updateInvite(req.params.id)
+        return res.status(200).json(response.rows);
     }
     catch (error) {
         console.log(error)
-}}
+    }
+}
 
 // deletes invite
 const declineInvite = async (req, res, next) => {
-   try {
-     const response = await deleteInvite(req.params.id)
-    return res.status(200).json(response.rows);
+    try {
+        const response = await deleteInvite(req.params.id)
+        return res.status(200).json(response.rows);
     }
     catch (error) {
         console.log(error)
-}}
+    }
+}
+
 export { postRegistration, postLogin, deleteUser, getAllGroupsByUser, postInvite, acceptInvite, declineInvite }
