@@ -1,3 +1,21 @@
+
+import { fetchMovieById } from '../api/fetchTMDB'
+
+const fetchMovieNames = async (reviews) => {
+    const moviesData = {}
+    for (const review of reviews) {
+        if (!moviesData[review.movie_id]) {
+            try {
+                const movieData = await fetchMovieById(review.movie_id) // get movie data by movie_id
+                moviesData[review.movie_id] = movieData.title // store movie name
+            } catch (error) {
+                console.error(`Error fetching movie title ${review.movie_id}:`, error)
+            }
+        }
+    }
+    return moviesData // Return the movies data
+}
+
 // this returns a string of stars and empty stars based on integer 1-5
 const renderStars = (stars) => {
     const filledStars = '★'.repeat(stars)
@@ -15,4 +33,4 @@ const formatTimestamp = (isoString) => {
 }
 
 
-export { renderStars, formatTimestamp } 
+export { renderStars, formatTimestamp, fetchMovieNames } 
