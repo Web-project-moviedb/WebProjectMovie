@@ -79,5 +79,31 @@ const deleteUser = async (req, res, next) => {
     }
 }
 
+const postInvite = async (req, res, next) => {
+   try {
+     const response = await insertInvite(req.body.account_id, req.body.group_id, req.body.pending)
+    return res.status(200).json(response.rows);
+    }
+    catch (error) {
+        console.log(error)
+}
+}
+// accept invite updates pending status to false
+const acceptInvite = async (req, res, next) => {
+    try {const response = await updateInvite(req.params.id)
+    return res.status(200).json(response.rows);
+    }
+    catch (error) {
+        console.log(error)
+}}
 
-export { postRegistration, postLogin, deleteUser, getAllGroupsByUser }
+// deletes invite
+const declineInvite = async (req, res, next) => {
+   try {
+     const response = await deleteInvite(req.params.id)
+    return res.status(200).json(response.rows);
+    }
+    catch (error) {
+        console.log(error)
+}}
+export { postRegistration, postLogin, deleteUser, getAllGroupsByUser, postInvite, acceptInvite, declineInvite }

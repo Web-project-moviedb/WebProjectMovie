@@ -21,4 +21,18 @@ const selectAllGroupsByUser = async (user_id) => {
 }
 
 
-export { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser }
+const insertInvite = async (account_id, group_id, pending) => {
+    return await pool.query('insert into account_user_group(account_id, group_id, pending) values ($1,$2,$3)', [account_id, group_id, pending])
+
+}
+
+const updateInvite = async (invite_id) => {
+    return await pool.query('update account_user_group SET pending = false WHERE id = $1',[invite_id])
+
+}
+
+const deleteInvite = async (invite_id) => {
+    return await pool.query('DELETE from account_user_group WHERE id = $1', [invite_id])
+
+}
+export { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, updateInvite, deleteInvite }
