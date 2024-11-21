@@ -1,10 +1,10 @@
 import { ApiError } from '../helpers/ApiError.js'
-import { selectPinnedMovie, selectPinnedShow, insertPinnedMovie, insertPinnedShow, deletePinnedMovie, deletePinnedShow } from '../models/Pinned.js'
+import { selectPinnedMovies, selectPinnedShow, insertPinnedMovie, insertPinnedShow, deletePinnedMovie, deletePinnedShow } from '../models/Pinned.js'
 
 
-const getPinnedMovie = async (req, res, next) => {
+const getPinnedMovies = async (req, res, next) => {
     try {
-        const response = await selectPinnedMovie(req.params.id)
+        const response = await selectPinnedMovies(req.params.id)
         return res.status(200).json(response.rows);
     }
     catch (error) {
@@ -60,4 +60,4 @@ const removePinnedShow = async (req, res, next) => {
     }
 }
 
-export { getPinnedMovie, getPinnedShowtime, postPinnedMovie, postPinnedShow, removePinnedMovie, removePinnedShow }
+export { getPinnedMovies, getPinnedShowtime, postPinnedMovie, postPinnedShow, removePinnedMovie, removePinnedShow }

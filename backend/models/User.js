@@ -1,5 +1,6 @@
 import { pool } from '../helpers/db.js'
 
+// Insert user
 const insertUser = async (username, hashedPassword) => {
     return await pool.query('insert into account (uname, password) values ($1, $2) returning *', [username, hashedPassword])
 }
@@ -9,16 +10,20 @@ const selectUserByUsername = async (username) => {
     return await pool.query('select * from account where uname=$1', [username])
 }
 
-// Delete user by id, this delete also automatically favourite(s) and review(s) by user
+// Delete user by id, this delete also automatically favourites and reviews by user
 const deleteUserById = async (id) => {
     return await pool.query('delete from account where id=$1 returning *', [id])
 }
 
-// Select user by group id
-const selectUserByGroup = async (group_id) => {
-    return await pool.query('select account_user_group.account_id, account_user_group.user_group_id, account_user_group.pending, account.uname from account INNER JOIN account_user_group ON account.id = account_user_group.account_id INNER JOIN user_group ON account_user_group.user_group_id = user_group.id WHERE user_group.id = $1', [group_id])
+// Select all groups by user
+const selectAllGroupsByUser = async (user_id) => {
+    return await pool.query('Select * from user_group INNER JOIN account_user_group ON user_group.id = account_user_group.user_group_id WHERE account_user_group.account_id = $1', [user_id])
 }
 
+
+
+
+// Below are the functions for the invite system and should maybe be moved to a separate file or to group controller
 const insertInvite = async (account_id, group_id, pending) => {
     return await pool.query('insert into account_user_group(account_id, group_id, pending) values ($1,$2,$3)', [account_id, group_id, pending])
 
@@ -33,4 +38,4 @@ const deleteInvite = async (invite_id) => {
     return await pool.query('DELETE from account_user_group WHERE id = $1', [invite_id])
 
 }
-export { insertUser, selectUserByUsername, deleteUserById, selectUserByGroup, insertInvite, updateInvite, deleteInvite }
+export { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, updateInvite, deleteInvite }
