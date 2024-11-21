@@ -10,6 +10,7 @@ import Reviews from './pages/Reviews.js';
 import Groups from './pages/Groups.js'
 import ShowTimes from './pages/ShowTimes.js';
 import Favorites from './pages/Favorites.js';
+import FavoritesPage from './pages/FavoritesPage.js';
 import Movie from './pages/Movie.js';
 import LoginPage, { AuthenticationMode } from './pages/LoginPage.js';
 import Collection from './pages/Collection.js';
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/favorites",
         element: <Favorites />,
+      },
+      {
+        path: "/favorites/:id",
+        element: <FavoritesPage />,
       },
       {
         path: "/movie/:id",
