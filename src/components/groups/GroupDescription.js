@@ -1,4 +1,4 @@
-export default function GroupDescription(description) {
+export default function GroupDescription({ description }) {
     return (
         <>
             <p>{description}</p>

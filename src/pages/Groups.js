@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react"
-import axios from 'axios'
 import AllGroups from '../components/groups/AllGroups.js'
 import { MainHeader } from '../components/Header.js'
-
-const url = process.env.REACT_APP_API_URL
+import { fetchAllGroups } from "../utils/groupFunctions.js"
 
 /* All users can view groups page
 Groups page contains all the created groups
@@ -18,7 +16,7 @@ export default function Groups() {
     // Get all groups
     const getGroups = async () => {
         try {
-            const response = await axios(url + '/groups')
+            const response = await fetchAllGroups()
             setGroups(response.data)
         } catch (error) {
             console.log(error)
@@ -28,12 +26,16 @@ export default function Groups() {
     
     useEffect(() => {
         getGroups()
-    }, [])
+    }, [setGroups])
+
+    if (error) {
+        return <div>{error}</div>
+    }
 
     return (
         <div>
             <MainHeader text={'Groups'} />
-            <AllGroups groups={groups} error={error} />
+            <AllGroups groups={groups} />
         </div>
     )
 }
