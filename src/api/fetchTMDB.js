@@ -30,7 +30,7 @@ const fetchMovieById = async (id) => {
 
 
 const fetchMoviesByTerm = async (term) => {
-  
+
   const options = {
     method: 'GET',
     headers: {
@@ -55,7 +55,7 @@ const fetchMoviesByTerm = async (term) => {
 
 
 const fetchMoviesByYear = async (year) => {
-  
+
   const options = {
     method: 'GET',
     headers: {
@@ -80,7 +80,7 @@ const fetchMoviesByYear = async (year) => {
 
 
 const fetchMoviesByLanguage = async (lang) => {
-  
+
   const options = {
     method: 'GET',
     headers: {
@@ -130,7 +130,7 @@ const fetchGenres = async () => {
 
 
 const fetchMoviesByGenre = async (genre) => {
-  
+
   const options = {
     method: 'GET',
     headers: {
@@ -154,7 +154,7 @@ const fetchMoviesByGenre = async (genre) => {
 }
 
 const fetchCollection = async (collection) => {
-  
+
   const options = {
     method: 'GET',
     headers: {

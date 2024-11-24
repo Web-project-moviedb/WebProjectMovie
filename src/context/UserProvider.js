@@ -11,28 +11,29 @@ export default function UserProvider({ children }) {
 
     // Login user API call
     const login = async () => {
-        const headers = {headers: { 'Content-Type': 'application/json' }}
-        const data = {username: user.username, password: user.password}
+        const headers = { headers: { 'Content-Type': 'application/json' } }
+        const data = { username: user.username, password: user.password }
 
         try {
             const response = await axios.post(url + '/user/login', data, headers)
             const { id, username: uname, token } = response.data
-            setUser({ id, username: uname})                            // Save id and username to user
+            setUser({ id, username: uname })                            // Save id and username to user
             setToken(token)                                            // Save token to token
         } catch (error) {
             setUser({ username: '', password: '' })                    // Set user and password fields empty
+            console.log("error")
             throw error
         }
     }
 
     // Register user API call
     const register = async () => {
-        const headers = {headers: {'Content-Type': 'application/json'}}
-        const data = {username: user.username, password: user.password}
+        const headers = { headers: { 'Content-Type': 'application/json' } }
+        const data = { username: user.username, password: user.password }
 
         try {
             await axios.post(url + '/user/register', data, headers)
-            setUser({username: '', password: ''})                       // Set user and password fields empty
+            setUser({ username: '', password: '' })                       // Set user and password fields empty
         } catch (error) {
             throw error
         }
