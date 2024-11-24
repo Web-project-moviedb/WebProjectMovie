@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 
-export default function GroupMembers({ groupUsers}) {
+export default function GroupMembers({ groupUsers }) {
     return (
         <>
             <ul> {groupUsers.map((user) => (

@@ -6,6 +6,7 @@ import GroupMembers from '../components/groups/GroupMembers.js'
 import GroupMovies from '../components/groups/GroupMovies.js'
 import { MainHeader, SectionHeader } from '../components/Header.js'
 import GroupDescription from '../components/groups/GroupDescription.js'
+import { fetchGroupMembers } from '../utils/groupFunctions.js'
 
 
 export default function Group() {
@@ -31,8 +32,8 @@ export default function Group() {
     // Get all users in group
     const getGroupMembers = async () => {
         try {
-            const response = await axios(url + '/groups/' + id)
-            setGroupUsers(response.data)
+            const response = await fetchGroupMembers(id)
+            setGroupUsers(response)
         } catch (error) {
             console.log(error)
             setError('Failed to load group members')
@@ -45,7 +46,7 @@ export default function Group() {
             const response = await axios(url + '/pinned/movie/' + id) // Returns id, group_id, movie_id
             const movieDetails = await Promise.all(
                 response.data.map(async (movie) => {
-                    const movieData = await fetchMovieById(movie.movie_id)
+                    const movieData = await fetchMovieById(movie.movie_id)  // HOX!!!!!!! Should use utils function to fetch movie data?????
                     const { id, title } = movieData
                     return { id, title }
                 })
@@ -61,7 +62,7 @@ export default function Group() {
         getGroupData()
         getGroupMembers()
         getGroupMovies()
-    })
+    }, [])
 
     if (error) {
         return <h3>{error}</h3>
@@ -75,6 +76,7 @@ export default function Group() {
             <GroupMembers groupUsers={groupUsers} />
             <SectionHeader text={'Movies'} />
             <GroupMovies movies={movies} />
+            <SectionHeader text={'Pinned Show Times'} />
         </div >
     )
 }
