@@ -6,14 +6,13 @@ import { pool } from '../helpers/db.js'
 const getAllFavoritesByUser = async (req, res, next) => {
     try {
         const response = await selectAllFavoritesByUser(req.params.id)
-        if(response.rows.length === 0){
-            return res.status(404).json({message: 'no favorites found for this user'})
+        if (response.rows.length === 0) {
+            return res.status(404).json({ message: 'no favorites found for this user' })
         }
         return res.status(200).json(response.rows);
     }
     catch (error) {
-        console.log(error)
-        return next(error)
+        console.log("get all favorites by user error: " + error)
     }
 }
 
@@ -38,18 +37,18 @@ const removeFavorite = async (req, res, next) => {
     }
 }
 
-const getAllUsersToFavorite = async (req,res,next) => {
-    try{
+const getAllUsersToFavorite = async (req, res, next) => {
+    try {
         const response = await selectAllUsersToFavorite()
-        if(!response.rows.length === 0){
-            return res.status(404).json({message: 'No users found'})
+        if (!response.rows.length === 0) {
+            return res.status(404).json({ message: 'No users found' })
         }
         return res.status(200).json(response.rows)
-    } catch(error) {
-    console.log(error)
-    return next(error)
+    } catch (error) {
+        console.log(error)
+        return next(error)
     }
-    
+
 }
 
-export { getAllFavoritesByUser, postFavorite, removeFavorite, getAllUsersToFavorite}
+export { getAllFavoritesByUser, postFavorite, removeFavorite, getAllUsersToFavorite }

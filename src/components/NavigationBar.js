@@ -1,27 +1,27 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UseUser } from '../context/UseUser'
 // using NavLink the browser checks if the current URL matches the Link and you can add CSS to the specific Link th is way
 // Outlet is used as a placeholder for the "children" elemenent. in this case the children element the specific Page
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import "./NavigationBar.css"
 
 
 const NavigationBar = () => {
     const { user, logout, token } = UseUser()
+    const [logged, setLogged] = useState(false)
+    const navigate = useNavigate()
     const accountUrl = "/account/" + user.id
-
-    const checkLogin = () => {
-        if (user.id) {
-            return (
-                <button onClick={(logout())}>Logout</button>
-            )
+    useEffect(() => {
+        if (token) {
+            setLogged(true)
         }
-        else {
-            return (
-                <NavLink to="/signin" activeclassname="current" > login</NavLink >
-            )
-        }
+    }, [token])
+    function logoutFunction() {
+        console.log("logout function")
+        setLogged(false)
+        logout()
+        navigate('/')
     }
     return (
         <>
@@ -34,8 +34,8 @@ const NavigationBar = () => {
                         <NavLink to="/showtimes" activeclassname="current">Showtimes</NavLink>
                     </div>
                     <div className="nav-user">
-                        <NavLink to={accountUrl} activeclassname="current">Account</NavLink>
-                        <NavLink to="/signin" activeclassname="current" > login</NavLink >
+                        {logged ? <NavLink to={accountUrl} activeclassname="current">Account</NavLink> : <></>}
+                        {logged ? <button onClick={logoutFunction}>Logout</button> : <NavLink to="/signin" activeclassname="current" > login</NavLink >}
                     </div>
                 </nav>
             </header>
