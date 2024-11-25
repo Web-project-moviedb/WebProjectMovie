@@ -15,6 +15,8 @@ import FavoritesPage from './pages/FavoritesPage.js';
 import Movie from './pages/Movie.js'
 import LoginPage, { AuthenticationMode } from './pages/LoginPage.js'
 import Collection from './pages/Collection.js'
+import ProfilePage from './pages/AccountPage.js'
+import DeleteProfile from './pages/DeleteProfile.js'
 
 
 // Front end routing 
@@ -44,7 +46,14 @@ const router = createBrowserRouter([
         path: "/showtimes",
         element: <ShowTimes />,
       },
-
+      {
+        path: "/account/:id",
+        element: <ProfilePage />,
+      },
+      {
+        path: "/delete",
+        element: <DeleteProfile />,
+      },
       // Other pages
       {
         path: "/favorites",

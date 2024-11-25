@@ -69,10 +69,18 @@ const getAllGroupsByUser = async (req, res, next) => {
 
 // Delete user
 const deleteUser = async (req, res, next) => {
+    const invalid_password_message = 'password was not correct'
+
     try {
         const id = parseInt(req.body.id)
-        if (!id) return next(new ApiError('Invalid id', 400))
-        return res.status(200).json(await deleteUserById(id))
+        const userFromDb = await selectUserByUsername(req.body.username)
+        const user = userFromDb.rows[0]
+        const result = await compare(req.body.password, user.password)
+        if (result) {
+            return res.status(200).json(await deleteUserById(id))
+        }
+        return next(new ApiError(invalid_password_message, 401))  // Passwords do not match
+
     } catch (error) {
         console.log(error)
     }
@@ -108,5 +116,6 @@ const declineInvite = async (req, res, next) => {
         console.log(error)
     }
 }
+
 
 export { postRegistration, postLogin, deleteUser, getAllGroupsByUser, postInvite, acceptInvite, declineInvite }

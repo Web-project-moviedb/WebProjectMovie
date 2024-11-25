@@ -9,7 +9,7 @@ export default function GroupMembers({ groupUsers }) {
                     {user.pending ? (
                         <span>{user.uname} (Pending)</span>
                     ) : (
-                        <Link to={`/useraccountpage/${user.account_id}`}>{user.uname}</Link>
+                        <Link to={`/profile/${user.account_id}`}>{user.uname}</Link>
                     )}
                 </li>
             ))}

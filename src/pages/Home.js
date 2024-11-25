@@ -38,7 +38,7 @@ function Home() {
 
             {/*SearchForm components for searching by term/year/language/genre, props are passed along with event handlers */}
 
-            <SearchForm                          
+            <SearchForm
                 label="Name"
                 placeholder="e.g. Apocalypse Now"
                 value={term}
