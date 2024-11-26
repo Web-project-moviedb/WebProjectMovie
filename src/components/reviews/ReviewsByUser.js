@@ -1,15 +1,17 @@
 // Use this component using the following code format: <ReviewsByUser id={123} />
 
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import axios from "axios"
 import { fetchMovieNames, renderStars, formatTimestamp } from "../../utils/helperFunctions.js"
+
 
 function ReviewsByUser({ id }) {
     const [reviews, setReviews] = useState([]) // State to store user reviews
     const [movies, setMovies] = useState({}) // State to store movie names
     const [loading, setLoading] = useState(true) // State to track loading
     const [error, setError] = useState(null) // State to store errors
+    const params = useParams()
 
     const url = process.env.REACT_APP_API_URL
 
@@ -36,6 +38,30 @@ function ReviewsByUser({ id }) {
         fetchUserReviews()
 
     }, [id, url]) // Run effect when id or url changes
+
+    const deleteReview = async (id) => {
+        try {
+            const response = await axios.delete(url + "/Reviews/" + id)
+            setReviews(reviews.filter(a => a.id !== id))
+            console.log(response)
+        }
+        catch (error) {
+            console.error('Error', error)
+            throw error
+        }
+    }
+    function checkReviewButton(id_for_Button) {
+        if (id === params.id) {
+            return (
+                <button id={id_for_Button} onClick={() => deleteReview(id_for_Button)}>Delete</button>
+            )
+        }
+        else {
+            return (
+                <></>
+            )
+        }
+    }
 
     if (loading) {
         return <h4>Loading...</h4>
@@ -70,6 +96,7 @@ function ReviewsByUser({ id }) {
                                 <td>{review.review_title}</td>
                                 <td>{review.review_body}</td>
                                 <td>{formatTimestamp(review.created_at)}</td>
+                                <td>     {checkReviewButton(review.id)} </td>
                             </tr>
                         ))}
                     </tbody>
