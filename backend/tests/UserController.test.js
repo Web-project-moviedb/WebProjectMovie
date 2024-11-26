@@ -16,12 +16,14 @@ describe('POST register account', () => {
         await initializeTestDB()
     })
 
+    const name = 'testuser'
+    const pword = 'Testuser123'
+
     it ('should create an account with valid email and password', async() => {
         const response = await axios.post(base_url + '/register', {
-            username: 'testuser',
-            password: 'Testuser123'
+            username: name,
+            password: pword
         })
-
         const data = await response.data
         expect(response.status).to.equal(201)
         expect(data).to.be.an('object')
@@ -29,13 +31,11 @@ describe('POST register account', () => {
     })
 
     it ('should not create an account with < 8 character password', async() => {
-        
         try {
             const response = await axios.post(base_url + '/register', {
-                username: 'testuser',
+                username: name,
                 password: 'Short1'
             })
-    
             const data = response.data
             expect(response.status).to.equal(400)
             expect(data).to.be.an('object')
@@ -48,8 +48,8 @@ describe('POST register account', () => {
     it ('should not create an account without capital letters in password', async() => {
         try {
             const response = await axios.post(base_url + '/register', {
-                username: 'testuser',
-                password: 'testuser123'
+                username: name,
+                password: 'nocaps123'
             })
     
             const data = response.data
@@ -64,10 +64,9 @@ describe('POST register account', () => {
     it ('should not create an account without numbers in password', async() => {
         try {
             const response = await axios.post(base_url + '/register', {
-                username: 'testuser',
+                username: name,
                 password: 'Withoutnumbers'
             })
-    
             const data = response.data
             expect(response.status).to.equal(400)
             expect(data).to.be.an('object')
@@ -81,9 +80,8 @@ describe('POST register account', () => {
         try {
             const response = await axios.post(base_url + '/register', {
                 username: '',
-                password: 'Testuser123'
+                password: pword
             })
-    
             const data = response.data
             expect(response.status).to.equal(400)
             expect(data).to.be.an('object')
@@ -96,10 +94,9 @@ describe('POST register account', () => {
     it ('should not create an account with username as password', async() => {
         try {
             const response = await axios.post(base_url + '/register', {
-                username: 'Testuser123',
-                password: 'Testuser123'
+                username: pword,
+                password: pword
             })
-    
             const data = response.data
             expect(response.status).to.equal(400)
             expect(data).to.be.an('object')
@@ -112,10 +109,9 @@ describe('POST register account', () => {
     it ('should not create an account with an existing username', async() => {
         try {
             const response = await axios.post(base_url + '/register', {
-                username: 'testuser',
-                password: 'Testuser123'
+                username: name,
+                password: pword
             })
-    
             const data = response.data
             expect(response.status).to.equal(400)
             expect(data).to.be.an('object')
@@ -127,16 +123,48 @@ describe('POST register account', () => {
 
 })
 
-// describe('DELETE delete account', () => {
+describe('DELETE delete account', () => {
 
-//     before(async() => {
+    const name = 'DeleteTest'
+    const pword = 'DeleteTest123'
 
-//     })
+    before(async () => {
+        await initializeTestDB()
+        await insertTestUser(name, pword)
+    })
 
-// })
+    it('should not delete an account with an invalid password', async () => {
+      try {
+        const response = await axios.delete(base_url + '/delete', {
+            data: {
+                id: 8, // this is always 9 bc of test structure
+                username: name,
+                password: 'InvalidPassword' 
+            }
+        })
+        expect(response.status).to.equal(401);
+        expect(response.data).to.be.an('object');
+        expect(response.data).to.have.property('error', 'Incorrect password')
+      } catch (error) {
+        // console.error('Error:', error.response ? error.response.data : error.message)
+      }  
+    })
+
+    it('should delete an account with correct password', async () => {
+        const response = await axios.delete(base_url + '/delete', {
+            data: {
+                id: 8, // this is always 8 bc of test structure
+                username: name,
+                password: pword
+            }
+        })
+        expect(response.status).to.equal(200)
+        expect(response.data).to.be.an('object')
+        expect(response.data.rows).to.be.an('array')
+        expect(response.data.rows[0]).to.have.property('id', 8)
+    })
+
+})
 
 // describe('POST login', () => {})
-
-
-
 //describe('XX logout', () => {})

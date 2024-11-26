@@ -70,8 +70,9 @@ const getAllGroupsByUser = async (req, res, next) => {
 }
 
 // Delete user
+// NOTE: if error messages are changed, make sure to update the tests in UserController.test.js to match!!
 const deleteUser = async (req, res, next) => {
-    const invalid_password_message = 'password was not correct'
+    const invalid_password_message = 'Incorrect password'
 
     try {
         const id = parseInt(req.body.id)
