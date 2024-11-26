@@ -48,7 +48,7 @@ CREATE TABLE user_group (
 
 -- Create account_user_group, connects account and user_group
 CREATE TABLE account_user_group (
-	id SERIAL PRIMARY KEY,
+	id SERIAL,
     account_id INTEGER NOT NULL,          -- Reference to account table
     user_group_id INTEGER NOT NULL,       -- Reference to user_group table
 	pending BOOLEAN DEFAULT TRUE,         -- Default TRUE, waiting for acceptance
@@ -100,14 +100,14 @@ INSERT INTO favorite (account_id, movie_id, movie_name) VALUES (6, 238, 'The God
 INSERT INTO review (account_id, movie_id, review_title, review_body, stars) VALUES (1, 744, 'Top Gun', 'Great movie!', 5);
 INSERT INTO review (account_id, movie_id, review_title, review_body, stars) VALUES (1, 680, 'Pulp Fiction', 'Great movie!', 5);
 INSERT INTO review (account_id, movie_id, review_title, review_body, stars) VALUES (2, 680, 'My opinion of Pulp Fiction...', 'BEST MOVIE EVER!!!', 5);
-INSERT INTO review (account_id, movie_id, review_title, review_body, stars) VALUES (3, 744, 'Top Gun', 'Tom Cruise sucks', 1);
+INSERT INTO review (account_id, movie_id, review_title, review_body, stars) VALUES (3, 744, 'Top Gun? More like Flop Gun', 'Tom Cruise sucks', 1);
 
 /* User_group data */
 
 INSERT INTO user_group (group_name, owner_id, description) VALUES ('TestGroup', 1, 'Test group for testing');
 INSERT INTO user_group (group_name, owner_id, description) VALUES ('Top 5 Movies', 2, 'My top 5 movies');
 INSERT INTO user_group (group_name, owner_id, description) VALUES ('Best movies group', 3, 'Collection of the best movies');
-INSERT INTO user_group (group_name, owner_id, description) VALUES ('Worst movies group', 20, 'Collection of the worst movies');
+INSERT INTO user_group (group_name, owner_id, description) VALUES ('Worst movies group', 3, 'Collection of the worst movies');
 
 /* Account_user_group data */
 

@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { pool } from '../db.js'
+import { pool } from './db.js'
 import { hash } from 'bcrypt'
 import pkg from 'jsonwebtoken'
 const { sign } = pkg
@@ -12,7 +12,7 @@ const __dirname = import.meta.dirname
 
 const initializeTestDB = async () => {
     console.log('Initializing test database')
-    const sql = fs.readFileSync(path.resolve(__dirname, 'movieapp_test.sql')).toString()    // read the test db sql file
+    const sql = fs.readFileSync(path.resolve(__dirname, '../movieapp_test.sql')).toString()    // read the test db sql file
     await pool.query(sql)   // execute the sql
     console.log('Test database initialized')
 }
