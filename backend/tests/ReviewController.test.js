@@ -4,7 +4,7 @@ import axios from 'axios'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const base_url = process.env.API_URL
+const base_url = process.env.BACKEND_URL
 console.log("Base URL: ", base_url)
 
 describe('GET reviews', () => {
