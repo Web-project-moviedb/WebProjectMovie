@@ -67,3 +67,6 @@ GET http://localhost:3001/pinned/movie/1 HTTP/1.1
 
 ### GET GROUP BY GROUP ID
 GET http://localhost:3001/group/1 HTTP/1.1
+
+### DELETE GROUP BY ID
+DELETE http://localhost:3001/group/2 HTTP/1.1

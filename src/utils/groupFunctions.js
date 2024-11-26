@@ -12,6 +12,16 @@ const fetchGroupMembers = async (groupId) => {
     }
 }
 
+// Get group by id
+const fetchGroupById = async (groupId) => {
+    try {
+        const response = await axios(url + '/group/' + groupId)
+        return response.data[0]
+    } catch (error) {
+        return error
+    }
+}
+
 // Get all groups
 const fetchAllGroups = async () => {
     try {
@@ -49,7 +59,7 @@ const joinGroup = async (userId, groupId) => {
     }
 }
 
-const leaveGroup = async (invite_id) => {
+const removeUserFromGroup = async (invite_id) => {
     try {
         const response = await axios(url + '/user/invite' + invite_id, {
             method: 'DELETE',
@@ -63,4 +73,35 @@ const leaveGroup = async (invite_id) => {
     }
 }
 
-export { fetchGroupMembers, fetchAllGroups, fetchAllGroupsByUser, joinGroup, leaveGroup }
+const deleteGroup = async (groupId) => {
+    try {
+        const response = await axios(url + '/group/' + groupId, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+const deletePinnedMovie = async (movie_id, group_id) => {
+    console.log(movie_id, group_id)
+    try {
+        const pinnedMovies = await axios(url + '/pinned/movie/' + group_id)
+        const pinnedMovie = pinnedMovies.data.find(movie => movie.movie_id === movie_id)
+        const response = await axios(url + '/pinned/movie/' + pinnedMovie.id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+export { fetchGroupMembers, fetchGroupById, fetchAllGroups, fetchAllGroupsByUser, joinGroup, removeUserFromGroup, deleteGroup, deletePinnedMovie }
