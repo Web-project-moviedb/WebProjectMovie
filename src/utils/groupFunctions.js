@@ -137,7 +137,6 @@ const deletePinnedMovie = async (movie_id, group_id) => {
 
 // Add movie to group
 const addMovieToGroup = async (movie_id, group_id) => {
-    console.log("Adding movie to group movie_id: ", movie_id, "group_id: ", group_id)
     try {
         const response = await axios.post(url + '/pinned/movie', {
             method: 'POST',
@@ -148,7 +147,6 @@ const addMovieToGroup = async (movie_id, group_id) => {
                 'Content-Type': 'application/json'
             }
         })
-        console.log("This response: ", response)
         if (response.status === 200) {
             alert('Movie added to group')
         }
