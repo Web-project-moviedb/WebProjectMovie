@@ -32,6 +32,7 @@ const NavigationBar = () => {
                         <NavLink to="/reviews" activeclassname="current">Reviews</NavLink>
                         <NavLink to="/groups" activeclassname="current">Groups</NavLink>
                         <NavLink to="/showtimes" activeclassname="current">Showtimes</NavLink>
+                        {logged ? <NavLink to="/members" activeclassname="current">Members</NavLink> : <></>}
                     </div>
                     <div className="nav-user">
                         {logged ? <NavLink to={accountUrl} activeclassname="current">Account</NavLink> : <></>}

@@ -34,7 +34,7 @@ const postPinnedMovie = async (req, res, next) => {
 }
 const postPinnedShow = async (req, res, next) => {
     try {
-        const response = await insertPinnedShow(req.params.id, req.body.movie_id)
+        const response = await insertPinnedShow(req.params.id, req.body.movie_id, req.body.area_id, req.body.date)
         return res.status(200).json(response.rows);
     }
     catch (error) {

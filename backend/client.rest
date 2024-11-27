@@ -37,12 +37,41 @@ Content-Type: application/json
     "password": "Admin123"
 }
 
+### FAULTY REGISTER USER
+POST http://localhost:3001/user/register HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "Admin1234",
+    "password": "Short"
+}
+
+### LOGIN USER
+POST http://localhost:3001/user/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "Admin1234",
+    "password": "Admin123"
+}
+
+### FAULTY LOGIN USER
+POST http://localhost:3001/user/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "Admin1234",
+    "password": "WrongPassword"
+}
+
 ### DELETE USER
 DELETE http://localhost:3001/user/delete HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 12
+    "id": 8,
+    "username": "SecondTest",
+    "password": "SecondTest123"
 }
 
 ### INSERT USER
@@ -73,3 +102,24 @@ DELETE http://localhost:3001/group/2 HTTP/1.1
 
 ### ACCEPT USER
 PUT http://localhost:3001/user/invite/14 HTTP/1.1
+
+### DELETE GROUP BY ID
+DELETE http://localhost:3001/group/2 HTTP/1.1
+
+### ACCEPT USER
+PUT http://localhost:3001/user/invite/14 HTTP/1.1
+
+
+
+### GET PINNED SHOWTIMES
+GET http://localhost:3001/pinned/showtime/1 HTTP/1.1
+
+### POST PINNEDSHOW
+POST http://localhost:3001/pinned/showtime/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "movie_id": "2141155",
+    "area_id": "1018",
+    "date": "27/11/2024"
+}

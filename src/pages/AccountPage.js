@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, NavLink } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
 import ReviewsByUser from '../components/reviews/ReviewsByUser.js'
 import { MainHeader, SectionHeader } from "../components/Header.js"
@@ -88,7 +88,7 @@ function ProfilePage() {
 
     const deleteFavorite = async (id) => {
         try {
-            const response = await axios.delete(url + "/Favorites/" + id)
+            const response = await axios.delete(url + "/favorites/" + id)
             setFavorites(favorites.filter(a => a.id !== id))
         }
         catch (error) {
@@ -192,10 +192,11 @@ function ProfilePage() {
             <ReviewsByUser id={id} />
             <SectionHeader text='Favorites' />
             <ProfileFavoriteList favorites={favorites} />
+            <Link to={'/favorite/' + id}>Link to my favorites page</Link>
             <SectionHeader text='Groups' />
             <ProfileGroupList groups={groups} />
             {checkUserIdforDelete()}
-        </div>
+        </div >
     )
 }
 

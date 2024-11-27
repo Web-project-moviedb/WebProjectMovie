@@ -20,12 +20,5 @@ const deleteFavorite = async (favorite_id) => {
         WHERE id = $1 returning *`, [favorite_id])
 }
 
-const selectAllUsersToFavorite = async () => {
-    return await pool.query(`
-        SELECT DISTINCT ON (account.uname) account.id, account.uname, favorite.id AS favorite_id, favorite.movie_name
-        FROM account
-        LEFT JOIN favorite ON account.id = favorite.account_id
-    `)
-}
 
-export { selectAllFavoritesByUser, insertFavorite, deleteFavorite, selectAllUsersToFavorite }
+export { selectAllFavoritesByUser, insertFavorite, deleteFavorite }
