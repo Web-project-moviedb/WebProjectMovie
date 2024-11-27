@@ -96,3 +96,18 @@ GET http://localhost:3001/pinned/movie/1 HTTP/1.1
 
 ### GET GROUP BY GROUP ID
 GET http://localhost:3001/group/1 HTTP/1.1
+
+
+
+### GET PINNED SHOWTIMES
+GET http://localhost:3001/pinned/showtime/1 HTTP/1.1
+
+### POST PINNEDSHOW
+POST http://localhost:3001/pinned/showtime/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "movie_id": "2141155",
+    "area_id": "1018",
+    "date": "27/11/2024"
+}

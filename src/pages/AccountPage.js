@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, NavLink } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
 import ReviewsByUser from '../components/reviews/ReviewsByUser.js'
 
@@ -15,6 +15,7 @@ function ProfilePage() {
     const [error, setError] = useState(null)  // state to handle errors
     const [favorites, setFavorites] = useState([])
     const [groups, setGroups] = useState([])
+    const favoriteLink = '/favorites/' + id
     useEffect(() => {
 
         const fetchFavoritesById = async (id) => {
@@ -201,9 +202,10 @@ function ProfilePage() {
         <div>
             <ReviewsByUser id={id} />
             <ProfileFavoriteList favorites={favorites} />
+            <Link to={favoriteLink}>Link to my favorites page</Link>
             <ProfileGroupList groups={groups} />
             {checkUserIdforDelete()}
-        </div>
+        </div >
     )
 }
 
