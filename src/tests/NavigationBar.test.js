@@ -50,8 +50,13 @@ describe('Logout from NavBar', () => {
     )
 
     // Verify that the user data is cleared
-    expect(UseUser().user.id).toBeNull()  // User id should be null
-    expect(UseUser().user.username).toBe('')  // Username should be empty
-    expect(UseUser().token).toBeNull()  // Token should be null
+    expect(UseUser().user.id).toBeNull()
+    expect(UseUser().user.username).toBe('')
+    expect(UseUser().token).toBeNull()
   })
 })
+
+// NOTE: to run frontend tests, run `npm test` in the frontend directory in the terminal
+// - all frontend tests will run and output to the terminal
+// - tests will run in watch mode by default, so they will automatically re-run when files are changed
+// - to exit watch mode, press `q` in the terminal
