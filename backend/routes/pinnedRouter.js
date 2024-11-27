@@ -3,7 +3,7 @@ import { getPinnedMovies, getPinnedShowtime, postPinnedMovie, postPinnedShow, re
 
 const router = Router()
 
-router.post('/movie/:id', postPinnedMovie)      //group ID
+router.post('/movie', postPinnedMovie)      //group ID
 router.get('/movie/:id', getPinnedMovies)       //group ID
 router.delete('/movie/:id', removePinnedMovie)    //pinned ID
 

@@ -4,8 +4,8 @@ import { insertGroup, deleteGroup, selectAllGroups, selectGroup, selectAllUsersB
 //add group to database
 const postGroup = async (req, res, next) => {
     try {
-        const response = await insertGroup(req.body.name, req.body.id, req.body.desc)
-        return res.status(201).json(response.rows[0]);
+        const response = await insertGroup(req.body.group_name, req.body.owner_id, req.body.group_description)
+        return res.status(201).json(response.rows);
     } catch (error) {
         console.log(error)
     }

@@ -89,13 +89,25 @@ GET http://localhost:3001/groups HTTP/1.1
 GET http://localhost:3001/groups/1 HTTP/1.1
 
 ### GET ALL GROUPS BY USER ID
-GET http://localhost:3001/user/group/2 HTTP/1.1
+GET http://localhost:3001/user/group/8 HTTP/1.1
 
 ### GET PINNED MOVIES
 GET http://localhost:3001/pinned/movie/1 HTTP/1.1
 
 ### GET GROUP BY GROUP ID
 GET http://localhost:3001/group/1 HTTP/1.1
+
+### DELETE GROUP BY ID
+DELETE http://localhost:3001/group/2 HTTP/1.1
+
+### ACCEPT USER
+PUT http://localhost:3001/user/invite/14 HTTP/1.1
+
+### DELETE GROUP BY ID
+DELETE http://localhost:3001/group/2 HTTP/1.1
+
+### ACCEPT USER
+PUT http://localhost:3001/user/invite/14 HTTP/1.1
 
 
 

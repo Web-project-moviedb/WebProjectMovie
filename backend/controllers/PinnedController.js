@@ -23,11 +23,13 @@ const getPinnedShowtime = async (req, res, next) => {
 
 const postPinnedMovie = async (req, res, next) => {
     try {
-        const response = await insertPinnedMovie(req.params.id, req.body.movie_id)
+        const response = await insertPinnedMovie(req.body.group_id, req.body.movie_id)
         return res.status(200).json(response.rows);
     }
     catch (error) {
-        console.log(error)
+        if (error.code === '23505') {
+            return next(new ApiError('Movie already added to selected group', 409))
+        }
     }
 }
 const postPinnedShow = async (req, res, next) => {
@@ -37,6 +39,9 @@ const postPinnedShow = async (req, res, next) => {
     }
     catch (error) {
         console.log(error)
+        if (error.code === '23505') {
+            return next(new ApiError('Showtime already added to group', 409))
+        }
     }
 }
 

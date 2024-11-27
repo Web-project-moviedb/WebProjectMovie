@@ -29,7 +29,7 @@ const insertInvite = async (account_id, group_id) => {
 }
 
 const updateInvite = async (invite_id) => {
-    return await pool.query('update account_user_group SET pending = false WHERE id = $1',[invite_id])
+    return await pool.query('update account_user_group SET pending = FALSE WHERE id = $1',[invite_id])
 }
 
 const deleteInvite = async (invite_id) => {

@@ -26,12 +26,12 @@ function DeleteProfile() {
             console.log(response)
             await logout()
             navigate('/')
-            alert('account deleted')
+            alert('Account deleted')
             //return response
         }
         catch (error) {
             console.log('Error', error)
-            alert("wrong password")
+            alert("Incorrect password")
             setDeletePassword('')
             //throw error
         }
@@ -45,13 +45,13 @@ function DeleteProfile() {
 
     return (
         <div>
-            <h3>Are you sure you want to delete?</h3>
+            <h3>Are you sure you want to delete your account? All data will be permanently lost</h3>
             <div>
                 <label>Type your password</label>
                 <input type='password' value={deletePassword || ''} onChange={e => setDeletePassword(e.target.value)} />
             </div>
-            <button onClick={() => deleteFunction()}>Yes</button>
-            <button onClick={() => returnFunction()}>return</button>
+            <button onClick={() => deleteFunction()}>Delete</button>
+            <button onClick={() => returnFunction()}>Cancel</button>
         </div>
 
     )

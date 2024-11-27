@@ -50,6 +50,7 @@ const ShowTimes = () => {
 
   useEffect(() => {
     const getGroups = async () => {
+      if (!user.id) return
       try {
         const response = await axios.get(url + "/user/group/" + user.id)
         setGroups(await response.data);
@@ -93,6 +94,7 @@ const ShowTimes = () => {
     }
   }
   const handleShowtimeAdd = async (showid, areaid, showdate, showtime) => {
+    if (!user.id) return
     if (!selectedGroup) {
       alert("please select group first")
       return

@@ -53,10 +53,8 @@ function ReviewsByUser({ id }) {
         }
     }
     function checkReviewButton(id_for_Button) {
-        console.log("id: " + id)
-        console.log("params id: " + params.id)
 
-        if (user.id === params.id) {
+        if (parseInt(user.id) === parseInt(params.id)) {
             return (
                 <button id={id_for_Button} onClick={() => deleteReview(id_for_Button)}>Delete</button>
             )
@@ -78,7 +76,6 @@ function ReviewsByUser({ id }) {
 
     return (
         <div>
-            <h3>Reviews by User</h3>
             {reviews.length === 0 ? (
                 <p>No reviews found for this user.</p>
             ) : (
