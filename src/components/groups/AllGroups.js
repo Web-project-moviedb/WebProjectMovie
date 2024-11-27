@@ -11,7 +11,7 @@ export default function AllGroups({ groups }) {
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        fetchGroupMemberships()
+        fetchGroupMemberships() // Get all groups for user
     }, [user.id])
 
     // Get all groups that user belongs to
@@ -34,9 +34,10 @@ export default function AllGroups({ groups }) {
     }
 
     //Add button by state of user in group
-    const selectButton = (group_id) => {
+    const selectButton = (group_id, owner_id) => {
         if (!user.id) return
         const group = userGroups.find(group => group.group_id === group_id)
+        if (user.id === owner_id) return <span>(Owner)</span>
         if (group) {
             if (group.pending === true) {
                 return <button type="button" onClick={() => handleLeaveButton(group.invite_id)}>Cancel Request</button> // Request sent
@@ -45,15 +46,13 @@ export default function AllGroups({ groups }) {
         }
         return <button type="button" onClick={() => handleJoinButton(group_id)}>Join Group</button> // User doesnt belong to group
     }
-    
 
     // Add user to group
     const handleJoinButton = async (group_id) => {
-        console.log("join group: ", group_id)
         try {
             await joinGroup(user.id, group_id)
             setUserGroups([...userGroups, { account_id: user.id, group_id: group_id, pending: true }])
-            fetchGroupMemberships()
+            fetchGroupMemberships() // Update user groups
         } catch (error) {
             setError('Failed to join group')
         }
@@ -61,11 +60,10 @@ export default function AllGroups({ groups }) {
 
     // Remove user from group
     const handleLeaveButton = async (invite_id) => {
-        console.log("leave group: ", invite_id)
         try {
             await removeUserFromGroup(invite_id)
             setUserGroups((prevGroups) => prevGroups.filter(group => group.invite_id !== invite_id))
-            fetchGroupMemberships()
+            fetchGroupMemberships() // Update user groups
         } catch (error) {
             setError('Failed to leave group')
         }
@@ -88,7 +86,7 @@ export default function AllGroups({ groups }) {
                         <tr key={group.id}>
                             <td><Link to={`/group/${group.id}`}> {group.group_name} </Link></td>
                             <td>{group.description}</td>
-                            <td>{selectButton(group.id)}</td>
+                            <td>{selectButton(group.id, group.owner_id)}</td>
                         </tr>
                     ))}
                 </tbody>

@@ -73,7 +73,6 @@ function ReviewsByUser({ id }) {
 
     return (
         <div>
-            <h3>Reviews by User</h3>
             {reviews.length === 0 ? (
                 <p>No reviews found for this user.</p>
             ) : (

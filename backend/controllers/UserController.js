@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcrypt'
-import { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, deleteInvite } from '../models/User.js'
+import { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, deleteInvite, updateInvite } from '../models/User.js'
 import { ApiError } from '../helpers/ApiError.js'
 import jwt from 'jsonwebtoken'
 

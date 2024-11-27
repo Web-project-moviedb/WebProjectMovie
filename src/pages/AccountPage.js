@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { useParams, Link } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
 import ReviewsByUser from '../components/reviews/ReviewsByUser.js'
+import { MainHeader, SectionHeader } from "../components/Header.js"
 
 import axios from "axios"
 
@@ -15,6 +16,7 @@ function ProfilePage() {
     const [error, setError] = useState(null)  // state to handle errors
     const [favorites, setFavorites] = useState([])
     const [groups, setGroups] = useState([])
+
     useEffect(() => {
 
         const fetchFavoritesById = async (id) => {
@@ -44,8 +46,6 @@ function ProfilePage() {
                 const data = await fetchFavoritesById(id)  // fetch reviews
                 if (data) {
                     setFavorites(data)
-                    console.log("data: " + data)
-                    console.log("favorites:" + favorites)
                 }
             } catch (error) {
                 setError(error.message)
@@ -57,7 +57,6 @@ function ProfilePage() {
         const getGroups = async () => {
             try {
                 const data = await fetchGroupsById(id)  // fetch reviews
-                console.log(data)
                 setGroups(data)
                 return data
             } catch (error) {
@@ -76,7 +75,7 @@ function ProfilePage() {
     const checkUserIdforDelete = () => {
         if (parseInt(user.id) === parseInt(id)) {
             return (
-                <Link to="/delete">delete my profile</Link>
+                <Link to="/delete">Delete account</Link>
             )
         }
         else {
@@ -91,7 +90,6 @@ function ProfilePage() {
         try {
             const response = await axios.delete(url + "/Favorites/" + id)
             setFavorites(favorites.filter(a => a.id !== id))
-            console.log(response)
         }
         catch (error) {
             console.error('Error', error)
@@ -140,11 +138,8 @@ function ProfilePage() {
 
 
     function ProfileFavoriteList({ favorites }) {
-        console.log(favorites)
         return (
             <div>
-
-                <h3> These are my favorites</h3>
                 {favorites.length === 0 ? (
                     <p>No favorites found for this user</p>
                 ) : (
@@ -154,11 +149,8 @@ function ProfilePage() {
                                 <h4>{favorite.movie_name}</h4>
                                 {checkFavoriteButton(favorite.id)}
                             </li>
-
                         ))
                         }
-
-
                     </ul>
                 )}
             </div >
@@ -168,7 +160,6 @@ function ProfilePage() {
     function ProfileGroupList({ groups }) {
         return (
             <div>
-                <h3>These are my groups</h3>
                 {groups.length === 0 ? (
                     <p>No groups for this user</p>
                 ) : (
@@ -178,11 +169,8 @@ function ProfilePage() {
                                 <h4>{group.group_name}</h4>
                                 {checkGroupButton(group.id)}
                             </li>
-
                         ))
                         }
-
-
                     </ul>
                 )}
             </div>
@@ -199,8 +187,12 @@ function ProfilePage() {
     }
     return (
         <div>
+            <MainHeader text='Profile' /> {/* Add profilename to present this as eg "Profilename Profile" */}
+            <SectionHeader text='Reviews' />
             <ReviewsByUser id={id} />
+            <SectionHeader text='Favorites' />
             <ProfileFavoriteList favorites={favorites} />
+            <SectionHeader text='Groups' />
             <ProfileGroupList groups={groups} />
             {checkUserIdforDelete()}
         </div>

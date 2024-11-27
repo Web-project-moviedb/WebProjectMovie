@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react"
 import AllGroups from '../components/groups/AllGroups.js'
-import { MainHeader } from '../components/Header.js'
-import { fetchAllGroups } from "../utils/groupFunctions.js"
+import { MainHeader, SectionHeader } from '../components/Header.js'
+import { createGroup, fetchAllGroups } from "../utils/groupFunctions.js"
+import CreateGroupForm from "../components/groups/CreateGroupForm.js"
 
 /* All users can view groups page
 Groups page contains all the created groups
 Only registered and logged in users can enter to group page
-Registered users can send join request to group
+Registered users can send join, cancel or leave to group
 */
 
 export default function Groups() {
@@ -28,6 +29,12 @@ export default function Groups() {
         getGroups()
     }, [setGroups])
 
+    // Create group
+    const handleCreateGroup = async (groupName, groupDescription, userId) => {
+        await createGroup(groupName, userId, groupDescription)
+        getGroups() // Refresh the groups
+    }
+
     if (error) {
         return <div>{error}</div>
     }
@@ -36,6 +43,8 @@ export default function Groups() {
         <div>
             <MainHeader text={'Groups'} />
             <AllGroups groups={groups} />
+            <SectionHeader text={'Create Group'} />
+            <CreateGroupForm onCreateGroup={handleCreateGroup} />
         </div>
     )
 }

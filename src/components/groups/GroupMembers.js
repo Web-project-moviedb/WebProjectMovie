@@ -1,18 +1,20 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 
-export default function GroupMembers({ groupUsers, isOwner, onRemoveUser }) {
-    console.log("listing users")
+export default function GroupMembers({ groupUsers, isOwner, ownerId, onRemoveUser, onAcceptUser }) {
     return (
         <>
             <ul> {groupUsers.map((user) => (
                 <li key={user.account_id} >
                     {user.pending ? (
-                        <span>{user.uname} (Pending)</span>
+                        <Link to={`/profile/${user.account_id}`}>{user.uname} (Pending) </Link>
                     ) : (
-                        <Link to={`/profile/${user.account_id}`}>{user.uname}</Link>
+                        <Link to={`/profile/${user.account_id}`}>{user.uname} </Link>
                     )}
-                    {isOwner && !user.pending && <button type='button' onClick={() => onRemoveUser(user.account_id)}>Remove</button>}
+                    {isOwner && user.account_id !== ownerId && !user.pending && <button type='button' onClick={() => onRemoveUser(user.account_id)}>Remove</button>}
+                    {isOwner && user.pending && 
+                        <button type='button' onClick={() => onRemoveUser(user.account_id)}>Decline</button>}
+                    {isOwner && user.pending && <button type='button' onClick={() => onAcceptUser(user.account_id)}>Accept</button>}
                 </li>
             ))}
             </ul>
