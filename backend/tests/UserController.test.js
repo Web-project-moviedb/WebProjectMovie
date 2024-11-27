@@ -5,9 +5,9 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const base_url = process.env.BACKEND_URL + '/user'
-console.log("Base URL: ", base_url)
+console.log("Base URL for user tests: ", base_url)
 
-// note: custom errror messages in UserController.js must match the test error messages exactly
+// note: custom error messages in UserController.js must match the test error messages exactly
 // note: tests that SHOULD return an error must be in a try-catch block because axios will automatically throw an error and terminate the test if the status code is not 2xx
 
 describe('POST register account', () => {
@@ -166,5 +166,58 @@ describe('DELETE delete account', () => {
 
 })
 
-// describe('POST login', () => {})
-//describe('XX logout', () => {})
+describe('POST login', () => {
+
+    const name = 'LoginTest'
+    const pword = 'LoginTest123'
+
+    before(async () => {
+        await initializeTestDB()
+        await insertTestUser(name, pword)
+    })
+
+    it ('should not login with nonexistent username', async () => {
+        try {
+            const response = await axios.post(base_url + '/login', {
+                username: 'Nonexistent',
+                password: pword
+            })
+            expect(response.status).to.equal(401)
+            expect(response.data).to.be.an('object')
+            expect(response.data).to.have.property('error', 'Invalid username or password')
+        } catch (error) {
+            // console.error('Error:', error.response ? error.response.data : error.message)
+        }
+    })
+
+    it ('should not login with incorrect password', async () => {
+        try {
+            const response = await axios.post(base_url + '/login', {
+                username: name,
+                password: 'Incorrect'
+            })
+            expect(response.status).to.equal(401)
+            expect(response.data).to.be.an('object')
+            expect(response.data).to.have.property('error', 'Invalid username or password')
+        } catch (error) {
+            // console.error('Error:', error.response ? error.response.data : error.message)
+        }
+    })
+
+    it ('should login with correct username and password', async () => {
+        const response = await axios.post(base_url + '/login', {
+            username: name,
+            password: pword
+        })
+        const data = response.data
+        expect(response.status).to.equal(200)
+        expect(data).to.be.an('object')
+        expect(data).to.include.all.keys('id', 'username', 'token')
+    })
+
+})
+
+// NOTE: to run backend tests:
+// - backend must be running in test mode (`npm run testStart` in backend directory in terminal)
+// - then run `npm run test` in the backend directory in another terminal
+// - all backend tests will run and output to the test terminal
