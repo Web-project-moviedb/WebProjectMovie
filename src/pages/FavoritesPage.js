@@ -24,6 +24,7 @@ function FavoritesPage() {
                 setUserName(data[0])
             } catch (error) {
                 setError("Could not load favorites")
+                console.log("Could not load favorites", error)
             } finally {
                 setLoading(false)
             }
@@ -32,23 +33,25 @@ function FavoritesPage() {
         fetchFavorites()
     }, [id])
 
-    return (
-        <div>
-
-            <h3 key={userName.id}>{userName.uname}{" "}'s Favorites</h3>
-            {loading && <p>Loading...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {favorites.length > 0 ? (
-                <ul>
-                    {favorites.map((fav) => (
-                        <li key={fav.id}>{fav.movie_name}</li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No favorites found for this user</p>
-            )}
-        </div>
-    )
+    if(favorites.length > 0){
+        return (
+            <div>
+                <h3 key={userName.id}>{userName.uname}'s Favorites</h3>
+                {loading && <p>Loading...</p>}
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                    <ul>
+                        {favorites.map((fav) => (
+                            <li key={fav.id}>{fav.movie_name}</li>
+                        ))}
+                    </ul>
+            </div>
+        )
+    }else{
+        return(
+            <div>
+                <p>No favorites found for this user</p>  
+            </div>
+        )
+    }
 }
-
 export default FavoritesPage;

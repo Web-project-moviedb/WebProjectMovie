@@ -1,6 +1,6 @@
 import { response } from 'express'
 import { ApiError } from '../helpers/ApiError.js'
-import { selectAllFavoritesByUser, insertFavorite, deleteFavorite, selectAllUsersToFavorite } from '../models/Favorite.js'
+import { selectAllFavoritesByUser, insertFavorite, deleteFavorite } from '../models/Favorite.js'
 import { pool } from '../helpers/db.js'
 
 const getAllFavoritesByUser = async (req, res, next) => {
@@ -13,6 +13,7 @@ const getAllFavoritesByUser = async (req, res, next) => {
     }
     catch (error) {
         console.log("get all favorites by user error: " + error)
+        return next(error)
     }
 }
 
@@ -37,18 +38,5 @@ const removeFavorite = async (req, res, next) => {
     }
 }
 
-const getAllUsersToFavorite = async (req, res, next) => {
-    try {
-        const response = await selectAllUsersToFavorite()
-        if (!response.rows.length === 0) {
-            return res.status(404).json({ message: 'No users found' })
-        }
-        return res.status(200).json(response.rows)
-    } catch (error) {
-        console.log(error)
-        return next(error)
-    }
 
-}
-
-export { getAllFavoritesByUser, postFavorite, removeFavorite, getAllUsersToFavorite }
+export { getAllFavoritesByUser, postFavorite, removeFavorite }

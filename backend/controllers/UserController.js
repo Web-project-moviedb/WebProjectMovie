@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcrypt'
-import { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, deleteInvite } from '../models/User.js'
+import { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, deleteInvite, selectAllUsersToMembers } from '../models/User.js'
 import { ApiError } from '../helpers/ApiError.js'
 import jwt from 'jsonwebtoken'
 
@@ -117,5 +117,20 @@ const declineInvite = async (req, res, next) => {
     }
 }
 
+// Member list
+const getAllUsersToMembers = async (req, res, next) => {
+    try {
+        const response = await selectAllUsersToMembers()
+        if (!response.rows.length === 0) {
+            return res.status(404).json({ message: 'No users found' })
+        }
+        return res.status(200).json(response.rows)
+    } catch (error) {
+        console.log(error)
+        return next(error)
+    }
 
-export { postRegistration, postLogin, deleteUser, getAllGroupsByUser, postInvite, acceptInvite, declineInvite }
+}
+
+
+export { postRegistration, postLogin, deleteUser, getAllGroupsByUser, postInvite, acceptInvite, declineInvite, getAllUsersToMembers }
