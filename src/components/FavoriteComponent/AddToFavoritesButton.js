@@ -7,12 +7,11 @@ const AddToFavoritesButton = ({ movie }) => {
     const { user, token } = UseUser()
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
-    const [delSuccess, setDelSuccess] = useState(false)
     const [isFavorites, setIsFavorites] = useState(false)
 
     useEffect(() => {
         const checkIfFavorite = async () => {
-            if (user && token){
+            
                 try{
                     const response = await fetch(`http://localhost:3001/favorites/${user.id}`)
                     if (!response.ok) {
@@ -26,7 +25,7 @@ const AddToFavoritesButton = ({ movie }) => {
                 } catch (error){
                     console.error('Error checking if favorite: ',error)
                 }
-            }
+            
         } 
 
         checkIfFavorite()
@@ -77,16 +76,24 @@ const AddToFavoritesButton = ({ movie }) => {
             setSuccess(false)
         }
     }
-
-    return (
-        <div>
-            <button onClick={handleAddFavorite} 
-            disabled={isFavorites}> {!isFavorites ? "Add To Favorites" : "Already in favorites"} </button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {success && <p style={{ color: "green" }}>Movie added to favorites!</p>}
-
-        </div>
-    )
+        if(token && user){
+        return (
+            <div>
+                <button onClick={handleAddFavorite} 
+                disabled={isFavorites}> {!isFavorites ? "Add To Favorites" : "Already in favorites"} </button>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                {success && <p style={{ color: "green" }}>Movie added to favorites!</p>}
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <button onClick={handleAddFavorite} disabled> Login to add in favorites </button>
+            </div>
+        )
+    }
+   
 }
+
 
 export default AddToFavoritesButton
