@@ -1,6 +1,7 @@
 
 import { fetchMovieById } from '../api/fetchTMDB'
 
+// this function replaces movie_id with movie name in reviews
 const fetchMovieNames = async (reviews) => {
     const moviesData = {}
     for (const review of reviews) {
@@ -13,7 +14,7 @@ const fetchMovieNames = async (reviews) => {
             }
         }
     }
-    return moviesData // Return the movies data
+    return moviesData // Return the movies data object with movie_id as key and movie name as value
 }
 
 // this returns a string of stars and empty stars based on integer 1-5
