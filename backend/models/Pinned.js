@@ -5,7 +5,7 @@ const selectPinnedMovies = async (group_id) => {
     return await pool.query('Select * from pinnedmovie where group_id = $1', [group_id])
 }
 const selectPinnedShow = async (group_id) => {
-    return await pool.query('Select * from pinnedshow where group_id = $1', [group_id])
+    return await pool.query('Select * from pinnedshow where group_id = $1 ORDER BY showdate ASC', [group_id])
 }
 
 const insertPinnedMovie = async (group_id, movie_id) => {

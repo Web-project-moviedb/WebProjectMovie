@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
 import ReviewsByUser from '../components/reviews/ReviewsByUser.js'
 import { MainHeader, SectionHeader } from "../components/Header.js"
@@ -17,7 +17,13 @@ function ProfilePage() {
     const [favorites, setFavorites] = useState([])
     const [groups, setGroups] = useState([])
 
+    const navigate = useNavigate()
+
     useEffect(() => {
+
+        if (!user.id || user.id !== parseInt(id)) {
+            navigate('/error')
+        }
 
         const fetchFavoritesById = async (id) => {
             try {
@@ -69,7 +75,7 @@ function ProfilePage() {
         //getReviews()
         getFavorites()
         getGroups()
-    }, [id])
+    }, [id, user.id, navigate])
 
 
     const checkUserIdforDelete = () => {
@@ -88,7 +94,7 @@ function ProfilePage() {
 
     const deleteFavorite = async (id) => {
         try {
-            const response = await axios.delete(url + "/favorites/" + id)
+            //const response = await axios.delete(url + "/favorites/" + id)
             setFavorites(favorites.filter(a => a.id !== id))
         }
         catch (error) {

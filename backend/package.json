@@ -4,9 +4,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "testStart": "cross-env NODE_ENV=test nodemon index.js",
-    "devStart": "cross-env NODE_ENV=development nodemon index.js",
-    "test": "cross-env NODE_ENV=test mocha tests/*.test.js"
+    "testStart": "NODE_ENV=test nodemon index.js || cross-env NODE_ENV=test nodemon index.js",
+    "devStart": "NODE_ENV=development nodemon index.js || cross-env NODE_ENV=development nodemon index.js",
+    "test": "NODE_ENV=test mocha tests/*.test.js || cross-env NODE_ENV=test mocha tests/*.test.js"
   },
   "keywords": [],
   "author": "",

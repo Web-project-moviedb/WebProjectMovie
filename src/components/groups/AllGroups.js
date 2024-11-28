@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import { Link } from 'react-router-dom'
 import { fetchAllGroupsByUser, joinGroup, removeUserFromGroup } from "../../utils/groupFunctions.js"
 import { UseUser } from "../../context/UseUser.js"
@@ -10,12 +10,8 @@ export default function AllGroups({ groups }) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
-    useEffect(() => {
-        fetchGroupMemberships() // Get all groups for user
-    }, [user.id])
-
     // Get all groups that user belongs to
-    const fetchGroupMemberships = async () => {
+    const fetchGroupMemberships = useCallback(async () => {
         try {
             if (!user.id) return
             const response = await fetchAllGroupsByUser(user.id) // Get all groups for user 
@@ -31,7 +27,7 @@ export default function AllGroups({ groups }) {
         } finally {
             setLoading(false)
         }
-    }
+    }, [user.id])
 
     //Add button by state of user in group
     const selectButton = (group_id, owner_id) => {
@@ -69,6 +65,10 @@ export default function AllGroups({ groups }) {
         }
     }
 
+    useEffect(() => {
+        fetchGroupMemberships() // Get all groups for user
+    }, [groups, fetchGroupMemberships])
+
     if (loading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
 
@@ -84,7 +84,14 @@ export default function AllGroups({ groups }) {
                 <tbody>
                     {groups.map((group) => (
                         <tr key={group.id}>
-                            <td><Link to={`/group/${group.id}`}> {group.group_name} </Link></td>
+                            <td>
+                                {/* If user belongs to group, make group name a link */}
+                                {userGroups.some(userGroup => userGroup.group_id === group.id && !userGroup.pending) ? (
+                                    <Link to={`/group/${group.id}`}>{group.group_name}</Link>
+                                ) : (
+                                    group.group_name
+                                )}
+                            </td>
                             <td>{group.description}</td>
                             <td>{selectButton(group.id, group.owner_id)}</td>
                         </tr>

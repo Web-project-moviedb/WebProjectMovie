@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
 import { fetchMovieById } from '../api/fetchTMDB.js'
@@ -7,6 +7,7 @@ import { fetchGroupMembers, fetchAllGroupsByUser, removeUserFromGroup, deleteGro
 import GroupDescription from '../components/groups/GroupDescription.js'
 import GroupMembers from '../components/groups/GroupMembers.js'
 import GroupMovies from '../components/groups/GroupMovies.js'
+import GroupShowtimes from '../components/groups/GroupShowtimes.js'
 
 /* Group page
 Only registered and logged in users can enter to group page
@@ -14,7 +15,6 @@ Group page contains group details, members and pinned movies
 Group owner can delete group, remove users and movies from group
 Group owner can accept or decline join invitations from users
 */
-
 
 export default function Group() {
     const { user } = UseUser()
@@ -28,6 +28,14 @@ export default function Group() {
     const navigate = useNavigate()
 
     useEffect(() => {
+        // Check that data is loaded
+        if(!user.id ||groupUsers.length === 0) return
+
+        // If user is not in group or not logged in, redirect to error page
+        if (!user.id || !groupUsers.some(groupUser => groupUser.account_id === user.id)) {
+            navigate('/error')
+        }
+
         // Check if group owner and set status
         const checkOwnership = async () => {
             if (user.id) {
@@ -43,17 +51,10 @@ export default function Group() {
             }
         }
         checkOwnership()
-        getGroupData()
-        getGroupMembers()
-        getGroupMovies()
-    }, [id, user.id])
-
-    useEffect(() => {
-        
-    }, [])
+    }, [id, user.id, groupUsers, navigate])
 
     // Get group details
-    const getGroupData = async () => {
+    const getGroupData = useCallback(async () => {
         try {
             const response = await fetchGroupById(id)
             setGroup(response)
@@ -61,7 +62,36 @@ export default function Group() {
             console.log(error)
             setError('Failed to load group data')
         }
-    }
+    }, [id])
+
+    // Get all users in group
+    const getGroupMembers = useCallback(async () => {
+        try {
+            const response = await fetchGroupMembers(id)
+            setGroupUsers(response)
+        } catch (error) {
+            console.log(error)
+            setError('Failed to load group members')
+        }
+    }, [id])
+
+    // Get all movie id's in group and fetch movie details
+    const getGroupMovies = useCallback(async () => {
+        try {
+            const response = await fetchGroupMovies(id)
+            const movieDetails = await Promise.all(
+                response.data.map(async (movie) => {
+                    const movieData = await fetchMovieById(movie.movie_id)
+                    const { id, title } = movieData
+                    return { id, title }
+                })
+            )
+            setMovies(movieDetails)
+        } catch (error) {
+            console.log(error)
+            setError('Failed to load movies')
+        }
+    }, [id])
 
     // Delete group
     const handleDeleteGroup = async () => {
@@ -71,17 +101,6 @@ export default function Group() {
         } catch (error) {
             console.log(error)
             setError('Failed to delete group')
-        }
-    }
-
-    // Get all users in group
-    const getGroupMembers = async () => {
-        try {
-            const response = await fetchGroupMembers(id)
-            setGroupUsers(response)
-        } catch (error) {
-            console.log(error)
-            setError('Failed to load group members')
         }
     }
 
@@ -111,31 +130,17 @@ export default function Group() {
         }
     }
 
-
-    // Get all movie id's in group and fetch movie details
-    const getGroupMovies = async () => {
-        try {
-            const response = await fetchGroupMovies(id)
-            const movieDetails = await Promise.all(
-                response.data.map(async (movie) => {
-                    const movieData = await fetchMovieById(movie.movie_id)
-                    const { id, title } = movieData
-                    return { id, title }
-                })
-            )
-            setMovies(movieDetails)
-        } catch (error) {
-            console.log(error)
-            setError('Failed to load movies')
-        }
-    }
-
     // Handle remove movie from group
     const handleRemoveMovie = async (movieId) => {
         await deletePinnedMovie(movieId, id)
         getGroupMovies()    // Refresh movies
     }
 
+    useEffect(() => {
+        getGroupData()
+        getGroupMembers()
+        getGroupMovies()
+    }, [getGroupData, getGroupMembers, getGroupMovies])
 
     if (error) {
         return <h3>{error}</h3>
@@ -151,6 +156,8 @@ export default function Group() {
             <SectionHeader text={'Movies'} />
             <GroupMovies movies={movies} onRemoveMovie={handleRemoveMovie} />
             {/* Pinned showtimes */}
+            <SectionHeader text={'Showtimes'} />
+            <GroupShowtimes group_id={id} />
             {isOwner && <button type='button' onClick={handleDeleteGroup}>Delete Group</button>}
         </div >
     )
