@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { initializeTestDB, insertTestUser, getToken } from '../helpers/test.js'
+import { initializeTestDB, insertTestUser, getUserByUsername } from '../helpers/test.js'
 import axios from 'axios'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -127,17 +127,20 @@ describe('DELETE delete account', () => {
 
     const name = 'DeleteTest'
     const pword = 'DeleteTest123'
+    let userId  // let instead of const because value will be assigned in before block
 
     before(async () => {
         await initializeTestDB()
         await insertTestUser(name, pword)
+        const user = await getUserByUsername(name)
+        userId = user.id
     })
 
     it('should not delete an account with an invalid password', async () => {
       try {
         const response = await axios.delete(base_url + '/delete', {
             data: {
-                id: 8, // this is always 9 bc of test structure
+                id: userId,
                 username: name,
                 password: 'InvalidPassword' 
             }
@@ -153,7 +156,7 @@ describe('DELETE delete account', () => {
     it('should delete an account with correct password', async () => {
         const response = await axios.delete(base_url + '/delete', {
             data: {
-                id: 8, // this is always 8 bc of test structure
+                id: userId,
                 username: name,
                 password: pword
             }
@@ -161,7 +164,7 @@ describe('DELETE delete account', () => {
         expect(response.status).to.equal(200)
         expect(response.data).to.be.an('object')
         expect(response.data.rows).to.be.an('array')
-        expect(response.data.rows[0]).to.have.property('id', 8)
+        expect(response.data.rows[0]).to.have.property('id', userId)
     })
 
 })
