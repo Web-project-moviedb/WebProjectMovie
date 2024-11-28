@@ -47,7 +47,6 @@ const AddToFavoritesButton = ({ movie }) => {
                     movie_name: movie.title,
                 }),
             })
-    console.log(response)
             if (!response.ok) {
                 throw new Error("Failed to add favorite")
             }

@@ -5,6 +5,8 @@ import { fetchMovieById } from '../api/fetchTMDB.js'
 import MovieDetails from '../components/movies/MovieDetails.js'
 import ReviewByMovie from '../components/reviews/ReviewByMovie.js'
 import LeaveReview from '../components/reviews/LeaveReview.js'
+import AddMovieToGroup from '../components/groups/AddMovieToGroup.js'
+import AddToFavoritesButton from '../components/FavoriteComponent/AddToFavoritesButton.js'
 
 function Movie() {
 
@@ -67,6 +69,8 @@ function Movie() {
     return (
         <div>
             {movie && <MovieDetails movie={movie} />}   {/* pass movie data to MovieDetails */}
+            <AddToFavoritesButton movie={movie} />   {/* pass movie data to AddToFavoritesButton */}
+            <AddMovieToGroup movie={movie} />   {/* pass movie data to AddMovieToGroup */}
             <LeaveReview movieId={id} reviews={reviews} refreshReviews={refreshReviews}/>   {/* pass along movie id refreshReviews function to LeaveReview*/}
             {reviews.length > 0 && <ReviewByMovie reviews={reviews} />}     {/* pass review data to ReviewByMovie */}
         </div>

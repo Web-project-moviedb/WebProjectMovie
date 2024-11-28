@@ -1,16 +1,17 @@
 import { hash, compare } from 'bcrypt'
-import { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, deleteInvite, selectAllUsersToMembers } from '../models/User.js'
+import { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, deleteInvite, updateInvite, selectAllUsersToMembers } from '../models/User.js'
 import { ApiError } from '../helpers/ApiError.js'
 import jwt from 'jsonwebtoken'
 
 const { sign } = jwt
 
 // Add user to database
+// NOTE: if error messages are changed, make sure to update the tests in UserController.test.js to match!!
 const postRegistration = async (req, res, next) => {
     try {
         // Username validation
         if (!req.body.username || req.body.username.length === 0) return next(new ApiError('Invalid username', 400))    // Input for username is empty
-        if (!req.body.username.length > 50) return next(new ApiError('Username is too long', 400))    // Input for username is too long
+        if (req.body.username.length > 50) return next(new ApiError('Username is too long', 400))    // Input for username is too long
         if (/\s/.test(req.body.username)) return next(new ApiError('Username cannot contain spaces', 400))    // Username contains spaces
 
         // Password validation
@@ -41,6 +42,7 @@ const createUserObject = (id, username, token = undefined) => {
 }
 
 // Login
+// NOTE: if error messages are changed, make sure to update the tests in UserController.test.js to match!!
 const postLogin = async (req, res, next) => {
     const invalid_credentials_message = 'Invalid username or password'
     try {
@@ -68,8 +70,9 @@ const getAllGroupsByUser = async (req, res, next) => {
 }
 
 // Delete user
+// NOTE: if error messages are changed, make sure to update the tests in UserController.test.js to match!!
 const deleteUser = async (req, res, next) => {
-    const invalid_password_message = 'password was not correct'
+    const invalid_password_message = 'Incorrect password'
 
     try {
         const id = parseInt(req.body.id)

@@ -12,8 +12,8 @@ const insertPinnedMovie = async (group_id, movie_id) => {
     return await pool.query('insert into pinnedmovie (group_id, movie_id) values ($1, $2) returning *', [group_id, movie_id])
 }
 
-const insertPinnedShow = async (group_id, movie_id) => {
-    return await pool.query('insert into pinnedshow (group_id, movie_id) values ($1, $2) returning *', [group_id, movie_id])
+const insertPinnedShow = async (group_id, movie_id, area_id, showdate) => {
+    return await pool.query('insert into pinnedshow (group_id, movie_id, area_id, showdate) values ($1, $2, $3, $4) returning *', [group_id, movie_id, area_id, showdate])
 }
 
 const deletePinnedMovie = async (pinned_id) => {

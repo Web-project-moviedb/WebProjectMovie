@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import fetchFinnkinoData from '../api/fetchFinnkino.js';
+import { fetchFinnkinoData } from '../api/fetchFinnkino.js';
 import axios from 'axios'
 
 import { UseUser } from '../context/UseUser.js'
@@ -49,14 +49,11 @@ const ShowTimes = () => {
   const [selectedGroup, setSelectedGroup] = useState('')
 
   useEffect(() => {
-    console.log("id is " + user.id)
     const getGroups = async () => {
+      if (!user.id) return
       try {
         const response = await axios.get(url + "/user/group/" + user.id)
-        console.log("response data: " + response.data)
         setGroups(await response.data);
-        console.log("groups value: " + groups)
-        groups.forEach((value) => console.log(value))
       }
       catch (error) {
         console.log(error)
@@ -72,10 +69,8 @@ const ShowTimes = () => {
     setError(null)
 
     const formattedDate = dt.split('-').reverse().join('.') //YYYY-MM-DD -> DD.MM.YYYY, needed for getting right day from API
-
     try {
       const data = await fetchFinnkinoData(areaId, formattedDate)
-      console.log('Fetched data:', data);
       setShows(data)
       setFilteredShows(data)
     } catch (error) {
@@ -98,9 +93,27 @@ const ShowTimes = () => {
       setError(null)
     }
   }
-  const handleShowtimeAdd = async () => {
-    // const response = await axios.post()
-    console.log("in handle showtime" + selectedGroup)
+  const handleShowtimeAdd = async (showid, areaid, showdate, showtime) => {
+    if (!user.id) return
+    if (!selectedGroup) {
+      alert("please select group first")
+      return
+    }
+    const showdateFormat = showdate.split(':').reverse().join('-')
+    const showtimeFormat = showtime.toString()
+    const showFullDate = [showdateFormat, showtimeFormat].join('T')
+    const posturl = url + '/pinned/showtime/' + selectedGroup
+    const response = await axios({
+      method: 'post',
+      url: posturl,
+      headers: {},
+      data: {
+        movie_id: `${showid}`,
+        area_id: `${areaid}`,
+        date: `${showFullDate}`
+      }
+    })
+    return response
   }
 
 
@@ -169,13 +182,14 @@ const ShowTimes = () => {
                   id='group'
                   value={selectedGroup}
                   onChange={(e) => setSelectedGroup(e.target.value)}>
+                  <option value=""> Select group</option>
                   {groups.map((group) => (
-                    <option key={group.id} value={group.id}>
+                    <option key={group.id} value={group.user_group_id}>
                       {group.group_name}
                     </option>
                   ))}
                 </select>
-                <button type="button" onClick={handleShowtimeAdd}>add</button>
+                <button type="button" onClick={() => handleShowtimeAdd(show.showId, show.areaId, show.showDate, show.showTime)}>add</button>
               </td>
             </tr>
           ))}

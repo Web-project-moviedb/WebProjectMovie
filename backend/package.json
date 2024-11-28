@@ -3,10 +3,11 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "devStart": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "testStart": "NODE_ENV=test nodemon index.js || cross-env NODE_ENV=test nodemon index.js",
+  "devStart": "NODE_ENV=development nodemon index.js || cross-env NODE_ENV=development nodemon index.js",
+  "test": "NODE_ENV=test mocha tests/*.test.js || cross-env NODE_ENV=test mocha tests/*.test.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",

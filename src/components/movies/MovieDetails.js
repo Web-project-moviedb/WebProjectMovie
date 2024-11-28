@@ -45,8 +45,6 @@ function MovieDetails({ movie }) {
                     <li key={genre.id}>{genre.name}</li>    // use the genre id as the key, but display the genre name
                 ))}
             </ul>
-            <AddToFavoritesButton movie={movie}/>
-            <p>Add drop-down menu and button to pin to group here!</p>
         </div>
     );
 }

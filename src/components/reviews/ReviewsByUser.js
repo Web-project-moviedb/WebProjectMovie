@@ -4,9 +4,11 @@ import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import axios from "axios"
 import { fetchMovieNames, renderStars, formatTimestamp } from "../../utils/helperFunctions.js"
+import { UseUser } from '../../context/UseUser.js'
 
 
 function ReviewsByUser({ id }) {
+    const { user } = UseUser()
     const [reviews, setReviews] = useState([]) // State to store user reviews
     const [movies, setMovies] = useState({}) // State to store movie names
     const [loading, setLoading] = useState(true) // State to track loading
@@ -51,7 +53,8 @@ function ReviewsByUser({ id }) {
         }
     }
     function checkReviewButton(id_for_Button) {
-        if (id === params.id) {
+
+        if (parseInt(user.id) === parseInt(params.id)) {
             return (
                 <button id={id_for_Button} onClick={() => deleteReview(id_for_Button)}>Delete</button>
             )
@@ -73,7 +76,6 @@ function ReviewsByUser({ id }) {
 
     return (
         <div>
-            <h3>Reviews by User</h3>
             {reviews.length === 0 ? (
                 <p>No reviews found for this user.</p>
             ) : (

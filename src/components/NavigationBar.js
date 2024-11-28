@@ -18,7 +18,6 @@ const NavigationBar = () => {
         }
     }, [token])
     function logoutFunction() {
-        console.log("logout function")
         setLogged(false)
         logout()
         navigate('/')
