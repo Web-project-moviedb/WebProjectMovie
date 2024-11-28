@@ -30,47 +30,16 @@ describe('POST register account', () => {
         expect(data).to.include.all.keys('id')
     })
 
-    it ('should not create an account with < 8 character password', async() => {
+    it ('should not create an account with spaces in username', async() => {
         try {
             const response = await axios.post(base_url + '/register', {
-                username: name,
-                password: 'Short1'
+                username: 'name with spaces',
+                password: pword
             })
             const data = response.data
             expect(response.status).to.equal(400)
             expect(data).to.be.an('object')
-            expect(data).to.have.property('error', 'Password length must be at least 8 characters')
-        } catch (error) {
-            // console.error('Error:', error.response ? error.response.data : error.message)
-        }
-    })
-
-    it ('should not create an account without capital letters in password', async() => {
-        try {
-            const response = await axios.post(base_url + '/register', {
-                username: name,
-                password: 'nocaps123'
-            })
-    
-            const data = response.data
-            expect(response.status).to.equal(400)
-            expect(data).to.be.an('object')
-            expect(data).to.have.property('error', 'Password must include at least one uppercase letter and one number')
-        } catch (error) {
-            // console.error('Error:', error.response ? error.response.data : error.message)
-        }
-    })
-
-    it ('should not create an account without numbers in password', async() => {
-        try {
-            const response = await axios.post(base_url + '/register', {
-                username: name,
-                password: 'Withoutnumbers'
-            })
-            const data = response.data
-            expect(response.status).to.equal(400)
-            expect(data).to.be.an('object')
-            expect(data).to.have.property('error', 'Password must include at least one uppercase letter and one number')
+            expect(data).to.have.property('error', 'Username cannot contain spaces')
         } catch (error) {
             // console.error('Error:', error.response ? error.response.data : error.message)
         }
@@ -116,6 +85,52 @@ describe('POST register account', () => {
             expect(response.status).to.equal(400)
             expect(data).to.be.an('object')
             expect(data).to.have.property('error', 'Username already exists')
+        } catch (error) {
+            // console.error('Error:', error.response ? error.response.data : error.message)
+        }
+    })
+
+    it ('should not create an account with < 8 character password', async() => {
+        try {
+            const response = await axios.post(base_url + '/register', {
+                username: name,
+                password: 'Short1'
+            })
+            const data = response.data
+            expect(response.status).to.equal(400)
+            expect(data).to.be.an('object')
+            expect(data).to.have.property('error', 'Password length must be at least 8 characters')
+        } catch (error) {
+            // console.error('Error:', error.response ? error.response.data : error.message)
+        }
+    })
+
+    it ('should not create an account without capital letters in password', async() => {
+        try {
+            const response = await axios.post(base_url + '/register', {
+                username: name,
+                password: 'nocaps123'
+            })
+    
+            const data = response.data
+            expect(response.status).to.equal(400)
+            expect(data).to.be.an('object')
+            expect(data).to.have.property('error', 'Password must include at least one uppercase letter and one number')
+        } catch (error) {
+            // console.error('Error:', error.response ? error.response.data : error.message)
+        }
+    })
+
+    it ('should not create an account without numbers in password', async() => {
+        try {
+            const response = await axios.post(base_url + '/register', {
+                username: name,
+                password: 'Withoutnumbers'
+            })
+            const data = response.data
+            expect(response.status).to.equal(400)
+            expect(data).to.be.an('object')
+            expect(data).to.have.property('error', 'Password must include at least one uppercase letter and one number')
         } catch (error) {
             // console.error('Error:', error.response ? error.response.data : error.message)
         }
