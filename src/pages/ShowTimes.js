@@ -53,7 +53,8 @@ const ShowTimes = () => {
       if (!user.id) return
       try {
         const response = await axios.get(url + "/user/group/" + user.id)
-        setGroups(await response.data);
+        const groups = response.data.filter(group => group.pending === false) // check that user is accepted to group
+        setGroups(groups);
       }
       catch (error) {
         console.log(error)

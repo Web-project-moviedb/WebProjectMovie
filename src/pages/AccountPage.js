@@ -122,10 +122,25 @@ function ProfilePage() {
         }
     }
 
-    function checkGroupButton(id_for_Button) {
+    function checkGroupButton(id_for_Button, owner_id, pending) {
+
         if (parseInt(user.id) === parseInt(id)) {
+
+            // Check if currently logger in user is owner of group
+            if (parseInt(user.id) === parseInt(owner_id)) {
+                return (
+                    <p> Owner</p>
+                )
+            }
+
+            // check if invite is currently pending
+            if (pending === true) {
+                return (
+                    <button id={id_for_Button} onClick={() => deleteGroup(id_for_Button)}>Cancel Request</button>
+                )
+            }
             return (
-                <button id={id_for_Button} onClick={() => deleteGroup(id_for_Button)}>Delete</button>
+                <button id={id_for_Button} onClick={() => deleteGroup(id_for_Button)}>Leave Group</button>
             )
         }
         else {
@@ -167,7 +182,7 @@ function ProfilePage() {
                         {groups.map((group) => (
                             <li key={group.id}>
                                 <h4>{group.group_name}</h4>
-                                {checkGroupButton(group.id)}
+                                {checkGroupButton(group.id, group.owner_id, group.pending)}
                             </li>
                         ))
                         }
