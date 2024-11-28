@@ -27,6 +27,7 @@ function ProfilePage() {
             catch (error) {
                 console.error('Error', error)
                 if (error.status === 404) {
+
                 }
                 //throw error
             }
@@ -99,9 +100,8 @@ function ProfilePage() {
     const deleteGroup = async (id) => {
 
         try {
-            //const response = await axios.delete(url + "/group/" + id)
+            const response = await axios.delete(url + "/user/invite/" + id)
             setGroups(groups.filter(a => a.id !== id))
-            console.log("no implimentation yet")
         }
         catch (error) {
             console.error('Error', error)
