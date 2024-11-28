@@ -3,7 +3,7 @@
 function ErrorPage() {
 
     return (
-        <h3> This is a Error Page</h3>
+        <h1>Not Found</h1>
     )
 }
 

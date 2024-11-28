@@ -170,4 +170,18 @@ const acceptInvite = async (invite_id) => {
     }
 }
 
-export { createGroup, fetchGroupMembers, fetchGroupById, fetchAllGroups, fetchGroupMovies, fetchAllGroupsByUser, joinGroup, removeUserFromGroup, deleteGroup, addMovieToGroup, deletePinnedMovie, acceptInvite }
+const deletePinnedShowtime = async (showtime_id) => {
+    try {
+        const response = await axios(url + '/pinned/showtime/' + showtime_id, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        return response
+    } catch (error) {
+        return error
+    }
+}
+
+export { createGroup, fetchGroupMembers, fetchGroupById, fetchAllGroups, fetchGroupMovies, fetchAllGroupsByUser, joinGroup, removeUserFromGroup, deleteGroup, addMovieToGroup, deletePinnedMovie, acceptInvite, deletePinnedShowtime }

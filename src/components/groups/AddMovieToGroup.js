@@ -40,7 +40,7 @@ export default function AddMovieToGroup({ movie }) {
     }
     return (
         <>
-        <SectionHeader text='Add Movie to Group' />
+        <SectionHeader text='Pin Movie to Group' />
             <label> 
                 <select value={selectedGroup} onChange={(e) => onGroupChange(e)}>
                     <option value=''>-- Select Group --</option>

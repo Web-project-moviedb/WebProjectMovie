@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
 import ReviewsByUser from '../components/reviews/ReviewsByUser.js'
 import { MainHeader, SectionHeader } from "../components/Header.js"
@@ -10,14 +10,20 @@ const url = process.env.REACT_APP_API_URL
 
 
 function ProfilePage() {
-    const { user } = UseUser()
+    const { user, token } = UseUser()
     const { id } = useParams()
     const [loading, setLoading] = useState(true)  // state to manage loading state
     const [error, setError] = useState(null)  // state to handle errors
     const [favorites, setFavorites] = useState([])
     const [groups, setGroups] = useState([])
 
+    const navigate = useNavigate()
+
     useEffect(() => {
+
+        if (!token ) {
+            navigate('/error')
+        }
 
         const fetchFavoritesById = async (id) => {
             try {
@@ -29,7 +35,6 @@ function ProfilePage() {
                 if (error.status === 404) {
 
                 }
-                //throw error
             }
         }
         const fetchGroupsById = async (id) => {
@@ -70,7 +75,7 @@ function ProfilePage() {
         //getReviews()
         getFavorites()
         getGroups()
-    }, [id])
+    }, [id,token, user.id, navigate])
 
 
     const checkUserIdforDelete = () => {
@@ -89,7 +94,7 @@ function ProfilePage() {
 
     const deleteFavorite = async (id) => {
         try {
-            const response = await axios.delete(url + "/favorites/" + id)
+            await axios.delete(url + "/favorites/" + id)
             setFavorites(favorites.filter(a => a.id !== id))
         }
         catch (error) {
@@ -100,7 +105,7 @@ function ProfilePage() {
     const deleteGroup = async (id) => {
 
         try {
-            const response = await axios.delete(url + "/user/invite/" + id)
+            await axios.delete(url + "/user/invite/" + id)
             setGroups(groups.filter(a => a.id !== id))
         }
         catch (error) {

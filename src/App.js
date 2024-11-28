@@ -82,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <LoginPage authenticationMode={AuthenticationMode.Register} />
+      },
+      {
+        path: "/error",
+        element: <ErrorPage />
       }
     ]
   }
