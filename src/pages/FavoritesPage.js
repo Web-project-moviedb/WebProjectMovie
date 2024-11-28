@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import FavoriteList from "../components/favorites/FavoriteList";
+
+const url = process.env.REACT_APP_API_URL
 
 function FavoritesPage() {
     const { id } = useParams() // Haetaan userId URL-osoitteesta
@@ -15,13 +18,13 @@ function FavoritesPage() {
             setError(null)
 
             try {
-                const response = await fetch(`http://localhost:3001/favorites/${id}`)
+                const response = await fetch(url + `/favorites/${id}`)
                 if (!response.ok) {
                     throw new Error("Failed to fetch favorites")
                 }
                 const data = await response.json()
                 setFavorites(data)
-                setUserName(data[0])
+                setUserName(data[0]?.uname || "No user found")
             } catch (error) {
                 setError("Could not load favorites")
                 console.log("Could not load favorites", error)
@@ -33,25 +36,13 @@ function FavoritesPage() {
         fetchFavorites()
     }, [id])
 
-    if(favorites.length > 0){
-        return (
-            <div>
-                <h3 key={userName.id}>{userName.uname}'s Favorites</h3>
-                {loading && <p>Loading...</p>}
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                    <ul>
-                        {favorites.map((fav) => (
-                            <li key={fav.id}>{fav.movie_name}</li>
-                        ))}
-                    </ul>
-            </div>
-        )
-    }else{
-        return(
-            <div>
-                <p>No favorites found for this user</p>  
-            </div>
-        )
-    }
+    return(
+        <FavoriteList
+            favorites = {favorites}
+            userName = {userName}
+            loading ={loading}
+            error = {error}>
+            </FavoriteList>
+    )
 }
 export default FavoritesPage;
