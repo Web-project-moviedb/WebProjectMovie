@@ -11,7 +11,7 @@ router.get('/group/:id', getAllGroupsByUser)
 // Invite routes. These should maybe be moved to a separate file or to group controller
 router.post('/invite', postInvite)
 router.put('/invite/:id', acceptInvite)
-router.delete('/invite:id', declineInvite)
+router.delete('/invite/:id', declineInvite)
 
 //members list
 router.get('/members', getAllUsersToMembers)
