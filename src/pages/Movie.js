@@ -6,7 +6,7 @@ import MovieDetails from '../components/movies/MovieDetails.js'
 import ReviewByMovie from '../components/reviews/ReviewByMovie.js'
 import LeaveReview from '../components/reviews/LeaveReview.js'
 import AddMovieToGroup from '../components/groups/AddMovieToGroup.js'
-import AddToFavoritesButton from '../components/FavoriteComponent/AddToFavoritesButton.js'
+import AddToFavoritesButton from '../components/favorites/AddToFavoritesButton.js'
 
 function Movie() {
 

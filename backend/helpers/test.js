@@ -27,4 +27,9 @@ const getToken = async (id) => {
     return sign({account: id}, key) // create a token with user id and secret key
 }
 
-export { initializeTestDB, insertTestUser, getToken }
+const getUserByUsername = async (username) => {
+    const result = await pool.query('SELECT * FROM account WHERE uname = $1', [username]);
+    return result.rows[0]; // uname is unique, so this will return the user object
+}
+
+export { initializeTestDB, insertTestUser, getToken, getUserByUsername }

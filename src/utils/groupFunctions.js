@@ -91,7 +91,7 @@ const joinGroup = async (userId, groupId) => {
 // Remove user from group
 const removeUserFromGroup = async (invite_id) => {
     try {
-        const response = await axios(url + '/user/invite' + invite_id, {
+        const response = await axios(url + '/user/invite/' + invite_id, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

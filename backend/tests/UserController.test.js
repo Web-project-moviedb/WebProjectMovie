@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { initializeTestDB, insertTestUser, getToken } from '../helpers/test.js'
+import { initializeTestDB, insertTestUser, getUserByUsername } from '../helpers/test.js'
 import axios from 'axios'
 import dotenv from 'dotenv'
 dotenv.config()
@@ -30,47 +30,16 @@ describe('POST register account', () => {
         expect(data).to.include.all.keys('id')
     })
 
-    it ('should not create an account with < 8 character password', async() => {
+    it ('should not create an account with spaces in username', async() => {
         try {
             const response = await axios.post(base_url + '/register', {
-                username: name,
-                password: 'Short1'
+                username: 'name with spaces',
+                password: pword
             })
             const data = response.data
             expect(response.status).to.equal(400)
             expect(data).to.be.an('object')
-            expect(data).to.have.property('error', 'Password length must be at least 8 characters')
-        } catch (error) {
-            // console.error('Error:', error.response ? error.response.data : error.message)
-        }
-    })
-
-    it ('should not create an account without capital letters in password', async() => {
-        try {
-            const response = await axios.post(base_url + '/register', {
-                username: name,
-                password: 'nocaps123'
-            })
-    
-            const data = response.data
-            expect(response.status).to.equal(400)
-            expect(data).to.be.an('object')
-            expect(data).to.have.property('error', 'Password must include at least one uppercase letter and one number')
-        } catch (error) {
-            // console.error('Error:', error.response ? error.response.data : error.message)
-        }
-    })
-
-    it ('should not create an account without numbers in password', async() => {
-        try {
-            const response = await axios.post(base_url + '/register', {
-                username: name,
-                password: 'Withoutnumbers'
-            })
-            const data = response.data
-            expect(response.status).to.equal(400)
-            expect(data).to.be.an('object')
-            expect(data).to.have.property('error', 'Password must include at least one uppercase letter and one number')
+            expect(data).to.have.property('error', 'Username cannot contain spaces')
         } catch (error) {
             // console.error('Error:', error.response ? error.response.data : error.message)
         }
@@ -121,23 +90,72 @@ describe('POST register account', () => {
         }
     })
 
+    it ('should not create an account with < 8 character password', async() => {
+        try {
+            const response = await axios.post(base_url + '/register', {
+                username: name,
+                password: 'Short1'
+            })
+            const data = response.data
+            expect(response.status).to.equal(400)
+            expect(data).to.be.an('object')
+            expect(data).to.have.property('error', 'Password length must be at least 8 characters')
+        } catch (error) {
+            // console.error('Error:', error.response ? error.response.data : error.message)
+        }
+    })
+
+    it ('should not create an account without capital letters in password', async() => {
+        try {
+            const response = await axios.post(base_url + '/register', {
+                username: name,
+                password: 'nocaps123'
+            })
+    
+            const data = response.data
+            expect(response.status).to.equal(400)
+            expect(data).to.be.an('object')
+            expect(data).to.have.property('error', 'Password must include at least one uppercase letter and one number')
+        } catch (error) {
+            // console.error('Error:', error.response ? error.response.data : error.message)
+        }
+    })
+
+    it ('should not create an account without numbers in password', async() => {
+        try {
+            const response = await axios.post(base_url + '/register', {
+                username: name,
+                password: 'Withoutnumbers'
+            })
+            const data = response.data
+            expect(response.status).to.equal(400)
+            expect(data).to.be.an('object')
+            expect(data).to.have.property('error', 'Password must include at least one uppercase letter and one number')
+        } catch (error) {
+            // console.error('Error:', error.response ? error.response.data : error.message)
+        }
+    })
+
 })
 
 describe('DELETE delete account', () => {
 
     const name = 'DeleteTest'
     const pword = 'DeleteTest123'
+    let userId  // let instead of const because value will be assigned in before block
 
     before(async () => {
         await initializeTestDB()
         await insertTestUser(name, pword)
+        const user = await getUserByUsername(name)
+        userId = user.id
     })
 
     it('should not delete an account with an invalid password', async () => {
       try {
         const response = await axios.delete(base_url + '/delete', {
             data: {
-                id: 8, // this is always 9 bc of test structure
+                id: userId,
                 username: name,
                 password: 'InvalidPassword' 
             }
@@ -153,7 +171,7 @@ describe('DELETE delete account', () => {
     it('should delete an account with correct password', async () => {
         const response = await axios.delete(base_url + '/delete', {
             data: {
-                id: 8, // this is always 8 bc of test structure
+                id: userId,
                 username: name,
                 password: pword
             }
@@ -161,7 +179,7 @@ describe('DELETE delete account', () => {
         expect(response.status).to.equal(200)
         expect(response.data).to.be.an('object')
         expect(response.data.rows).to.be.an('array')
-        expect(response.data.rows[0]).to.have.property('id', 8)
+        expect(response.data.rows[0]).to.have.property('id', userId)
     })
 
 })

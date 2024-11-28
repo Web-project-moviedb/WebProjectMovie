@@ -33,6 +33,7 @@ function ProfilePage() {
             catch (error) {
                 console.error('Error', error)
                 if (error.status === 404) {
+
                 }
                 //throw error
             }
@@ -105,9 +106,8 @@ function ProfilePage() {
     const deleteGroup = async (id) => {
 
         try {
-            //const response = await axios.delete(url + "/group/" + id)
+            const response = await axios.delete(url + "/user/invite/" + id)
             setGroups(groups.filter(a => a.id !== id))
-            console.log("no implimentation yet")
         }
         catch (error) {
             console.error('Error', error)
@@ -152,7 +152,7 @@ function ProfilePage() {
                     <ul>
                         {favorites.map((favorite) => (
                             <li key={favorite.id}>
-                                <h4>{favorite.movie_name}</h4>
+                                <Link to={`/movie/${favorite.movie_id}`}>{favorite.movie_name}</Link>
                                 {checkFavoriteButton(favorite.id)}
                             </li>
                         ))

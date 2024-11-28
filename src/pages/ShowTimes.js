@@ -37,7 +37,7 @@ const areaList = [
 ]
 
 const ShowTimes = () => {
-  const { user } = UseUser()
+  const { user, token } = UseUser()
   const [shows, setShows] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -113,6 +113,8 @@ const ShowTimes = () => {
         date: `${showFullDate}`
       }
     })
+    console.log(response)
+    console.log(response.status)
     return response
   }
 
@@ -167,7 +169,21 @@ const ShowTimes = () => {
             <th>Theatre</th>
             <th>Auditorium</th>
             <th>Movie Name</th>
-            <th>Add to group</th>
+            {token ? <th>Pin to Group</th> : <></>}
+            {token ? <th>
+              <select
+                id='group'
+                value={selectedGroup}
+                onChange={(e) => setSelectedGroup(e.target.value)}>
+                <option value=""> Select group</option>
+                {groups.map((group) => (
+                  <option key={group.id} value={group.user_group_id}>
+                    {group.group_name}
+                  </option>
+                ))}
+              </select>
+            </th> : <></>}
+
           </tr>
         </thead>
         <tbody>
@@ -178,18 +194,7 @@ const ShowTimes = () => {
               <td>{show.theatreAuditorium}</td>
               <td>{show.movieName}</td>
               <td>
-                <select
-                  id='group'
-                  value={selectedGroup}
-                  onChange={(e) => setSelectedGroup(e.target.value)}>
-                  <option value=""> Select group</option>
-                  {groups.map((group) => (
-                    <option key={group.id} value={group.user_group_id}>
-                      {group.group_name}
-                    </option>
-                  ))}
-                </select>
-                <button type="button" onClick={() => handleShowtimeAdd(show.showId, show.areaId, show.showDate, show.showTime)}>add</button>
+                {token ? <button type="button" onClick={() => handleShowtimeAdd(show.showId, show.areaId, show.showDate, show.showTime)}>Pin</button> : <></>}
               </td>
             </tr>
           ))}
