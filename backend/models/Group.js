@@ -24,14 +24,12 @@ const insertGroup = async (group_name, user_id, description) => {
     try {
         await client.query('BEGIN');
 
-        // Lisää ryhmä 'user_group'-tauluun
         const groupResult = await client.query(
             'INSERT INTO user_group (group_name, owner_id, description) VALUES ($1, $2, $3) RETURNING id',
             [group_name, user_id, description]
         );
         const groupId = groupResult.rows[0].id;
 
-        // Lisää käyttäjän ja ryhmän välinen suhde 'account_user_group'-tauluun
         await client.query(
             'INSERT INTO account_user_group (account_id, user_group_id, pending) VALUES ($1, $2, FALSE)',
             [user_id, groupId]
