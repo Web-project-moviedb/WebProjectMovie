@@ -10,7 +10,7 @@ const url = process.env.REACT_APP_API_URL
 
 
 function ProfilePage() {
-    const { user } = UseUser()
+    const { user, token } = UseUser()
     const { id } = useParams()
     const [loading, setLoading] = useState(true)  // state to manage loading state
     const [error, setError] = useState(null)  // state to handle errors
@@ -21,7 +21,7 @@ function ProfilePage() {
 
     useEffect(() => {
 
-        if (!user.id || user.id !== parseInt(id)) {
+        if (!token ) {
             navigate('/error')
         }
 
@@ -35,7 +35,6 @@ function ProfilePage() {
                 if (error.status === 404) {
 
                 }
-                //throw error
             }
         }
         const fetchGroupsById = async (id) => {
@@ -76,7 +75,7 @@ function ProfilePage() {
         //getReviews()
         getFavorites()
         getGroups()
-    }, [id, user.id, navigate])
+    }, [id,token, user.id, navigate])
 
 
     const checkUserIdforDelete = () => {
@@ -95,7 +94,7 @@ function ProfilePage() {
 
     const deleteFavorite = async (id) => {
         try {
-            //const response = await axios.delete(url + "/favorites/" + id)
+            await axios.delete(url + "/favorites/" + id)
             setFavorites(favorites.filter(a => a.id !== id))
         }
         catch (error) {
@@ -106,7 +105,7 @@ function ProfilePage() {
     const deleteGroup = async (id) => {
 
         try {
-            const response = await axios.delete(url + "/user/invite/" + id)
+            await axios.delete(url + "/user/invite/" + id)
             setGroups(groups.filter(a => a.id !== id))
         }
         catch (error) {

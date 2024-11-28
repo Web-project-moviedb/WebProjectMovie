@@ -4,6 +4,7 @@ import { deletePinnedShowtime } from '../../utils/groupFunctions.js'
 
 export default function GroupShowtimes({ group_id }) {
     const [showtimes, setShowtimes] = useState([])
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -12,10 +13,19 @@ export default function GroupShowtimes({ group_id }) {
 
             try {
                 const response = await fetchFinnkinoDataById(group_id)
-                setShowtimes(response)
+
+                if (Array.isArray(response)) {
+                    setShowtimes(response)
+                } else {
+                    console.error('Error fetching showtimes:', response)
+                    setShowtimes([])
+                }
+
                 setError(null)
+                setLoading(false)
             } catch (error) {
                 setError('Failed to fetch showtimes')
+                setLoading(false)
             }
         }
         fetchShowtimes()
@@ -33,6 +43,7 @@ export default function GroupShowtimes({ group_id }) {
         }
     }
 
+    if (loading) return <p>Loading...</p>
     if (showtimes.length === 0) return <p>No pinned showtimes...</p>
     if (error) return <p>{error}</p>
 
@@ -49,7 +60,7 @@ export default function GroupShowtimes({ group_id }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {showtimes.map((showtime, index) => (
+                    {Array.isArray(showtimes) && showtimes.map((showtime, index) => (
                         <tr key={index}>
                             <td>{showtime.showTime}</td>
                             <td>{showtime.theatreName}</td>
@@ -59,8 +70,7 @@ export default function GroupShowtimes({ group_id }) {
                             <td>
                                 <button
                                     type='button'
-                                    onClick={() => handleDeleteShowtime(showtime.id)}
-                                >
+                                    onClick={() => handleDeleteShowtime(showtime.id)}>
                                     Delete
                                 </button>
                             </td>

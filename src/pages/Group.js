@@ -29,13 +29,13 @@ export default function Group() {
 
     useEffect(() => {
 
+        // Check that data is loaded
+        if (!token || groupUsers.length === 0) return
+
         // If user is not in group or not logged in, redirect to error page
         if (!token || !groupUsers.some(groupUser => groupUser.account_id === user.id)) {
             navigate('/error')
         }
-
-        // Check that data is loaded
-        if(!token ||groupUsers.length === 0) return
 
         // Check if group owner and set status
         const checkOwnership = async () => {
