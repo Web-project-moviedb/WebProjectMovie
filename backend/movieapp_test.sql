@@ -61,7 +61,7 @@ CREATE TABLE pinnedmovie (
 	id SERIAL PRIMARY KEY,
 	group_id INTEGER NOT NULL,
 	movie_id INTEGER NOT NULL,
-	FOREIGN KEY (group_id) REFERENCES user_group(id) ON DELETE CASCADE
+	FOREIGN KEY (group_id) REFERENCES user_group(id) ON DELETE CASCADE,
 	CONSTRAINT unique_movie_in_group UNIQUE (group_id, movie_id)
 );
 
@@ -71,7 +71,7 @@ CREATE TABLE pinnedshow (
 	movie_id INTEGER NOT NULL,
 	area_id INTEGER NOT NULL,
     showdate TIMESTAMP,
-	FOREIGN KEY (group_id) REFERENCES user_group(id) ON DELETE CASCADE
+	FOREIGN KEY (group_id) REFERENCES user_group(id) ON DELETE CASCADE,
 	CONSTRAINT unique_show_in_group UNIQUE (group_id, movie_id)
 );
 
