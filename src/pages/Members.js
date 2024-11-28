@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+const url = process.env.REACT_APP_API_URL
+
 function Members() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
@@ -8,7 +10,7 @@ function Members() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:3001/user/members")
+        const response = await fetch(url + `/user/members`)
         console.log(response)
         if (!response.ok) {
           throw new Error("Failed to fetch users")
@@ -34,10 +36,8 @@ function Members() {
         ) : (
           users.map((user) => (
             <ul key={user.id}>
-              {user.uname}{" "}
-              {/* Button to one user account page */}
               <Link to={`/account/${user.id}`}>
-                <button>Show account</button>
+                {user.uname}
               </Link>
             </ul>
           ))

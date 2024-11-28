@@ -151,7 +151,7 @@ function ProfilePage() {
                     <ul>
                         {favorites.map((favorite) => (
                             <li key={favorite.id}>
-                                <h4>{favorite.movie_name}</h4>
+                                <Link to={`/movie/${favorite.movie_id}`}>{favorite.movie_name}</Link>
                                 {checkFavoriteButton(favorite.id)}
                             </li>
 

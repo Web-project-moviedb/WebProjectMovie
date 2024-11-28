@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { UseUser } from "../../context/UseUser";
 
+const url = process.env.REACT_APP_API_URL
 
 const AddToFavoritesButton = ({ movie }) => {
     const { user, token } = UseUser()
@@ -13,7 +14,7 @@ const AddToFavoritesButton = ({ movie }) => {
         const checkIfFavorite = async () => {
             
                 try{
-                    const response = await fetch(`http://localhost:3001/favorites/${user.id}`)
+                    const response = await fetch( url + `/favorites/${user.id}`)
                     if (!response.ok) {
                         throw new Error("Failed to fetch favorites")
                     }
@@ -25,7 +26,6 @@ const AddToFavoritesButton = ({ movie }) => {
                 } catch (error){
                     console.error('Error checking if favorite: ',error)
                 }
-            
         } 
 
         checkIfFavorite()
@@ -33,25 +33,9 @@ const AddToFavoritesButton = ({ movie }) => {
 
 
     const handleAddFavorite = async () => {
-        if (!user) {
-            console.error('User ID is missing')
-            setError('User ID is missing')
-            return
-        }
-    
-        if (!token) {
-            console.error('Token is missing');
-            setError('Login to add to favorites')
-            return
-        }
-        if (isFavorites) {
-            console.error('Movie is already in favorites')
-            setError('Movie is already in favorites')
-            return
-        }
-    
+
         try {
-            const response = await fetch("http://localhost:3001/favorites", {
+            const response = await fetch(url + '/favorites', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
