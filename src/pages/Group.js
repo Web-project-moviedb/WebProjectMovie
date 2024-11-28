@@ -11,13 +11,13 @@ import GroupShowtimes from '../components/groups/GroupShowtimes.js'
 
 /* Group page
 Only registered and logged in users can enter to group page
-Group page contains group details, members and pinned movies
-Group owner can delete group, remove users and movies from group
-Group owner can accept or decline join invitations from users
+Group page contains group details, members, pinned movies and pinned showtimes
+Group owner can delete group, remove users, movies and pinned showtimes from group
+Group owner can accept or decline join invitations other from users
 */
 
 export default function Group() {
-    const { user } = UseUser()
+    const { user, token } = UseUser()
     const { id } = useParams() // group_id from URL
     const [isOwner, setIsOwner] = useState(false)
     const [group, setGroup] = useState(' ')
@@ -28,13 +28,14 @@ export default function Group() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // Check that data is loaded
-        if(!user.id ||groupUsers.length === 0) return
 
         // If user is not in group or not logged in, redirect to error page
-        if (!user.id || !groupUsers.some(groupUser => groupUser.account_id === user.id)) {
+        if (!token || !groupUsers.some(groupUser => groupUser.account_id === user.id)) {
             navigate('/error')
         }
+
+        // Check that data is loaded
+        if(!token ||groupUsers.length === 0) return
 
         // Check if group owner and set status
         const checkOwnership = async () => {
@@ -51,7 +52,7 @@ export default function Group() {
             }
         }
         checkOwnership()
-    }, [id, user.id, groupUsers, navigate])
+    }, [id, token, user.id, groupUsers, navigate])
 
     // Get group details
     const getGroupData = useCallback(async () => {
@@ -155,7 +156,6 @@ export default function Group() {
             <GroupMembers groupUsers={groupUsers} isOwner={isOwner} ownerId={group.owner_id} onRemoveUser={handleRemoveUser} onAcceptUser={handleAcceptUser} />
             <SectionHeader text={'Movies'} />
             <GroupMovies movies={movies} onRemoveMovie={handleRemoveMovie} />
-            {/* Pinned showtimes */}
             <SectionHeader text={'Showtimes'} />
             <GroupShowtimes group_id={id} />
             {isOwner && <button type='button' onClick={handleDeleteGroup}>Delete Group</button>}
