@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
 import ReviewsByUser from '../components/reviews/ReviewsByUser.js'
-import { MainHeader, SectionHeader } from "../components/Header.js"
+import { MainHeader, SectionHeader } from "../components/header/Header.js"
 
 import axios from "axios"
 

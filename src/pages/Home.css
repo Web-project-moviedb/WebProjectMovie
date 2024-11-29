@@ -1,0 +1,40 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.browse-table, .search-table {
+    border: none;
+    table-layout: fixed;
+}
+
+.browse-table td, .browse-table th, .search-table td, .search-table th {
+    border: none;
+}
+
+.home-page table {
+    width: 100%;
+    max-width: 400px;
+    border-collapse: collapse;
+}
+
+.browse-table td:first-child, .search-table td:first-child {
+    width: 20%; /* First column (label) is narrower */
+}
+
+.browse-table td:nth-child(2), .search-table td:nth-child(2) {
+    width: 65%; /* Middle column (input) takes more space */
+}
+
+.browse-table td:last-child, .search-table td:last-child {
+    width: 15%; /* Last column (button) is narrower */
+}
+
+.browse-table input, .search-table input,
+.browse-table select, .search-table select {
+    width: 100%; /* Ensure the input fields and dropdowns fill the second column */
+    box-sizing: border-box; /* Include padding in the width calculation */
+    border-radius: 3px;
+}

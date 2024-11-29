@@ -4,6 +4,7 @@ import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMovi
 import MovieList from '../components/movies/MovieList.js'
 import SearchForm from '../components/movies/SearchForm.js'
 import GenreSelect from '../components/movies/GenreSelect.js'
+import './Home.css'
 
 function Home() {
     const [term, setTerm] = useState('')
@@ -32,59 +33,88 @@ function Home() {
     };
 
     return (
-        <div>
-            <h1>Home</h1>
+        <div className="home-page">
+            <h1>Movie Finder</h1>
             <h3>Search for movies:</h3>
 
-            {/*SearchForm components for searching by term/year/language/genre, props are passed along with event handlers */}
-
-            <SearchForm
-                label="Name"
-                placeholder="e.g. Apocalypse Now"
-                value={term}
-                onChange={setTerm}
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    handleSearch(fetchMoviesByTerm, term)
-                    setTerm('')
-                }}
-            />
-
+            {/* Search form in table format */}
+            <table className="search-table">
+                <tbody>
+                    <tr>
+                        <td><label>Name:</label></td>
+                        <td><input
+                            type="text"
+                            value={term}
+                            onChange={(e) => setTerm(e.target.value)}
+                            placeholder="e.g. Apocalypse Now"
+                        /></td>
+                        <td><button
+                            type="submit"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                handleSearch(fetchMoviesByTerm, term)
+                                setTerm('')
+                            }}
+                        >Search</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
             <h3>Or browse by:</h3>
 
-            <SearchForm
-                label="Year"
-                placeholder="e.g. 2021"
-                value={year}
-                onChange={setYear}
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    handleSearch(fetchMoviesByYear, year)
-                    setYear('')
-                }}
-            />
-
-            <SearchForm
-                label="Language code"
-                placeholder="e.g. 'sv' for Swedish"
-                value={language}
-                onChange={setLanguage}
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    handleSearch(fetchMoviesByLanguage, language)
-                    setLanguage('')
-                }}
-            />
-
-            <GenreSelect
-                selectedGenre={genre}
-                onGenreChange={setGenre}
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    handleSearch(fetchMoviesByGenre, genre)
-                    setGenre('')
-                }}
-            />
+            <table className="browse-table">
+                <tbody>
+                    <tr>
+                        <td><label>Year:</label></td>
+                        <td><input
+                            type="text"
+                            value={year}
+                            onChange={(e) => setYear(e.target.value)}
+                            placeholder="e.g. 2021"
+                        /></td>
+                        <td><button
+                            type="submit"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                handleSearch(fetchMoviesByYear, year)
+                                setYear('')
+                            }}
+                        >Search</button></td>
+                    </tr>
+                    <tr>
+                        <td><label>Language code:</label></td>
+                        <td><input
+                            type="text"
+                            value={language}
+                            onChange={(e) => setLanguage(e.target.value)}
+                            placeholder="e.g. 'sv' for Swedish"
+                        /></td>
+                        <td><button
+                            type="submit"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                handleSearch(fetchMoviesByLanguage, language)
+                                setLanguage('')
+                            }}
+                        >Search</button></td>
+                    </tr>
+                    <tr>
+                        <td><label>Genre:</label></td>
+                        <td><GenreSelect
+                            selectedGenre={genre}
+                            onGenreChange={setGenre}
+                        /></td>
+                        <td><button
+                            type="submit"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                handleSearch(fetchMoviesByGenre, genre)
+                                setGenre('')
+                            }}
+                        >Search</button></td>
+                    </tr>
+                </tbody>
+            </table>
 
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}

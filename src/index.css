@@ -1,9 +1,16 @@
 /* GLOBAL STYLING */ 
 
-body, html {
+* {
+    box-sizing: border-box;
+}
+
+.main-wrapper {
+    margin: 10px;
+}
+
+html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
 }
 
 body {
@@ -11,17 +18,14 @@ body {
     background-color: #eff3f6;
 }
 
-label {
-/*    display: block; */
-    margin: 5px;
-}
-
 button {
-
+    font-family: 'Georgia', sans-serif;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
     border: 1px solid #000000;
     border-radius: 3px;
     margin: 5px;
-    margin-bottom: 10px;
     background-color: #eff3f6;
 }
 
