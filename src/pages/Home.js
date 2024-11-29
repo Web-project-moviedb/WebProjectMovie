@@ -1,8 +1,6 @@
-// pages/Home.js
 import React, { useState, useEffect } from 'react'
-import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm } from '../api/fetchTMDB'
+import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm, fetchTopMovies } from '../api/fetchTMDB'
 import MovieList from '../components/movies/MovieList.js'
-import SearchForm from '../components/movies/SearchForm.js'
 import GenreSelect from '../components/movies/GenreSelect.js'
 import './Home.css'
 
@@ -14,6 +12,7 @@ function Home() {
     const [movies, setMovies] = useState([])
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [isInitialLoad, setIsInitialLoad] = useState(true)  // Track if it's the first load
 
     const handleSearch = async (fetchFunction, params = {}) => {
         setLoading(true)
@@ -34,9 +33,14 @@ function Home() {
 
     // Use useEffect to trigger the search when the page is first loaded
     useEffect(() => {
-        const currentYear = new Date().getFullYear();  // Get the current year
-        handleSearch(fetchMoviesByYear, currentYear)  // Automatically search for movies from the current year
-    }, []); // Empty dependency array ensures this runs only once when the component mounts
+        handleSearch(fetchTopMovies)  // Load top movies on first load
+    }, []);  // Empty dependency array ensures this runs only once when the component mounts
+
+    // Update isInitialLoad when a search is performed
+    const handleSearchWithParams = (fetchFunction, params) => {
+        setIsInitialLoad(false)  // After first load, it's not the initial load anymore
+        handleSearch(fetchFunction, params)
+    }
 
     return (
         <div className="home-page">
@@ -58,7 +62,7 @@ function Home() {
                             type="submit"
                             onClick={(e) => {
                                 e.preventDefault()
-                                handleSearch(fetchMoviesByTerm, term)
+                                handleSearchWithParams(fetchMoviesByTerm, term)
                                 setTerm('')
                             }}
                         >Search</button></td>
@@ -82,7 +86,7 @@ function Home() {
                             type="submit"
                             onClick={(e) => {
                                 e.preventDefault()
-                                handleSearch(fetchMoviesByYear, year)
+                                handleSearchWithParams(fetchMoviesByYear, year)
                                 setYear('')
                             }}
                         >Search</button></td>
@@ -99,7 +103,7 @@ function Home() {
                             type="submit"
                             onClick={(e) => {
                                 e.preventDefault()
-                                handleSearch(fetchMoviesByLanguage, language)
+                                handleSearchWithParams(fetchMoviesByLanguage, language)
                                 setLanguage('')
                             }}
                         >Search</button></td>
@@ -114,7 +118,7 @@ function Home() {
                             type="submit"
                             onClick={(e) => {
                                 e.preventDefault()
-                                handleSearch(fetchMoviesByGenre, genre)
+                                handleSearchWithParams(fetchMoviesByGenre, genre)
                                 setGenre('')
                             }}
                         >Search</button></td>
@@ -125,7 +129,8 @@ function Home() {
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            <MovieList movies={movies} />
+            {/* Conditionally render the title based on isInitialLoad */}
+            <MovieList movies={movies} title={isInitialLoad ? "Top Rated Movies" : "Top 20 Search Results"} />
         </div>
     )
 }

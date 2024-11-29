@@ -1,20 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-function MovieList({ movies }) {
+function MovieList({ movies, title }) {
     if (!movies || movies.length === 0) {
-        return <p></p>
+        return <p>No movies found.</p>
     }
-
-    // this is the list of movies that will be displayed
-    // the map function will iterate over each movie in the list and create a list item
-    // the key prop is used to uniquely identify each list item
-    // the Link component is used to create a link to the movie details page
 
     return (
         <div>
             <center>
-                <h2>Top 20 Search Results</h2>
+                <br /><h2>{title}</h2>  {/* Dynamically set the title */}
                 <div className="movie-grid">
                     {movies.map((movie) => (
                         <div key={movie.id} className="movie-item">
