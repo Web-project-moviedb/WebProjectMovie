@@ -19,6 +19,7 @@ const ShowTimes = () => {
   const [filteredShows, setFilteredShows] = useState([])
   const [groups, setGroups] = useState([])
   const [selectedGroup, setSelectedGroup] = useState('')
+  const [search, setSearch] = useState(false)
 
   useEffect(() => {
     const getGroups = async () => {
@@ -47,6 +48,7 @@ const ShowTimes = () => {
       const data = await fetchFinnkinoData(areaId, formattedDate)
       setShows(data)
       setFilteredShows(data)
+      setSearch(true)
     } catch (error) {
       setError(error.message)
       console.log('Failed to fetch data', error)
@@ -61,10 +63,12 @@ const ShowTimes = () => {
     )
     setFilteredShows(filtered)
     if (filtered.length === 0) {
-      setError(`Movie named "${movieName}" did not found`)
-      console.log(`Movie named "${movieName}" did not found`, error)
+      setError(`Movie named "${movieName}" not found`)
+      console.log(`Movie named "${movieName}" not found`, error)
+      setMovieName('')
     } else {
       setError(null)
+      setMovieName('')
     }
   }
   const handleShowtimeAdd = async (showid, areaid, showdate, showtime) => {
@@ -120,7 +124,8 @@ const ShowTimes = () => {
             onChange={(e) => setDt(e.target.value)}
           />
         </div>
-        <div>
+        <button type="submit">Search</button>
+        <div hidden={!search}>
           <label>Movie Name:</label>
           <input
             type="text"
@@ -130,7 +135,6 @@ const ShowTimes = () => {
           />
           <button type="button" onClick={handleMovieSearch}>Filter movie</button>
         </div>
-        <button type="submit">Search</button>
       </form>
 
       {/* Error message if not found movie by gived name */}
@@ -138,7 +142,7 @@ const ShowTimes = () => {
 
       <table>
         <thead>
-          <tr>
+          <tr hidden={!search}>
             <th>Show Time</th>
             <th>Theatre</th>
             <th>Auditorium</th>

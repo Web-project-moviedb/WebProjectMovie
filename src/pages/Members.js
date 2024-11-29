@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { UseUser } from "../context/UseUser.js";
 
 const url = process.env.REACT_APP_API_URL
 
 function Members() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
+  const { token } = UseUser()
+  const navigate = useNavigate()
 
   useEffect(() => {
+
+    if(!token) {
+      navigate('/error')
+    }
+
     const fetchUsers = async () => {
       try {
         const response = await fetch(url + `/user/members`)
