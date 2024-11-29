@@ -1,2 +1,63 @@
+/* GLOBAL STYLING */ 
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
 body {
+    font-family: 'Georgia', sans-serif;
+    background-color: #eff3f6;
+}
+
+label {
+/*    display: block; */
+    margin: 5px;
+}
+
+button {
+
+    border: 1px solid #000000;
+    border-radius: 3px;
+    margin: 5px;
+    margin-bottom: 10px;
+    background-color: #eff3f6;
+}
+
+/* styling for input fields */ 
+input {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+/* styling for dropdown menus */ 
+select {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #000000;
+    border-radius: 3px;
+}
+
+/* styling for tables */ 
+table {
+    border-collapse: collapse; /* this means that the borders of the table cells will be collapsed into a single border */
+    border: #000000 1px solid;
+    border-radius: 3px;
+    }
+
+    
+table th, table td {
+    border: #000000 1px solid;
+    padding: 5px;
+}
+
+
+/* styling for images */ 
+img {
+    border-radius: 0px;
+    margin: 5px;
+    max-width: fit-content;
 }

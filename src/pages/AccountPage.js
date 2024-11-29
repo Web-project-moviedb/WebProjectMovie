@@ -75,7 +75,7 @@ function ProfilePage() {
         //getReviews()
         getFavorites()
         getGroups()
-    }, [id,token, user.id, navigate])
+    }, [id, token, user.id, navigate])
 
 
     const checkUserIdforDelete = () => {

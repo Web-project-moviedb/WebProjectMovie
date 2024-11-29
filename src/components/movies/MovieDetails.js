@@ -2,7 +2,6 @@ import React from 'react'
 import languageMap from '../../utils/languageMap'
 import countryMap from '../../utils/countryMap'
 import { Link } from 'react-router-dom'
-import AddToFavoritesButton from '../favorites/AddToFavoritesButton'
 
 // this component displays details of a single movie
 // if some element is missing from the json object (eg tagline), it will not be displayed

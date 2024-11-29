@@ -36,8 +36,8 @@ const NavigationBar = () => {
                         {logged ? <NavLink to="/members" activeclassname="current">Members</NavLink> : <></>}
                     </div>
                     <div className="nav-user">
-                        {logged ? <NavLink to={'/account/' + user.id} activeclassname="current">Account</NavLink> : <></>}
-                        {logged ? <button onClick={logoutFunction}>Logout</button> : <NavLink to="/signin" activeclassname="current" > login</NavLink >}
+                        {logged ? <NavLink to={'/account/' + user.id} activeclassname="current">My Account</NavLink> : <></>}
+                        {logged ? <button onClick={logoutFunction}>Logout</button> : <NavLink to="/signin" activeclassname="current" > Login</NavLink >}
                     </div>
                 </nav>
             </header>
