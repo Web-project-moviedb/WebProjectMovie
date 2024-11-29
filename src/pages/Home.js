@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm, fetchTopMovies } from '../api/fetchTMDB'
+import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm, fetchCurrentMovies } from '../api/fetchTMDB'
 import MovieList from '../components/movies/MovieList.js'
 import GenreSelect from '../components/movies/GenreSelect.js'
 import './Home.css'
@@ -33,7 +33,7 @@ function Home() {
 
     // Use useEffect to trigger the search when the page is first loaded
     useEffect(() => {
-        handleSearch(fetchTopMovies)  // Load top movies on first load
+        handleSearch(fetchCurrentMovies)  // Load top movies on first load
     }, []);  // Empty dependency array ensures this runs only once when the component mounts
 
     // Update isInitialLoad when a search is performed
@@ -130,7 +130,7 @@ function Home() {
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
             {/* Conditionally render the title based on isInitialLoad */}
-            <MovieList movies={movies} title={isInitialLoad ? "Top Rated Movies" : "Top 20 Search Results"} />
+            <MovieList movies={movies} title={isInitialLoad ? "Top Current Movies" : "Top 20 Search Results"} />
         </div>
     )
 }

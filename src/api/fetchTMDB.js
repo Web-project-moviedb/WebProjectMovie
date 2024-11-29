@@ -177,7 +177,7 @@ const fetchCollection = async (collection) => {
   }
 }
 
-const fetchTopMovies = async () => {
+const fetchCurrentMovies = async () => {
 
   const options = {
     method: 'GET',
@@ -188,7 +188,7 @@ const fetchTopMovies = async () => {
   }
 
   try {
-    const response = await fetch('https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1', options);
+    const response = await fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options);
     if (!response.ok) {
       throw new Error(`Error: ${response.status} - ${response.statusText}`)
     }
@@ -202,4 +202,4 @@ const fetchTopMovies = async () => {
 }
 
 
-export { fetchMovieById, fetchMoviesByTerm, fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchGenres, fetchCollection, fetchTopMovies }
+export { fetchMovieById, fetchMoviesByTerm, fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchGenres, fetchCollection, fetchCurrentMovies }
