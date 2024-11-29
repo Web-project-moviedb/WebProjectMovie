@@ -53,6 +53,10 @@
     margin-bottom: 16px; /* Space between review body and submit button */
 }
 
+.review-form button {
+    margin-bottom: 16px;
+}
+
 #reviews-by-movie-table {
     width: 100%;
     max-width: 1000px;
