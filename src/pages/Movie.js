@@ -7,6 +7,7 @@ import ReviewByMovie from '../components/reviews/ReviewByMovie.js'
 import LeaveReview from '../components/reviews/LeaveReview.js'
 import AddMovieToGroup from '../components/groups/AddMovieToGroup.js'
 import AddToFavoritesButton from '../components/favorites/AddToFavoritesButton.js'
+import './Movie.css'
 
 function Movie() {
 
@@ -68,11 +69,15 @@ function Movie() {
 
     return (
         <div>
-            {movie && <MovieDetails movie={movie} />}   {/* pass movie data to MovieDetails */}
-            <AddToFavoritesButton movie={movie} />   {/* pass movie data to AddToFavoritesButton */}
-            <AddMovieToGroup movie={movie} />   {/* pass movie data to AddMovieToGroup */}
-            <LeaveReview movieId={id} reviews={reviews} refreshReviews={refreshReviews}/>   {/* pass along movie id refreshReviews function to LeaveReview*/}
-            {reviews.length > 0 && <ReviewByMovie reviews={reviews} />}     {/* pass review data to ReviewByMovie */}
+            <center>
+                {movie && <MovieDetails movie={movie} />}   {/* pass movie data to MovieDetails */}
+                <div className="movie-actions">
+                    <AddToFavoritesButton movie={movie} />   {/* pass movie data to AddToFavoritesButton */}
+                    <AddMovieToGroup movie={movie} />   {/* pass movie data to AddMovieToGroup */}
+                </div>
+                <LeaveReview movieId={id} reviews={reviews} refreshReviews={refreshReviews}/>   {/* pass along movie id refreshReviews function to LeaveReview*/}
+                {reviews.length > 0 && <ReviewByMovie reviews={reviews} />}     {/* pass review data to ReviewByMovie */}
+            </center>
         </div>
     )
 }

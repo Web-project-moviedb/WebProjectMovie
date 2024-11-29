@@ -40,16 +40,18 @@ export default function AddMovieToGroup({ movie }) {
     }
     return (
         <>
-        <SectionHeader text='Pin Movie to Group' />
-            <label> 
-                <select value={selectedGroup} onChange={(e) => onGroupChange(e)}>
-                    <option value=''>-- Select Group --</option>
-                    {groups.map(group => (
-                        <option key={group.id} value={group.user_group_id}>{group.group_name}</option>
-                    ))}
-                </select>
-            </label>
-            <button type='button' onClick={handleAddMovie}>Add Movie</button>
+            <div className="add-movie-to-group-container">
+                <SectionHeader text='Pin Movie to Group' />
+                <label> 
+                    <select value={selectedGroup} onChange={(e) => onGroupChange(e)}>
+                        <option value=''>-- Select Group --</option>
+                        {groups.map(group => (
+                            <option key={group.id} value={group.user_group_id}>{group.group_name}</option>
+                        ))}
+                    </select>
+                </label>
+                <button type='button' onClick={handleAddMovie}>Add Movie</button>
+            </div>
         </>
     )
 }

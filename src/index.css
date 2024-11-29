@@ -22,9 +22,10 @@ body {
 
 button {
     font-family: 'Georgia', sans-serif;
-    padding: 3px;
-    padding-left: 5px;
-    padding-right: 5px;
+    font-size: 16px;
+    padding: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
     border: 1px solid #000000;
     border-radius: 3px;
     margin: 5px;
