@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { renderStars, formatTimestamp } from '../../utils/helperFunctions.js'
+import { renderStars } from '../../utils/helperFunctions.js'
 
 function ReviewByMovie ({reviews}) {
 
@@ -38,7 +38,6 @@ function ReviewByMovie ({reviews}) {
                                 <td>{review.uname}</td>
                                 <td>{review.review_title}</td>
                                 <td>{review.review_body}</td>
-                                {/* <td>{formatTimestamp(review.created_at)}</td> {*/} {/* Format the timestamp here */}
                             </tr>
                         ))}
                     </tbody>
