@@ -1,5 +1,5 @@
 // pages/Home.js
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm } from '../api/fetchTMDB'
 import MovieList from '../components/movies/MovieList.js'
 import SearchForm from '../components/movies/SearchForm.js'
@@ -30,7 +30,13 @@ function Home() {
         } finally {
             setLoading(false)
         }
-    };
+    }
+
+    // Use useEffect to trigger the search when the page is first loaded
+    useEffect(() => {
+        const currentYear = new Date().getFullYear();  // Get the current year
+        handleSearch(fetchMoviesByYear, currentYear)  // Automatically search for movies from the current year
+    }, []); // Empty dependency array ensures this runs only once when the component mounts
 
     return (
         <div className="home-page">

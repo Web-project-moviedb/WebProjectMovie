@@ -38,3 +38,55 @@
     box-sizing: border-box; /* Include padding in the width calculation */
     border-radius: 3px;
 }
+
+.home-page h3 {
+    margin-top: 30px;
+
+}
+
+.no-bullets {
+    list-style-type: none;
+}
+
+.home-page a {
+    text-decoration: underline;
+}
+
+.movie-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+}
+
+
+.movie-item {
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: calc(25% - 16px); /* 4 columns layout, adjusts based on available space */
+    box-sizing: border-box;
+}
+
+.movie-item img.movie-poster {
+    max-width: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 1200px) {
+    .movie-item {
+        width: calc(33.33% - 16px); /* 3 columns layout on medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .movie-item {
+        width: calc(50% - 16px); /* 2 columns layout on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .movie-item {
+        width: 100%; /* Single column layout on very small screens */
+    }
+}

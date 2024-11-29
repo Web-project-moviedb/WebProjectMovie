@@ -11,30 +11,29 @@ function MovieList({ movies }) {
     // the key prop is used to uniquely identify each list item
     // the Link component is used to create a link to the movie details page
 
-    // potential features to add:
-    // - add button+logic to load more pages of search results, currently searching and displaying only page 1 (top 20 results)
-
     return (
         <div>
-            <h3>Top 20 Search Results</h3>
-            <ul>
-                {movies.map((movie) => (
-                    <li key={movie.id}>
-                        <h4>
-                            <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
-                        </h4>
-                        <img 
-                            src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
-                            alt={movie.title} 
-                            style={{ maxWidth: '200px' }} /* NOTE remove styling from here in final version, this is just for dev convenience */
-                        /> 
-                        <p>Release Date: {movie.release_date}</p>
-                        {movie.title !== movie.original_title && (
-                            <p>Original Title: {movie.original_title}</p>
-                        )}
-                    </li>
-                ))}
-            </ul>
+            <center>
+                <h2>Top 20 Search Results</h2>
+                <div className="movie-grid">
+                    {movies.map((movie) => (
+                        <div key={movie.id} className="movie-item">
+                            <h3>
+                                <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
+                            </h3>
+                            <img 
+                                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
+                                alt={movie.title} 
+                                className="movie-poster"
+                            /> 
+                            <p>Release Date: {movie.release_date}</p>
+                            {movie.title !== movie.original_title && (
+                                <p>Original Title: {movie.original_title}</p>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </center>
         </div>
     )
 }
