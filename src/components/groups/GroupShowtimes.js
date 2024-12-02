@@ -44,8 +44,8 @@ export default function GroupShowtimes({ group_id }) {
     }
 
     if (loading) return <p>Loading...</p>
-    if (showtimes.length === 0) return <p>No pinned showtimes...</p>
     if (error) return <p>{error}</p>
+    if (showtimes.length === 0) return <p>No pinned showtimes...</p>
 
     return (
         <>
