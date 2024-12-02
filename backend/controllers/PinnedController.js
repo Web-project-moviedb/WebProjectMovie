@@ -38,7 +38,6 @@ const postPinnedShow = async (req, res, next) => {
         return res.status(200).json(response.rows);
     }
     catch (error) {
-        console.log(error)
         if (error.code === '23505') {
             return next(new ApiError('Showtime already added to group', 409))
         }
