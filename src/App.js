@@ -54,8 +54,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <UserProvider>
-      <RouterProvider router={router} />
-      <Footer />
+      <div className="app-container"> {/* Flex container for the entire app */}
+        <RouterProvider router={router} />
+        <Footer />
+      </div>
     </UserProvider>
   );
 }
