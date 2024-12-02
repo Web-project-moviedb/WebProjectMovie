@@ -25,6 +25,7 @@
     display: flex;
     justify-content: space-evenly;
     flex-grow: 1;
+    align-items: center;
 }
 
 .nav-user {
