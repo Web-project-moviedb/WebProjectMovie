@@ -1,5 +1,6 @@
 // pages/Home.js
 import React, { useState } from 'react'
+import { MainHeader, SectionHeader } from '../components/Header.js'
 import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm } from '../api/fetchTMDB'
 import MovieList from '../components/movies/MovieList.js'
 import SearchForm from '../components/movies/SearchForm.js'
@@ -29,12 +30,12 @@ function Home() {
         } finally {
             setLoading(false)
         }
-    };
+    }
 
     return (
         <div>
-            <h1>Home</h1>
-            <h3>Search for movies:</h3>
+            <MainHeader text="PopFlicks" />
+            <SectionHeader text="Search for movies" />
 
             {/*SearchForm components for searching by term/year/language/genre, props are passed along with event handlers */}
 
@@ -50,7 +51,7 @@ function Home() {
                 }}
             />
 
-            <h3>Or browse by:</h3>
+            <SectionHeader text="Or browse by" />
 
             <SearchForm
                 label="Year"
@@ -88,7 +89,6 @@ function Home() {
 
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
-
             <MovieList movies={movies} />
         </div>
     )

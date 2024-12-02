@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import { UseUser } from '../context/UseUser'
 // Using NavLink the browser checks if the current URL matches the Link and you can add CSS to the specific Link th is way
 // Outlet is used as a placeholder for the "children" elemenent. in this case the children element the specific Page

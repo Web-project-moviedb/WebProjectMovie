@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { SectionHeader } from "../components/Header";
 
 const url = process.env.REACT_APP_API_URL
 
@@ -28,7 +29,7 @@ function Members() {
 
   return (
     <div>
-      <h3>All Users</h3>
+      <SectionHeader text="All Users" />
       {error && <p style={{ color: "red" }}>{error}</p>}
       <ul>
         {users.length === 0 ? (
@@ -44,7 +45,7 @@ function Members() {
         )}
       </ul>
     </div>
-  );
+  )
 }
 
 export default Members;

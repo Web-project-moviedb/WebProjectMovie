@@ -9,20 +9,19 @@ export default function AddMovieToGroup({ movie }) {
     const [selectedGroup, setSelectedGroup] = useState('')
 
     useEffect(() => {
-        getGroups()
-    }, [])
-
-    const getGroups = async () => {
-        if (user.id) {
-            try {
-                const userGroups = await fetchAllGroupsByUser(user.id)
-                const groups = userGroups.data.filter(group => group.pending === false) // check that user is accepted to group
-                setGroups(groups)
-            } catch (error) {
-                console.error('Error fetching groups:', error)
+        const getGroups = async () => {
+            if (user.id) {
+                try {
+                    const userGroups = await fetchAllGroupsByUser(user.id)
+                    const groups = userGroups.data.filter(group => group.pending === false) // check that user is accepted to group
+                    setGroups(groups)
+                } catch (error) {
+                    console.error('Error fetching groups:', error)
+                }
             }
         }
-    }
+        getGroups()
+    }, [user.id])
 
     const onGroupChange = (e) => {
         setSelectedGroup(e.target.value)
