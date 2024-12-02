@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { MainHeader } from '../components/Header.js'
+import { MainHeader } from '../components/header/Header.js'
 import { fetchMovieNames } from '../utils/helperFunctions.js'
 import AllReviews from '../components/reviews/AllReviews.js'
 

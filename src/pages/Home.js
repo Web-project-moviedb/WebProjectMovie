@@ -1,6 +1,6 @@
 // pages/Home.js
-import React, { useState } from 'react'
-import { MainHeader, SectionHeader } from '../components/Header.js'
+import React, { useState, useEffect } from 'react'
+import { MainHeader, SectionHeader } from '../components/header/Header.js'
 import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm, fetchCurrentMovies } from '../api/fetchTMDB'
 import MovieList from '../components/movies/MovieList.js'
 import GenreSelect from '../components/movies/GenreSelect.js'
@@ -72,7 +72,7 @@ function Home() {
                 </tbody>
             </table>
             
-            <h3>Or browse by:</h3>
+            <SectionHeader text="Or browse by:" />
 
             <table className="browse-table">
                 <tbody>
