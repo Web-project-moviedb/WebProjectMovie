@@ -3,8 +3,17 @@ import { Link } from "react-router-dom"
 
 function CollectionDetails({ collection }) {
 
+    // sort movies by release date
+      collection.parts.sort((a, b) => {
+      const dateA = new Date(a.release_date);
+      const dateB = new Date(b.release_date);
+      return dateA - dateB; // oldest first
+  })
+
     return (
         <div>
+
+          <div className="collection-overview">
             <h1>{collection.name}</h1>
             <p>{collection.overview}</p>
 
@@ -14,23 +23,30 @@ function CollectionDetails({ collection }) {
                     alt={collection.name}
                 />
             )}
+          </div>
 
+          <div className="collection-parts">
             <h2>Movies in this collection:</h2>
-            <ul>
-            {collection.parts.map((movie) => (
-          <li key={movie.id}>
-            <h3><Link to={`/movie/${movie.id}`}>{movie.title}</Link></h3>
-            <p><strong>Release Date:</strong> {movie.release_date}</p>
-            <p>{movie.overview}</p>
-            {movie.poster_path && (
-              <img
-                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                alt={`${movie.title} poster`}
-              />
-            )}
-          </li>
-        ))}
-            </ul>
+            <div className="movie-grid">
+              {collection.parts.map((movie) => (
+                <div key={movie.id} className="movie-item">
+                  <h3>
+                    <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
+                  </h3>
+                  {movie.poster_path && (
+                    <img
+                      className="movie-poster"
+                      src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                      alt={`${movie.title} poster`}
+                    />
+                  )}
+                  <p><strong>Release Date:</strong> {movie.release_date}</p>
+                  <p>{movie.overview}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
     )
 }
