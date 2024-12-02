@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+a {
+    color: #5d2062;
+}
+
 .main-wrapper {
     margin: 10px;
     display: flex;

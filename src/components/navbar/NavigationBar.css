@@ -1,3 +1,5 @@
+/* lisää vielä yhtenäinen väri linkeille navbarissa ja tee jotain jännää */ 
+
 .navbar {
     display: flex;
     justify-content: space-between;
