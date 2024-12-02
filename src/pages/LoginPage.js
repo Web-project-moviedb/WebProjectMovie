@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
-import { SectionHeader } from '../components/Header.js'
+import { SectionHeader } from '../components/header/Header.js'
 import LoginForm from '../components/login/LoginForm.js'
 
 

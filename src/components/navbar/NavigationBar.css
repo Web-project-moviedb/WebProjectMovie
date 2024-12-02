@@ -1,30 +1,32 @@
-header {
-    width: 100%;
-    background-color: #dae3eb
-
-}
-
 .navbar {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+    background-color: #dae3eb;
+}
+
+.navbar .nav-links, .navbar .nav-user {
+    display: flex;
+    align-items: center;
 }
 
 .nav-links {
     display: flex;
     justify-content: space-evenly;
     width: 80%;
-
-    list-style: none;
-    padding-left: 20px;
 }
 
 .nav-user {
     display: flex;
     justify-content: space-evenly;
-    padding-right: 20px;
     width: 20%;
+}
 
-
+.nav-user button {
+    display: flex;
+    align-items: center;
 }
 
 a {
@@ -32,6 +34,5 @@ a {
 }
 
 a.active {
-    text-decoration: none;
     font-weight: bold;
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import AllGroups from '../components/groups/AllGroups.js'
-import { MainHeader, SectionHeader } from '../components/Header.js'
+import { MainHeader, SectionHeader } from '../components/header/Header.js'
 import { createGroup, fetchAllGroups } from "../utils/groupFunctions.js"
 import CreateGroupForm from "../components/groups/CreateGroupForm.js"
 

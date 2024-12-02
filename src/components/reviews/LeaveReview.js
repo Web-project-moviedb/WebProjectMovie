@@ -48,32 +48,38 @@ export default function LeaveReview({ movieId, reviews, refreshReviews }) {
 
     return (
         <div>
-            <h3>Leave a Review</h3>
+            <br /><h3>Leave a Review</h3>
             {error && <p style={{ color: 'red' }}>{error}</p>}
     
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Rating (1-5):</label>
-                    <input
-                        type="number"
-                        min="1"
-                        max="5"
-                        value={review.stars}
-                        onChange={(e) => setReview({ ...review, stars: parseInt(e.target.value, 10) })}
-                        required
-                    />
+            <form className="review-form" onSubmit={handleSubmit}>
+                <div className="review-fields">
+                    <div className="rating-field">
+                        <label htmlFor="rating">Rating (1-5):</label>
+                        <input
+                            id="rating"
+                            type="number"
+                            min="1"
+                            max="5"
+                            value={review.stars}
+                            onChange={(e) => setReview({ ...review, stars: parseInt(e.target.value, 10) })}
+                            required
+                        />
+                    </div>
+                    <div className="review-title-field">
+                        <label htmlFor="review_title">Review Title:</label>
+                        <textarea
+                            id="review_title"
+                            value={review.review_title}
+                            onChange={(e) => setReview({ ...review, review_title: e.target.value })}
+                            required
+                        ></textarea>
+                    </div>
                 </div>
-                <div>
-                    <label>Review Title:</label>
+    
+                <div className="review-body-field">
+                    <label htmlFor="review_body">Review Body:</label>
                     <textarea
-                        value={review.review_title}
-                        onChange={(e) => setReview({ ...review, review_title: e.target.value })}
-                        required
-                    ></textarea>
-                </div>
-                <div>
-                    <label>Review:</label>
-                    <textarea
+                        id="review_body"
                         value={review.review_body}
                         onChange={(e) => setReview({ ...review, review_body: e.target.value })}
                         required
@@ -82,11 +88,12 @@ export default function LeaveReview({ movieId, reviews, refreshReviews }) {
     
                 {!user.id && <p><i>You must be logged in to leave a review.</i></p>}
                 {hasReviewed && <p><i>You have already reviewed this movie. To leave a new review, please delete your existing review from your account page.</i></p>}
-                
+    
                 <button type="submit" disabled={!user.id || hasReviewed}>
                     Submit
                 </button>
             </form>
         </div>
     )
+
 }

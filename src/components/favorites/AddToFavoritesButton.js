@@ -62,6 +62,7 @@ const AddToFavoritesButton = ({ movie }) => {
         if(token && user){
         return (
             <div>
+                <h3>Add Movie to Favorites</h3>
                 <button onClick={handleAddFavorite} 
                 disabled={isFavorites}> {!isFavorites ? "Add To Favorites" : "Already in favorites"} </button>
                 {error && <p style={{ color: "red" }}>{error}</p>}
@@ -71,6 +72,7 @@ const AddToFavoritesButton = ({ movie }) => {
     } else {
         return (
             <div>
+                <h3>Add Movie to Favorites</h3>
                 <button onClick={handleAddFavorite} disabled> Login to add in favorites </button>
             </div>
         )

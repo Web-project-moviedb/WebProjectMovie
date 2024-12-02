@@ -161,7 +161,7 @@ const fetchCollection = async (collection) => {
       accept: 'application/json',
       Authorization: tmdb_token
     }
-  };
+  }
 
   try {
     const response = await fetch(`https://api.themoviedb.org/3/collection/${collection}?language=en-US`, options)
@@ -177,5 +177,29 @@ const fetchCollection = async (collection) => {
   }
 }
 
+const fetchCurrentMovies = async () => {
 
-export { fetchMovieById, fetchMoviesByTerm, fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchGenres, fetchCollection }
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: tmdb_token
+    }
+  }
+
+  try {
+    const response = await fetch('https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1', options);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`)
+    }
+    const data = await response.json()
+    return data
+
+  } catch (error) {
+    console.error('Error fetching movies:', error)
+    throw error
+  }
+}
+
+
+export { fetchMovieById, fetchMoviesByTerm, fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchGenres, fetchCollection, fetchCurrentMovies }
