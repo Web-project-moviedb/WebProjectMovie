@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { MainHeader } from '../components/header/Header.js'
 import { fetchMovieNames } from '../utils/helperFunctions.js'
 import AllReviews from '../components/reviews/AllReviews.js'
 
@@ -38,7 +39,7 @@ function Reviews() {
 
     return (
         <div>
-            <h1>All Reviews</h1>
+            <MainHeader text="All Reviews" />
             <AllReviews reviews={reviews} movies={movies} /> {/* Pass the reviews and movies to the ReviewList component */}
         </div>
     )

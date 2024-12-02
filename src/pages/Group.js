@@ -23,36 +23,45 @@ export default function Group() {
     const [group, setGroup] = useState(' ')
     const [groupUsers, setGroupUsers] = useState([])
     const [movies, setMovies] = useState([])
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     const navigate = useNavigate()
-
     useEffect(() => {
+        const fetchInitialData = async () => {
+            try {
+                // Get group members
+                const membersResponse = await fetchGroupMembers(id)
+                setGroupUsers(membersResponse)
 
-        // Check that data is loaded
-        if (!token || groupUsers.length === 0) return
+                // Get group details
+                const groupResponse = await fetchGroupById(id)
+                setGroup(groupResponse)
 
-        // If user is not in group or not logged in, redirect to error page
-        if (!token || !groupUsers.some(groupUser => groupUser.account_id === user.id)) {
-            navigate('/error')
-        }
-
-        // Check if group owner and set status
-        const checkOwnership = async () => {
-            if (user.id) {
-                try {
-                    const groupOwner = await fetchGroupById(id)
-                    if (groupOwner.owner_id === user.id) {
-                        setIsOwner(true)
-                    }
-                } catch (error) {
-                    console.log(error)
-                    setError('Failed to check group ownership')
+                // Check if user is group owner
+                if (groupResponse.owner_id === user.id) {
+                    setIsOwner(true)
                 }
+
+                // If user is not in group or not logged in, redirect to error page
+                if (!token || !membersResponse.some(member => member.account_id === user.id)) {
+                    navigate('/error')
+                }
+            } catch (err) {
+                console.error('Error loading group data:', err)
+                setError('Failed to load group data')
+            } finally {
+                setLoading(false)
             }
         }
-        checkOwnership()
-    }, [id, token, user.id, groupUsers, navigate])
+
+        // Check that user is logged in and group id is valid
+        if (token && id) {
+            fetchInitialData()
+        } else {
+            navigate('/error')
+        }
+    }, [id, token, user.id, navigate])
 
     // Get group details
     const getGroupData = useCallback(async () => {
@@ -142,6 +151,10 @@ export default function Group() {
         getGroupMembers()
         getGroupMovies()
     }, [getGroupData, getGroupMembers, getGroupMovies])
+
+    if (loading) {
+        return <h3>Loading...</h3>
+    }
 
     if (error) {
         return <h3>{error}</h3>

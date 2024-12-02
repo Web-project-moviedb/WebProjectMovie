@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { fetchFinnkinoData } from '../api/fetchFinnkino.js';
-import finnkinoList from '../utils/finnkinoList.js';
+import React, { useState, useEffect } from 'react'
+import { MainHeader } from '../components/header/Header.js'
+import { fetchFinnkinoData } from '../api/fetchFinnkino.js'
+import finnkinoList from '../utils/finnkinoList.js'
 import axios from 'axios'
 
 import { UseUser } from '../context/UseUser.js'
@@ -101,7 +102,7 @@ const ShowTimes = () => {
 
   return (
     <div>
-      <h1>Movie Showtimes</h1>
+      <MainHeader text="Finnkino Showtimes" />
       <form onSubmit={handleSearch}>
         <div>
           <label>Select City/Theatre:</label>

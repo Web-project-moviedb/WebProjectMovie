@@ -60,7 +60,7 @@ const fetchFinnkinoDataById = async (group_id) => {
   const returnArray = []
 
   // Check if the showtime is in the past and delete it
-  for (const [key, value] of Object.entries(pinnedMovies.data)) {
+  for (const value of Object.values(pinnedMovies.data)) {
     let date_object = new Date(value.showdate)
 
     if (date_now > date_object) {

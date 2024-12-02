@@ -1,23 +1,23 @@
-import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import UserProvider from './context/UserProvider.js';
-import NavigationBar from './components/navbar/NavigationBar.js';
-import Footer from './components/footer/Footer.js';
+import './App.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import UserProvider from './context/UserProvider.js'
+import NavigationBar from './components/navbar/NavigationBar.js'
+import Footer from './components/footer/Footer.js'
 
 // Pages import
-import ErrorPage from './pages/ErrorPage.js';
-import Home from './pages/Home.js';
-import Reviews from './pages/Reviews.js';
-import Groups from './pages/Groups.js';
-import Group from './pages/Group.js';
-import ShowTimes from './pages/ShowTimes.js';
-import Members from './pages/Members.js';
-import FavoritesPage from './pages/FavoritesPage.js';
-import Movie from './pages/Movie.js';
-import LoginPage, { AuthenticationMode } from './pages/LoginPage.js';
-import Collection from './pages/Collection.js';
-import ProfilePage from './pages/AccountPage.js';
-import DeleteProfile from './pages/DeleteProfile.js';
+import ErrorPage from './pages/ErrorPage.js'
+import Home from './pages/Home.js'
+import Reviews from './pages/Reviews.js'
+import Groups from './pages/Groups.js'
+import Group from './pages/Group.js'
+import ShowTimes from './pages/ShowTimes.js'
+import Members from './pages/Members.js'
+import FavoritesPage from './pages/FavoritesPage.js'
+import Movie from './pages/Movie.js'
+import LoginPage, { AuthenticationMode } from './pages/LoginPage.js'
+import Collection from './pages/Collection.js'
+import ProfilePage from './pages/AccountPage.js'
+import DeleteProfile from './pages/DeleteProfile.js'
 
 // Front-end routing 
 const router = createBrowserRouter([

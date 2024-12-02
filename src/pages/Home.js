@@ -1,4 +1,6 @@
+// pages/Home.js
 import React, { useState, useEffect } from 'react'
+import { MainHeader, SectionHeader } from '../components/header/Header.js'
 import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm, fetchCurrentMovies } from '../api/fetchTMDB'
 import MovieList from '../components/movies/MovieList.js'
 import GenreSelect from '../components/movies/GenreSelect.js'
@@ -44,8 +46,8 @@ function Home() {
 
     return (
         <div className="home-page">
-            <h1>Movie Finder</h1>
-            <h3>Search for movies:</h3>
+            <MainHeader text="Movie Finder" />
+            <SectionHeader text="Search for Movies" />
 
             {/* Search form in table format */}
             <table className="search-table">
@@ -70,7 +72,7 @@ function Home() {
                 </tbody>
             </table>
             
-            <h3>Or browse by:</h3>
+            <SectionHeader text="Or browse by:" />
 
             <table className="browse-table">
                 <tbody>
