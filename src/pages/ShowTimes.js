@@ -82,19 +82,29 @@ const ShowTimes = () => {
     const showtimeFormat = showtime.toString()
     const showFullDate = [showdateFormat, showtimeFormat].join('T')
     const posturl = url + '/pinned/showtime/' + selectedGroup
-    const response = await axios({
-      method: 'post',
-      url: posturl,
-      headers: {},
-      data: {
-        movie_id: `${showid}`,
-        area_id: `${areaid}`,
-        date: `${showFullDate}`
+    try {
+      const response = await axios({
+        method: 'post',
+        url: posturl,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          movie_id: `${showid}`,
+          area_id: `${areaid}`,
+          date: `${showFullDate}`
+        }
+      })
+      if (response.status === 200) {
+        alert('Show added to a Group')
       }
-    })
-    console.log(response)
-    console.log(response.status)
-    return response
+    } catch (error) {
+      if (error.status === 409) {
+        alert('Show already pinned to this Group')
+        return
+      }
+    }
+
   }
 
 
