@@ -10,9 +10,11 @@ function MovieDetails({ movie }) {
 
     const originalLanguageName = languageMap[movie.original_language] || movie.original_language;
     const originCountryNames = movie.origin_country.map(countryCode => countryMap[countryCode] || countryCode)
+    const genreNames = movie.genres.map((genre) => genre.name).join(', ');
 
     return (
         <div>
+            <center>
             <h1>{movie.title}</h1>
             <p><i>{movie.tagline}</i></p>
             <p>{movie.overview}</p>
@@ -38,12 +40,8 @@ function MovieDetails({ movie }) {
                 </>
             )} </p>
 
-            <p>Genres:</p>
-            <ul>
-                {movie.genres.map((genre) => (  // map over the genres array to display each genre
-                    <li key={genre.id}>{genre.name}</li>    // use the genre id as the key, but display the genre name
-                ))}
-            </ul>
+            <p>Genres: {genreNames}</p>
+            </center>
         </div>
     );
 }

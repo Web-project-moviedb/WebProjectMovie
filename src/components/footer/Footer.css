@@ -1,0 +1,24 @@
+#footer {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-size: cover;
+    padding: 5px;
+    align-items: center;
+    background-color: #dae3eb;
+    margin-top: auto;
+}
+
+#footer img {
+    width: 15px;
+    height: auto;
+    vertical-align: middle;
+}
+
+#footer .text-muted {
+    display: flex;
+    align-items: center;
+}

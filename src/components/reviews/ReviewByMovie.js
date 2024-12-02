@@ -21,14 +21,13 @@ function ReviewByMovie ({reviews}) {
             {reviews.length === 0 ? (
                 <p>No reviews available.</p>
             ) : (
-                <table>
+                <table id="reviews-by-movie-table">
                     <thead>
                         <tr>
                             <th>Stars</th>
                             <th>Reviewer</th>
                             <th>Title</th>
                             <th>Review</th>
-                            {/* <th>Time Reviewed</th> */}
                         </tr>
                     </thead>
                     <tbody>

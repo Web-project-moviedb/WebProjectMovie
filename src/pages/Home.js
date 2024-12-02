@@ -1,9 +1,8 @@
-// pages/Home.js
-import React, { useState } from 'react'
-import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm } from '../api/fetchTMDB'
+import React, { useState, useEffect } from 'react'
+import { fetchMoviesByYear, fetchMoviesByLanguage, fetchMoviesByGenre, fetchMoviesByTerm, fetchCurrentMovies } from '../api/fetchTMDB'
 import MovieList from '../components/movies/MovieList.js'
-import SearchForm from '../components/movies/SearchForm.js'
 import GenreSelect from '../components/movies/GenreSelect.js'
+import './Home.css'
 
 function Home() {
     const [term, setTerm] = useState('')
@@ -13,6 +12,7 @@ function Home() {
     const [movies, setMovies] = useState([])
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
+    const [isInitialLoad, setIsInitialLoad] = useState(true)  // Track if it's the first load
 
     const handleSearch = async (fetchFunction, params = {}) => {
         setLoading(true)
@@ -29,67 +29,108 @@ function Home() {
         } finally {
             setLoading(false)
         }
-    };
+    }
+
+    // Use useEffect to trigger the search when the page is first loaded
+    useEffect(() => {
+        handleSearch(fetchCurrentMovies)  // Load top movies on first load
+    }, []);  // Empty dependency array ensures this runs only once when the component mounts
+
+    // Update isInitialLoad when a search is performed
+    const handleSearchWithParams = (fetchFunction, params) => {
+        setIsInitialLoad(false)  // After first load, it's not the initial load anymore
+        handleSearch(fetchFunction, params)
+    }
 
     return (
-        <div>
-            <h1>Home</h1>
+        <div className="home-page">
+            <h1>Movie Finder</h1>
             <h3>Search for movies:</h3>
 
-            {/*SearchForm components for searching by term/year/language/genre, props are passed along with event handlers */}
-
-            <SearchForm
-                label="Name"
-                placeholder="e.g. Apocalypse Now"
-                value={term}
-                onChange={setTerm}
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    handleSearch(fetchMoviesByTerm, term)
-                    setTerm('')
-                }}
-            />
-
+            {/* Search form in table format */}
+            <table className="search-table">
+                <tbody>
+                    <tr>
+                        <td><label>Name:</label></td>
+                        <td><input
+                            type="text"
+                            value={term}
+                            onChange={(e) => setTerm(e.target.value)}
+                            placeholder="e.g. Apocalypse Now"
+                        /></td>
+                        <td><button
+                            type="submit"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                handleSearchWithParams(fetchMoviesByTerm, term)
+                                setTerm('')
+                            }}
+                        >Search</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
             <h3>Or browse by:</h3>
 
-            <SearchForm
-                label="Year"
-                placeholder="e.g. 2021"
-                value={year}
-                onChange={setYear}
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    handleSearch(fetchMoviesByYear, year)
-                    setYear('')
-                }}
-            />
-
-            <SearchForm
-                label="Language code"
-                placeholder="e.g. 'sv' for Swedish"
-                value={language}
-                onChange={setLanguage}
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    handleSearch(fetchMoviesByLanguage, language)
-                    setLanguage('')
-                }}
-            />
-
-            <GenreSelect
-                selectedGenre={genre}
-                onGenreChange={setGenre}
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    handleSearch(fetchMoviesByGenre, genre)
-                    setGenre('')
-                }}
-            />
+            <table className="browse-table">
+                <tbody>
+                    <tr>
+                        <td><label>Year:</label></td>
+                        <td><input
+                            type="text"
+                            value={year}
+                            onChange={(e) => setYear(e.target.value)}
+                            placeholder="e.g. 2021"
+                        /></td>
+                        <td><button
+                            type="submit"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                handleSearchWithParams(fetchMoviesByYear, year)
+                                setYear('')
+                            }}
+                        >Search</button></td>
+                    </tr>
+                    <tr>
+                        <td><label>Language code:</label></td>
+                        <td><input
+                            type="text"
+                            value={language}
+                            onChange={(e) => setLanguage(e.target.value)}
+                            placeholder="e.g. 'sv' for Swedish"
+                        /></td>
+                        <td><button
+                            type="submit"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                handleSearchWithParams(fetchMoviesByLanguage, language)
+                                setLanguage('')
+                            }}
+                        >Search</button></td>
+                    </tr>
+                    <tr>
+                        <td><label>Genre:</label></td>
+                        <td><GenreSelect
+                            selectedGenre={genre}
+                            onGenreChange={setGenre}
+                        /></td>
+                        <td><button
+                            type="submit"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                handleSearchWithParams(fetchMoviesByGenre, genre)
+                                setGenre('')
+                            }}
+                        >Search</button></td>
+                    </tr>
+                </tbody>
+            </table>
 
             {loading && <p>Loading...</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            <MovieList movies={movies} />
+            {/* Conditionally render the title based on isInitialLoad */}
+            <MovieList movies={movies} title={isInitialLoad ? "Top Current Movies" : "Top 20 Search Results"} />
         </div>
     )
 }

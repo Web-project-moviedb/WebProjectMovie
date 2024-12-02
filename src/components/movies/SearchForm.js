@@ -6,7 +6,7 @@ import React from 'react';
 
 function SearchForm({ label, placeholder, value, onChange, onSubmit }) {
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className="search-form">
             <label>
                 {label}:
                 <input
@@ -14,9 +14,10 @@ function SearchForm({ label, placeholder, value, onChange, onSubmit }) {
                     value={value}
                     onChange={(e) => onChange(e.target.value)}
                     placeholder={placeholder}
+                    className="search-form__input"
                 />
             </label>
-            <button type="submit">Search</button>
+            <button type="submit" className="search-form__button">Search</button>
         </form>
     );
 }
