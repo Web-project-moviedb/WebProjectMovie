@@ -130,7 +130,7 @@ function Home() {
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
             {/* Conditionally render the title based on isInitialLoad */}
-            <MovieList movies={movies} title={isInitialLoad ? "Top Current Movies" : "Top 20 Search Results"} />
+            <MovieList movies={movies} title={isInitialLoad ? "Top 20 Current Movies" : "Top 20 Search Results"} />
         </div>
     )
 }

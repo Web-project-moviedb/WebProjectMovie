@@ -19,7 +19,7 @@ function SearchForm({ label, placeholder, value, onChange, onSubmit }) {
             </label>
             <button type="submit" className="search-form__button">Search</button>
         </form>
-    );
+    )
 }
 
-export default SearchForm;
+export default SearchForm
