@@ -77,7 +77,7 @@ function ReviewsByUser({ id }) {
     return (
         <div>
             {reviews.length === 0 ? (
-                <p>No reviews found for this user.</p>
+                <p>No reviews found under this user.</p>
             ) : (
                 <table>
                     <thead>

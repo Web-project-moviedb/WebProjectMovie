@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { renderStars } from '../../utils/helperFunctions.js'
+import { Link } from 'react-router-dom'
 
 function ReviewByMovie ({reviews}) {
 
@@ -10,7 +11,7 @@ function ReviewByMovie ({reviews}) {
             const dateA = new Date(a.created_at);
             const dateB = new Date(b.created_at);
             return dateB - dateA; // Compare dates: newest first
-        });
+        })
         setSortedReviews(sorted);
     }, [reviews])   // run effect when reviews change
 
@@ -21,29 +22,25 @@ function ReviewByMovie ({reviews}) {
             {reviews.length === 0 ? (
                 <p>No reviews available.</p>
             ) : (
-                <table id="reviews-by-movie-table">
-                    <thead>
-                        <tr>
-                            <th>Stars</th>
-                            <th>Reviewer</th>
-                            <th>Title</th>
-                            <th>Review</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div className="reviews-container">
                     {sortedReviews.map((review) => (
-                            <tr key={review.id}>
-                                <td>{renderStars(review.stars)}</td>
-                                <td>{review.uname}</td>
-                                <td>{review.review_title}</td>
-                                <td>{review.review_body}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            ) 
-            }
-
+                        <div key={review.id} className="review-box">
+                            <div className="review-item">
+                                {renderStars(review.stars)}
+                            </div>
+                            <div className="review-item">
+                                <strong>{review.review_title}</strong>
+                            </div>
+                            <div className="review-item">
+                                {review.review_body}
+                            </div>
+                            <div className="review-item">
+                                <i>Review by<Link to={`/account/${review.account_id}`}>{review.uname}</Link></i>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
