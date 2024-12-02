@@ -35,7 +35,12 @@ export default function AddMovieToGroup({ movie }) {
         addMovieToGroup(movie.id, selectedGroup)
     }
     if (!user.id) {
-        return <p>Please log in to add a movie to a group</p>
+        return (
+            <div className="add-movie-to-group-container">
+                <SectionHeader text='Pin Movie to Group' />
+                <p><i>Log in to pin this movie to a group</i></p>
+            </div>
+    )
     }
     return (
         <>

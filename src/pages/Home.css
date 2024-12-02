@@ -5,6 +5,10 @@
     padding: 20px;
 }
 
+.home-page h3 {
+    margin-top: 30px;
+}
+
 .browse-table, .search-table {
     border: none;
     table-layout: fixed;
@@ -39,9 +43,10 @@
     border-radius: 3px;
 }
 
-.home-page h3 {
-    margin-top: 30px;
-
+.home-page button {
+    padding: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 }
 
 .no-bullets {
@@ -62,6 +67,7 @@
 
 .movie-item {
     padding: 16px;
+    padding-top: 5px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     width: calc(25% - 16px); /* 4 columns layout, adjusts based on available space */
@@ -88,5 +94,17 @@
 @media (max-width: 480px) {
     .movie-item {
         width: 100%; /* Single column layout on very small screens */
+    }
+
+    .browse-table td:first-child, .search-table td:first-child {
+        width: 25%; /* First column (label) is narrower */
+    }
+    
+    .browse-table td:nth-child(2), .search-table td:nth-child(2) {
+        width: 60%; /* Middle column (input) takes more space */
+    }
+    
+    .browse-table td:last-child, .search-table td:last-child {
+        width: 15%; /* Last column (button) is narrower */
     }
 }
