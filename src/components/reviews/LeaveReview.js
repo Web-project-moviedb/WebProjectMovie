@@ -53,18 +53,21 @@ export default function LeaveReview({ movieId, reviews, refreshReviews }) {
     
             <form className="review-form" onSubmit={handleSubmit}>
                 <div className="review-fields">
-                    <div className="rating-field">
-                        <label htmlFor="rating">Rating (1-5):</label>
-                        <input
-                            id="rating"
-                            type="number"
-                            min="1"
-                            max="5"
-                            value={review.stars}
-                            onChange={(e) => setReview({ ...review, stars: parseInt(e.target.value, 10) })}
-                            required
-                        />
-                    </div>
+
+                <div className="rating-field">
+                    <label htmlFor="rating">Stars:</label>
+                    <input
+                        id="rating"
+                        type="number"
+                        placeholder="1-5"
+                        min="1"
+                        max="5"
+                        value={review.stars || ""}
+                        onChange={(e) => setReview({ ...review, stars: parseInt(e.target.value, 10) })}
+                        required
+                    />
+                </div>
+
                     <div className="review-title-field">
                         <label htmlFor="review_title">Review Title:</label>
                         <textarea
@@ -90,7 +93,7 @@ export default function LeaveReview({ movieId, reviews, refreshReviews }) {
                 {hasReviewed && <p><i>You have already reviewed this movie. To leave a new review, please delete your existing review from your account page.</i></p>}
     
                 <button type="submit" disabled={!user.id || hasReviewed}>
-                    Submit
+                    Submit Review
                 </button>
             </form>
         </div>

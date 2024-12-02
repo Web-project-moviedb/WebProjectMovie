@@ -73,7 +73,7 @@ const AddToFavoritesButton = ({ movie }) => {
         return (
             <div>
                 <h3>Add Movie to Favorites</h3>
-                <button onClick={handleAddFavorite} disabled> Login to add in favorites </button>
+                <button onClick={handleAddFavorite} disabled> Log in to add to your favorites </button>
             </div>
         )
     }
