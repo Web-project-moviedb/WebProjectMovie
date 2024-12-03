@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { SectionHeader } from "../header/Header";
 import { UseUser } from "../../context/UseUser";
 
 const url = process.env.REACT_APP_API_URL
@@ -62,7 +62,7 @@ const AddToFavoritesButton = ({ movie }) => {
         if(token && user){
         return (
             <div>
-                <h3>Add Movie to Favorites</h3>
+                <SectionHeader text="Add Movie to Favorites" />
                 <button onClick={handleAddFavorite} 
                 disabled={isFavorites}> {!isFavorites ? "Add To Favorites" : "Already in favorites"} </button>
                 {error && <p style={{ color: "red" }}>{error}</p>}
@@ -72,7 +72,7 @@ const AddToFavoritesButton = ({ movie }) => {
     } else {
         return (
             <div>
-                <h3>Add Movie to Favorites</h3>
+                <SectionHeader text="Add Movie to Favorites" />
                 <button onClick={handleAddFavorite} disabled> Log in to add to your favorites </button>
             </div>
         )

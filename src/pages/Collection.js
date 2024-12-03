@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { fetchCollection } from '../api/fetchTMDB.js'
 import CollectionDetails from '../components/movies/CollectionDetails.js'
+import './Collection.css'
 
 function Collection() {
     const { id } = useParams();  // collection ID from URL
