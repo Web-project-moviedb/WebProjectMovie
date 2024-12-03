@@ -73,8 +73,7 @@ export default function AllGroups({ groups }) {
     if (error) return <p>{error}</p>
 
     return (
-        <>
-            <table>
+            <table className="groups-table">
                 <thead>
                     <tr>
                         <th>Group Name</th>
@@ -98,6 +97,5 @@ export default function AllGroups({ groups }) {
                     ))}
                 </tbody>
             </table>
-        </>
     )
 }

@@ -1,0 +1,87 @@
+/* Groups Container */
+.groups-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+}
+
+/* Groups Table */
+.groups-table {
+    width: 90%;
+    max-width: 800px;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top: 20px;
+    border-style: hidden;
+}
+
+.groups-table tr th, .groups-table tr td {
+    padding: 8px 12px;
+    border-style: hidden;
+}
+
+/* Create Group Container */
+.create-group-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Create Group Form */
+.create-group-form {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.create-group-form label {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.create-group-form input[type="text"],
+.create-group-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.create-group-form textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.create-group-form button {
+    align-self: flex-start;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.create-group-form button:hover {
+    background-color: #eaeaea;
+}
+
+/* Responsiivisuus */
+@media (max-width: 768px) {
+    .groups-table {
+        width: 100%;
+    }
+
+    .create-group-form {
+        max-width: 100%;
+    }
+}
