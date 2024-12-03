@@ -1,3 +1,7 @@
+.movie-text {
+    max-width: 1000px;
+}
+
 .movie-actions {
     display: flex;
     flex-direction: row;
