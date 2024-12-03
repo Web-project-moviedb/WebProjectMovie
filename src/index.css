@@ -4,13 +4,19 @@
     box-sizing: border-box;
 }
 
+a {
+    color: #5d2062;
+}
+
 .main-wrapper {
     margin: 10px;
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -18,6 +24,9 @@ html, body {
 body {
     font-family: 'Georgia', sans-serif;
     background-color: #eff3f6;
+    display: flex;
+    flex-direction: column; /* Use flex to stack content vertically */
+    height: 100%;
 }
 
 button {

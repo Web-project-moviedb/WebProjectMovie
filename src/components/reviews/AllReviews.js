@@ -64,7 +64,7 @@ function ReviewList({ reviews, movies }) {
                                     )}
                                 </td>
                                 <td>{renderStars(review.stars)}</td>
-                                <td>{review.uname}</td>
+                                <td><Link to={`/account/${review.account_id}`}>{review.uname}</Link></td>
                                 <td>{review.review_title}</td>
                                 <td>{review.review_body}</td>
                                 <td>{formatTimestamp(review.created_at)}</td>
