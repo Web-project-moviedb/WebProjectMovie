@@ -92,7 +92,8 @@ const joinGroup = async (userId, groupId) => {
             group_id: groupId
         }, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         })
         return response
@@ -106,7 +107,8 @@ const removeUserFromGroup = async (invite_id) => {
     try {
         const response = await axios.delete(url + '/user/invite/' + invite_id, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         })
         return response
@@ -120,7 +122,8 @@ const deleteGroup = async (groupId) => {
     try {
         const response = await axios.delete(url + '/group/' + groupId, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         })
         return response
@@ -136,7 +139,8 @@ const deletePinnedMovie = async (movie_id, group_id) => {
         const pinnedMovie = pinnedMovies.data.find(movie => movie.movie_id === movie_id)
         const response = await axios(url + '/pinned/movie/' + pinnedMovie.id, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         })
         return response
@@ -153,7 +157,8 @@ const addMovieToGroup = async (movie_id, group_id) => {
             movie_id: movie_id
         }, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         })
         if (response.status === 200) {
@@ -169,7 +174,8 @@ const acceptInvite = async (invite_id) => {
     try {
         const response = await axios.put(url + '/user/invite/' + invite_id, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         })
         return response
@@ -182,7 +188,8 @@ const deletePinnedShowtime = async (showtime_id) => {
     try {
         const response = await axios.delete(url + '/pinned/showtime/' + showtime_id, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         })
         return response

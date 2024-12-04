@@ -2,7 +2,7 @@ import './Groups.css'
 import React, { useEffect, useState } from "react"
 import AllGroups from '../components/groups/AllGroups.js'
 import { MainHeader, SectionHeader } from '../components/header/Header.js'
-import { createGroup, fetchAllGroups } from "../utils/groupFunctions.js"
+import { createGroup, fetchAllGroups } from "../api/groupApi.js"
 import CreateGroupForm from "../components/groups/CreateGroupForm.js"
 import './Groups.css'
 

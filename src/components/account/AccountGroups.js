@@ -59,7 +59,11 @@ function ProfileGroupList({ id }) {
     const deleteGroup = async (id) => {
 
         try {
-            await axios.delete(url + "/user/invite/" + id)
+            await axios.delete(url + "/user/invite/" + id, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
             setGroups(groups.filter(a => a.id !== id))
         }
         catch (error) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { UseUser } from '../../context/UseUser.js'
-import { fetchAllGroupsByUser, addMovieToGroup } from '../../utils/groupFunctions'
+import { fetchAllGroupsByUser, addMovieToGroup } from '../../api/groupApi.js'
 import { SectionHeader } from '../header/Header.js'
 
 export default function AddMovieToGroup({ movie }) {

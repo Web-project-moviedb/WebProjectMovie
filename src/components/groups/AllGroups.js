@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react"
 import { Link } from 'react-router-dom'
-import { fetchAllGroupsByUser, joinGroup, removeUserFromGroup } from "../../utils/groupFunctions.js"
+import { fetchAllGroupsByUser, joinGroup, removeUserFromGroup } from "../../api/groupApi.js"
 import { UseUser } from "../../context/UseUser.js"
 
 // Return all groups in a list

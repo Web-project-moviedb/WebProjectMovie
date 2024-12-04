@@ -113,7 +113,8 @@ const ShowTimes = () => {
         method: 'post',
         url: posturl,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         data: {
           movie_id: `${showid}`,

@@ -28,7 +28,7 @@ const postRegistration = async (req, res, next) => {
         const user = userFromDb.rows[0]
         return res.status(201).json(createUserObject(user.id, user.username))
     } catch (error) {
-        console.log(error)
+        return next(error)
     }
 }
 
@@ -52,10 +52,10 @@ const postLogin = async (req, res, next) => {
         const user = userFromDb.rows[0]
         if (!await compare(req.body.password, user.password)) return next(new ApiError(invalid_credentials_message, 401))  // Passwords do not match
 
-        const token = sign({username: req.body.username}, process.env.JWT_SECRET_KEY, {expiresIn: '1m'})
+        const token = sign({username: req.body.username}, process.env.JWT_SECRET_KEY, {expiresIn: '2h'})
         return res.status(200).json(createUserObject(user.id, user.uname, token))
     } catch (error) {
-        console.log(error)
+        return next(error)
     }
 }
 

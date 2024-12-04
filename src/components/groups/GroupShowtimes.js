@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SectionHeader } from '../header/Header.js'
 import { fetchFinnkinoDataById } from '../../api/fetchFinnkino.js'
-import { deletePinnedShowtime } from '../../utils/groupFunctions.js'
+import { deletePinnedShowtime } from '../../api/groupApi.js'
 
 export default function GroupShowtimes({ group_id }) {
     const [showtimes, setShowtimes] = useState([])
