@@ -51,7 +51,7 @@ a.active {
     font-weight: bold;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 620px) {
     .navbar {
         padding: 5px;
         height: auto;
