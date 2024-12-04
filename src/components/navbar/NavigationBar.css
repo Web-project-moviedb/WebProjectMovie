@@ -42,9 +42,10 @@
     align-items: center;
 }
 
-a {
+.nav-links a, .nav-user a {
     text-decoration: none;
-    padding: 5px 10px;
+    color: #5d2062;
+    padding: 10px;
 }
 
 a.active {
