@@ -15,6 +15,8 @@ const NavigationBar = () => {
     useEffect(() => {
         if (token) {
             setLogged(true)
+        } else {
+            setLogged(false)    // Set logged to false when token is removed
         }
     }, [token])
 
@@ -25,6 +27,7 @@ const NavigationBar = () => {
         closeMenu()
     }
 
+    // Function to toggle the menu
     const toggleMenu = () => {
         setMenuOpen(!menuOpen)
     }

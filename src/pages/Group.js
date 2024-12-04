@@ -106,6 +106,9 @@ export default function Group() {
 
     // Delete group
     const handleDeleteGroup = async () => {
+        // Confirm group deletion
+        const confirmDelete = window.confirm('Are you sure you want to delete this group?')
+        if (!confirmDelete) return
         try {
             await deleteGroup(id)
             navigate('/groups')

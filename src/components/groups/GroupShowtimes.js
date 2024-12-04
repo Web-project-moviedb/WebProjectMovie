@@ -36,7 +36,6 @@ export default function GroupShowtimes({ group_id }) {
         try {
             const response = await deletePinnedShowtime(showtime_id)
             if (response.status === 200) {
-                alert('Showtime deleted')
                 setShowtimes(showtimes.filter(showtime => showtime.id !== showtime_id))
             }
         } catch (error) {

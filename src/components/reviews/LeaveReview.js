@@ -46,9 +46,11 @@ export default function LeaveReview({ movieId, reviews, refreshReviews }) {
         }
     }
 
+    if (!user.id) return <p><i>You must be logged in to leave a review.</i></p>
+    if (hasReviewed) return <p><i>You have already reviewed this movie. To leave a new review, please delete your existing review from your account page.</i></p>
+    
     return (
         <div>
-            <br /><h3>Leave a Review</h3>
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
             <form className="review-form" onSubmit={handleSubmit}>

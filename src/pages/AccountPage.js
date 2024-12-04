@@ -9,33 +9,44 @@ import ProfileGroupList from "../components/account/AccountGroups.js"
 function ProfilePage() {
     const { user, token } = UseUser()
     const { id } = useParams()
+    const [profileName, setProfileName] = useState('Profile')
     const navigate = useNavigate()
 
-    useEffect(() => {
+    const url = process.env.REACT_APP_API_URL
 
+    useEffect(() => {
         if (!token) {
             navigate('/error')
         }
     }, [token, navigate])
 
+    useEffect(() => {
+        if (id) {
+            const getUsername = async () => {
+                try {
+                    const response = await fetch(url + '/user/username/' + id)
+                    const data = await response.json()
+                    const username = data[0].uname
+                    setProfileName(username)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            getUsername()
+        }
+    }, [id, url])
+
 
     const checkUserIdforDelete = () => {
         if (parseInt(user.id) === parseInt(id)) {
-            return (
-                <Link to="/delete">Delete account</Link>
-            )
+            return <Link to="/delete">Delete account</Link>
         }
-        else {
-            return (
-                <></>
-            )
-        }
-
     }
+
 
     return (
         <div>
-            <MainHeader text='Profile' /> {/* Add profilename to present this as eg "Profilename Profile" */}
+            <MainHeader text={profileName} /> {/* Add profilename to present this as eg "Profilename Profile" */}
             <SectionHeader text='Reviews' />
             <ReviewsByUser id={id} />
             <SectionHeader text='Favorites' />

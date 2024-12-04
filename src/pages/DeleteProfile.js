@@ -7,13 +7,13 @@ function DeleteProfile() {
 
     const default_url = process.env.REACT_APP_API_URL
     const { logout, user } = UseUser()
-    const navigate = useNavigate()
     const [deletePassword, setDeletePassword] = useState('')
+    const navigate = useNavigate()
 
-
+    
     const deleteFunction = async () => {
         try {
-            const response = await axios({
+            await axios({
                 method: 'delete',
                 url: default_url + '/user/delete',
                 data: {
@@ -23,17 +23,14 @@ function DeleteProfile() {
                 }
 
             })
-            console.log(response)
             await logout()
             navigate('/')
             alert('Account deleted')
-            //return response
         }
         catch (error) {
             console.log('Error', error)
             alert("Incorrect password")
             setDeletePassword('')
-            //throw error
         }
 
     }
