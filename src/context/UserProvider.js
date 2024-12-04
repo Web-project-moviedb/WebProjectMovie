@@ -7,8 +7,8 @@ const url = process.env.REACT_APP_API_URL
 
 export default function UserProvider({ children }) {
     // Get user and token from session storage
-    const storedUser = sessionStorage.getItem('user')
-    const storedToken = sessionStorage.getItem('token')
+    const storedUser = localStorage.getItem('user')
+    const storedToken = localStorage.getItem('token')
 
     // Initialize user and token states with session storage values
     const [user, setUser] = useState(() => {
@@ -21,15 +21,15 @@ export default function UserProvider({ children }) {
     useEffect(() => {
         // Refresh the session storage when user or token changes
         if (user.id) {
-            sessionStorage.setItem('user', JSON.stringify(user))
+            localStorage.setItem('user', JSON.stringify(user))
         } else {
-            sessionStorage.removeItem('user')
+            localStorage.removeItem('user')
         }
 
         if (token) {
-            sessionStorage.setItem('token', token)
+            localStorage.setItem('token', token)
         } else {
-            sessionStorage.removeItem('token')
+            localStorage.removeItem('token')
         }
     }, [user, token])
 
@@ -66,11 +66,11 @@ export default function UserProvider({ children }) {
     }
 
     // Logout user
-    const logout = () => {
-        setUser({ id: null, username: '' }) // Set user and password fields empty
+    const logout = async () => {
+        setUser({ id: null, username: '' }) // Set id and username fields empty
         setToken(null)                      // Set token to null
-        sessionStorage.removeItem('user')   // Remove user from session storage
-        sessionStorage.removeItem('token')  // Remove token from session storage
+        localStorage.removeItem('user')   // Remove user from session storage
+        localStorage.removeItem('token')  // Remove token from session storage
     }
 
     return (

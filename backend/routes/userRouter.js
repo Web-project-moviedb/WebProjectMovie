@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { postRegistration, postLogin, getAllGroupsByUser, deleteUser, postInvite, acceptInvite, declineInvite, getAllUsersToMembers } from '../controllers/UserController.js'
+import { postRegistration, postLogin, getAllGroupsByUser, deleteUser, postInvite, acceptInvite, declineInvite, getAllUsersToMembers, getUsernameById } from '../controllers/UserController.js'
 
 const router = Router()
 
@@ -15,5 +15,6 @@ router.delete('/invite/:id', declineInvite)
 
 //members list
 router.get('/members', getAllUsersToMembers)
+router.get('/username/:id', getUsernameById)
 
 export default router

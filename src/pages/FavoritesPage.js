@@ -13,15 +13,11 @@ function FavoritesPage() {
 
     useEffect(() => {
         const fetchFavorites = async () => {
-
-            setLoading(true)
-            setError(null)
+            if (!id) return
 
             try {
-                const response = await fetch(url + `/favorites/${id}`)
-                if (!response.ok) {
-                    throw new Error("Failed to fetch favorites")
-                }
+                const response = await fetch(url + '/favorites/' + id)
+                if (!response.ok) throw new Error("Failed to fetch favorites")
                 const data = await response.json()
                 setFavorites(data)
                 setUserName(data[0]?.uname || "No user found")

@@ -10,6 +10,7 @@ export default function CreateGroupForm({ onCreateGroup }) {
     if (!user.id) {
         return <div>You must be logged in to create a group</div>
     }
+    
     const handleCreateGroup = (e) => {
         e.preventDefault()
         if (groupName === '' || groupDescription === '') {

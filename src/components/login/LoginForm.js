@@ -8,7 +8,7 @@ export default function LoginForm({ user, setUser, handleSubmit, authenticationM
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Username</label>
-                    <input type='text' value={user.username || ''} onChange={e => setUser({ ...user, username: e.target.value })} />
+                    <input type='text' value={user.username || ''} onChange={e => setUser({ ...user, username: e.target.value })} autoFocus/>
                 </div>
                 <div>
                     <label>Password</label>

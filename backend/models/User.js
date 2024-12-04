@@ -38,6 +38,10 @@ const deleteInvite = async (invite_id) => {
 
 // members list
 const selectAllUsersToMembers = async () => {
-    return await pool.query('SELECT id,uname FROM account')
+    return await pool.query('SELECT id, uname FROM account')
 }
-export { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, updateInvite, deleteInvite, selectAllUsersToMembers }
+
+const selectUsernameById = async (id) => {
+    return await pool.query('SELECT uname FROM account WHERE id = $1', [id])
+}
+export { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, updateInvite, deleteInvite, selectAllUsersToMembers, selectUsernameById }

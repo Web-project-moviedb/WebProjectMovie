@@ -21,6 +21,7 @@ const ShowTimes = () => {
   const [groups, setGroups] = useState([])
   const [selectedGroup, setSelectedGroup] = useState('')
   const [search, setSearch] = useState(false)
+  const [groupShowtimes, setGroupShowtimes] = useState([])
 
   useEffect(() => {
     const getGroups = async () => {
@@ -28,7 +29,7 @@ const ShowTimes = () => {
       try {
         const response = await axios.get(url + "/user/group/" + user.id)
         const groups = response.data.filter(group => group.pending === false) // check that user is accepted to group
-        setGroups(groups);
+        setGroups(groups)
       }
       catch (error) {
         console.log(error)
@@ -37,6 +38,28 @@ const ShowTimes = () => {
     }
     getGroups()
   }, [user.id])
+
+  useEffect(() => {
+    if (!selectedGroup) return
+
+    const getGroupShowtimes = async (groupId) => {
+      try {
+        const response = await axios.get(url + "/pinned/showtime/" + groupId)
+        setGroupShowtimes(response.data)
+      } catch (error) {
+        console.log(error)
+        throw error
+      }
+    }
+    getGroupShowtimes(selectedGroup)
+  }, [selectedGroup])
+
+  const checkGroupShowtimes = (showId, areaId, showDate, showTime) => {
+    if (groupShowtimes.some(showtime => parseInt(showtime.movie_id) === parseInt(showId))) {
+      return <button type="button" disabled>Pinned</button>
+    }
+    return <button type="button" onClick={() => handleShowtimeAdd(showId, areaId, showDate, showTime)}>Pin</button>
+  }
 
   // search for showtimes. Area and date are required
   const handleSearch = async (e) => {
@@ -72,16 +95,19 @@ const ShowTimes = () => {
       setMovieName('')
     }
   }
+
   const handleShowtimeAdd = async (showid, areaid, showdate, showtime) => {
     if (!user.id) return
     if (!selectedGroup) {
-      alert("please select group first")
+      alert("Please select group first")
       return
     }
+
     const showdateFormat = showdate.split(':').reverse().join('-')
     const showtimeFormat = showtime.toString()
     const showFullDate = [showdateFormat, showtimeFormat].join('T')
     const posturl = url + '/pinned/showtime/' + selectedGroup
+
     try {
       const response = await axios({
         method: 'post',
@@ -95,16 +121,16 @@ const ShowTimes = () => {
           date: `${showFullDate}`
         }
       })
+
       if (response.status === 200) {
-        alert('Show added to a Group')
+        setGroupShowtimes([...groupShowtimes, { movie_id: showid, area_id: areaid, date: showFullDate }])
       }
     } catch (error) {
       if (error.status === 409) {
-        alert('Show already pinned to this Group')
+        alert('Show already pinned to this Group')  // Should not happen, prevented by checking if show is already pinned in checkGroupShowtimes
         return
       }
     }
-
   }
 
 
@@ -183,7 +209,7 @@ const ShowTimes = () => {
               <td>{show.theatreAuditorium}</td>
               <td>{show.movieName}</td>
               <td>
-                {token ? <button type="button" onClick={() => handleShowtimeAdd(show.showId, show.areaId, show.showDate, show.showTime)}>Pin</button> : <></>}
+                {token && checkGroupShowtimes(show.showId, show.areaId, show.showDate, show.showTime)}
               </td>
             </tr>
           ))}
