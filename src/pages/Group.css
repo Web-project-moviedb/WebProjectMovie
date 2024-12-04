@@ -1,0 +1,38 @@
+.group-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+}
+
+.group-movies-container,
+.group-members-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.group-members-table,
+.group-movies-table {
+    width: 90%;
+    max-width: 800px;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top: 20px;
+    border-style: hidden;
+}
+
+.group-members-table tr td,
+.group-movies-table tr td {
+    border-collapse: collapse;
+    border-style: hidden;
+}
+
+.group-showtimes {
+
+}

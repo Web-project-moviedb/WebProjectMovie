@@ -1,5 +1,6 @@
 import React from "react"
 import { UseUser } from "../../context/UseUser.js"
+import { SectionHeader } from "../header/Header.js"
 
 
 export default function CreateGroupForm({ onCreateGroup }) {
@@ -22,16 +23,19 @@ export default function CreateGroupForm({ onCreateGroup }) {
     }
 
     return (
-        <form onSubmit={handleCreateGroup}>
-            <label>
-                Group Name:
+        <div className="create-group-container">
+            <SectionHeader text={"Create Group"} />
+            <form className="create-group-form" onSubmit={handleCreateGroup}>
+                <label>
+                    Group Name:
+                </label>
                 <input type='text' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
-            </label>
-            <label>
-                Description:
-                <textarea value={groupDescription} onChange={(e) => setGroupDescription(e.target.value)} />
-            </label>
-            <button type='submit'>Create Group</button>
-        </form>
+                <label>
+                    Description:
+                </label>
+                <textarea id="group-description-input-textarea" value={groupDescription} onChange={(e) => setGroupDescription(e.target.value)} />
+                <button type='submit'>Create Group</button>
+            </form>
+        </div>
     )
 }

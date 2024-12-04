@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { SectionHeader } from '../header/Header.js'
 import { fetchFinnkinoDataById } from '../../api/fetchFinnkino.js'
 import { deletePinnedShowtime } from '../../utils/groupFunctions.js'
 
@@ -48,7 +49,8 @@ export default function GroupShowtimes({ group_id }) {
     if (showtimes.length === 0) return <p>No pinned showtimes...</p>
 
     return (
-        <>
+        <div className="group-showtimes">
+            <SectionHeader text="Pinned Showtimes" />
             <table>
                 <thead>
                     <tr>
@@ -78,6 +80,6 @@ export default function GroupShowtimes({ group_id }) {
                     ))}
                 </tbody>
             </table>
-        </>
+        </div>
     )
 }
