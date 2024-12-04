@@ -39,6 +39,7 @@ button {
     border-radius: 3px;
     margin: 5px;
     background-color: #f4f7fa;
+    cursor: pointer;
 }
 
 /* styling for input fields */ 

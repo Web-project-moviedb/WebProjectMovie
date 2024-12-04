@@ -1,3 +1,4 @@
+import './Groups.css'
 import React, { useEffect, useState } from "react"
 import AllGroups from '../components/groups/AllGroups.js'
 import { MainHeader, SectionHeader } from '../components/header/Header.js'
@@ -40,10 +41,9 @@ export default function Groups() {
     }
 
     return (
-        <div>
+        <div className="groups-container">
             <MainHeader text={'Groups'} />
             <AllGroups groups={groups} />
-            <SectionHeader text={'Create Group'} />
             <CreateGroupForm onCreateGroup={handleCreateGroup} />
         </div>
     )
