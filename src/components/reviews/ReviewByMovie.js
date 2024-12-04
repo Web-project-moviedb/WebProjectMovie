@@ -35,7 +35,7 @@ function ReviewByMovie ({reviews}) {
                                 {review.review_body}
                             </div>
                             <div className="review-item">
-                                <i>Review by<Link to={`/account/${review.account_id}`}>{review.uname}</Link></i>
+                                <i>Review by <Link to={`/account/${review.account_id}`}>{review.uname}</Link></i>
                             </div>
                         </div>
                     ))}
