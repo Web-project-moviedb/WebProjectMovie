@@ -123,3 +123,6 @@ Content-Type: application/json
     "area_id": "1018",
     "date": "27/11/2024"
 }
+
+### GET USERNAME BY ID
+GET http://localhost:3001/user/username/1 HTTP/1.1

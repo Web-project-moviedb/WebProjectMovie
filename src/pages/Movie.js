@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import { fetchMovieById } from '../api/fetchTMDB.js'
+import { SectionHeader } from '../components/header/Header.js'
 import MovieDetails from '../components/movies/MovieDetails.js'
 import ReviewByMovie from '../components/reviews/ReviewByMovie.js'
 import LeaveReview from '../components/reviews/LeaveReview.js'
@@ -75,6 +76,7 @@ function Movie() {
                     <AddToFavoritesButton movie={movie} />   {/* pass movie data to AddToFavoritesButton */}
                     <AddMovieToGroup movie={movie} />   {/* pass movie data to AddMovieToGroup */}
                 </div>
+                <SectionHeader text='Leave a Review' />
                 <LeaveReview movieId={id} reviews={reviews} refreshReviews={refreshReviews}/>   {/* pass along movie id refreshReviews function to LeaveReview*/}
                 {reviews.length > 0 && <ReviewByMovie reviews={reviews} />}     {/* pass review data to ReviewByMovie */}
             </center>

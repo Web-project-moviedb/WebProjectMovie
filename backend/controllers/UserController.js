@@ -1,5 +1,5 @@
 import { hash, compare } from 'bcrypt'
-import { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, deleteInvite, updateInvite, selectAllUsersToMembers } from '../models/User.js'
+import { insertUser, selectUserByUsername, deleteUserById, selectAllGroupsByUser, insertInvite, deleteInvite, updateInvite, selectAllUsersToMembers, selectUsernameById } from '../models/User.js'
 import { ApiError } from '../helpers/ApiError.js'
 import jwt from 'jsonwebtoken'
 
@@ -52,7 +52,7 @@ const postLogin = async (req, res, next) => {
         const user = userFromDb.rows[0]
         if (!await compare(req.body.password, user.password)) return next(new ApiError(invalid_credentials_message, 401))  // Passwords do not match
 
-        const token = sign(req.body.username, process.env.JWT_SECRET_KEY)
+        const token = sign({username: req.body.username}, process.env.JWT_SECRET_KEY, {expiresIn: '1m'})
         return res.status(200).json(createUserObject(user.id, user.uname, token))
     } catch (error) {
         console.log(error)
@@ -135,5 +135,14 @@ const getAllUsersToMembers = async (req, res, next) => {
 
 }
 
+const getUsernameById = async (req, res, next) => {
+    try {
+        const response = await selectUsernameById(req.params.id)
+        return res.status(200).json(response.rows)
+    } catch (error) {
+        console.log(error)
+        return next(error)
+    }
+}
 
-export { postRegistration, postLogin, deleteUser, getAllGroupsByUser, postInvite, acceptInvite, declineInvite, getAllUsersToMembers }
+export { postRegistration, postLogin, deleteUser, getAllGroupsByUser, postInvite, acceptInvite, declineInvite, getAllUsersToMembers, getUsernameById }

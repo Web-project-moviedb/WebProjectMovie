@@ -1,8 +1,9 @@
+import './Group.css'
 import React, { useState, useEffect, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
 import { fetchMovieById } from '../api/fetchTMDB.js'
-import { MainHeader, SectionHeader } from '../components/header/Header.js'
+import { MainHeader } from '../components/header/Header.js'
 import { fetchGroupMembers, fetchAllGroupsByUser, removeUserFromGroup, deleteGroup, fetchGroupById, deletePinnedMovie, acceptInvite, fetchGroupMovies } from '../utils/groupFunctions.js'
 import GroupDescription from '../components/groups/GroupDescription.js'
 import GroupMembers from '../components/groups/GroupMembers.js'
@@ -106,6 +107,9 @@ export default function Group() {
 
     // Delete group
     const handleDeleteGroup = async () => {
+        // Confirm group deletion
+        const confirmDelete = window.confirm('Are you sure you want to delete this group?')
+        if (!confirmDelete) return
         try {
             await deleteGroup(id)
             navigate('/groups')
@@ -162,15 +166,11 @@ export default function Group() {
     }
 
     return (
-        <div>
+        <div className='group-page'>
             <MainHeader text={group.group_name} />
-            <SectionHeader text={'Description'} />
             <GroupDescription description={group.description} />
-            <SectionHeader text={'Members'} />
             <GroupMembers groupUsers={groupUsers} isOwner={isOwner} ownerId={group.owner_id} onRemoveUser={handleRemoveUser} onAcceptUser={handleAcceptUser} />
-            <SectionHeader text={'Movies'} />
             <GroupMovies movies={movies} onRemoveMovie={handleRemoveMovie} />
-            <SectionHeader text={'Showtimes'} />
             <GroupShowtimes group_id={id} />
             {isOwner && <button type='button' className="major-delete-button" onClick={handleDeleteGroup}>Delete Group</button>}
         </div >
