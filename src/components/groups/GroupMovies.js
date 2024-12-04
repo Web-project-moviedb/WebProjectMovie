@@ -3,7 +3,14 @@ import { SectionHeader } from "../header/Header"
 import { Link } from 'react-router-dom'
 
 export default function GroupMovies({ movies, onRemoveMovie }) {
-    if (movies.length === 0) return <p>No pinned movies...</p>
+    if (movies.length === 0) return (
+        <>
+            <div className="group-section-container">
+                <SectionHeader text='Pinned Movies' />
+                <p><i>This group has not pinned any movies!</i></p>
+            </div>
+        </>
+    )
 
     return (
         <div className="group-movies-container">

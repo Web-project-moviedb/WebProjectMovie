@@ -43,9 +43,28 @@ export default function GroupShowtimes({ group_id }) {
         }
     }
 
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>{error}</p>
-    if (showtimes.length === 0) return <p>This group has not pinned any showtimes!</p>
+    if (loading) return (
+        <>
+            <SectionHeader text="Pinned Showtimes" />
+            <p>Loading pinned showtimes...</p>
+        </>
+    )
+
+    if (error) return (
+        <>
+            <SectionHeader text="Pinned Showtimes" />
+            <p>{error}</p>
+        </>
+    )
+
+    if (showtimes.length === 0) return (
+        <>
+            <SectionHeader text="Pinned Showtimes" />
+            <div className="group-section-container">
+                <p><i>This group has not pinned any showtimes!</i></p>
+            </div>
+        </>
+    )
 
     return (
         <div className="group-showtimes">
