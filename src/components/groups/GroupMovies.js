@@ -8,16 +8,18 @@ export default function GroupMovies({ movies, onRemoveMovie }) {
     return (
         <div className="group-movies-container">
             <SectionHeader text='Pinned Movies' />
-            <table className="group-movies-table">
-                <tbody>
-                    {movies.map((movie) => (
-                        <tr key={movie.id}>
-                            <td><Link to={`/movie/${movie.id}`}>{movie.title}</Link></td>
-                            <td><button type='button' onClick={() => onRemoveMovie(movie.id)}>Remove</button></td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <div className="group-section-container">
+                <table className="group-movies-table">
+                    <tbody>
+                        {movies.map((movie) => (
+                            <tr key={movie.id}>
+                                <td><Link to={`/movie/${movie.id}`}>{movie.title}</Link></td>
+                                <td><button type='button' onClick={() => onRemoveMovie(movie.id)}>Remove</button></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

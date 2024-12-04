@@ -45,40 +45,64 @@ export default function GroupShowtimes({ group_id }) {
 
     if (loading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
-    if (showtimes.length === 0) return <p>No pinned showtimes...</p>
+    if (showtimes.length === 0) return <p>This group has not pinned any showtimes!</p>
 
     return (
         <div className="group-showtimes">
             <SectionHeader text="Pinned Showtimes" />
-            <table>
-                <thead>
-                    <tr>
-                        <th>Showtime</th>
-                        <th>Theatre</th>
-                        <th>Auditorium</th>
-                        <th>Movie</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {Array.isArray(showtimes) && showtimes.map((showtime, index) => (
-                        <tr key={index}>
-                            <td>{showtime.showTime}</td>
-                            <td>{showtime.theatreName}</td>
-                            <td>{showtime.theatreAuditorium}</td>
-                            <td>{showtime.movieName}</td>
-                            <td>{showtime.showDate}</td>
-                            <td>
-                                <button
-                                    type='button'
-                                    onClick={() => handleDeleteShowtime(showtime.id)}>
-                                    Delete
-                                </button>
-                            </td>
+            <div className="group-section-container">
+
+                <table className="group-showtime-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Theater</th>
+                            <th>Auditorium</th>
+                            <th>Movie</th>
+                            <th>Unpin</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {Array.isArray(showtimes) && showtimes.map((showtime, index) => (
+                            <tr key={index}>
+                                <td>{showtime.showDate}</td>
+                                <td>{showtime.showTime}</td>
+                                <td>{showtime.theatreName}</td>
+                                <td>{showtime.theatreAuditorium}</td>
+                                <td>{showtime.movieName}</td>
+                                
+                                <td>
+                                    <button
+                                        type='button'
+                                        onClick={() => handleDeleteShowtime(showtime.id)}>
+                                        Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                <div className="showtime-grid">
+                {Array.isArray(showtimes) && showtimes.map((showtime, index) => (
+                    <div key={index} className="showtime-card">
+                        <p><strong>Movie:</strong> {showtime.movieName}</p>
+                        <p><strong>Date:</strong> {showtime.showDate}</p>
+                        <p><strong>Time:</strong> {showtime.showTime}</p>
+                        <p><strong>Theater:</strong> {showtime.theatreName}</p>
+                        <p><strong>Auditorium:</strong> {showtime.theatreAuditorium}</p>
+                        <button
+                            type='button'
+                            onClick={() => handleDeleteShowtime(showtime.id)}
+                            className="delete-button">
+                            Unpin
+                        </button>
+                    </div>
+                ))}
+            </div>
+
+            </div>
         </div>
     )
 }
