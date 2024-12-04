@@ -4,6 +4,7 @@ import AllGroups from '../components/groups/AllGroups.js'
 import { MainHeader, SectionHeader } from '../components/header/Header.js'
 import { createGroup, fetchAllGroups } from "../utils/groupFunctions.js"
 import CreateGroupForm from "../components/groups/CreateGroupForm.js"
+import './Groups.css'
 
 /* All users can view groups page
 Groups page contains all the created groups
@@ -44,6 +45,7 @@ export default function Groups() {
         <div className="groups-container">
             <MainHeader text={'Groups'} />
             <AllGroups groups={groups} />
+            <SectionHeader text={'Create New Group'} />
             <CreateGroupForm onCreateGroup={handleCreateGroup} />
         </div>
     )

@@ -1,3 +1,7 @@
+.movie-text {
+    max-width: 1000px;
+}
+
 .movie-actions {
     display: flex;
     flex-direction: row;
@@ -71,24 +75,26 @@
     margin-bottom: 20px;
 } */
 
-#reviews-by-movie-table th, #reviews-by-movie-table td {
+/* #reviews-by-movie-table th, #reviews-by-movie-table td {
     padding: 8px;
     text-align: left;
 }
 
 #reviews-by-movie-table tr:nth-child(even) {
-    background-color: #f6f8fa /* Default color for odd rows */
+    background-color: #f6f8fa;
 }
 
 #reviews-by-movie-table th {
-    background-color: #f6f8fa;  /* Ensures the title row has the same color as odd rows */
-}
+    background-color: #f6f8fa;
+} */
 
 .review-box {
     border: 1px solid #ddd;  /* Add a border around the review item */
     padding: 16px;  /* Add padding to the review item */
     margin-bottom: 16px;  /* Space between review items */
     max-width: 900px;  /* Limit the width of the review item */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
 }
 
 .review-item {

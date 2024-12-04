@@ -15,9 +15,11 @@ function MovieDetails({ movie }) {
     return (
         <div>
             <center>
-            <h1>{movie.title}</h1>
-            <p><i>{movie.tagline}</i></p>
-            <p>{movie.overview}</p>
+            <div className="movie-text">
+                <h1>{movie.title}</h1>
+                <p><i>{movie.tagline}</i></p>
+                <p>{movie.overview}</p>
+            </div>
             <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}

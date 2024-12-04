@@ -1,41 +1,53 @@
 import React from "react"
 import { UseUser } from "../../context/UseUser.js"
-import { SectionHeader } from "../header/Header.js"
-
 
 export default function CreateGroupForm({ onCreateGroup }) {
     const { user } = UseUser()
     const [groupName, setGroupName] = React.useState('')
     const [groupDescription, setGroupDescription] = React.useState('')
+    const [error, setError] = React.useState(null)
 
     if (!user.id) {
-        return <div>You must be logged in to create a group</div>
+        return <div><i>You must be logged in to create a group.</i></div>
     }
-    
+
     const handleCreateGroup = (e) => {
         e.preventDefault()
         if (groupName === '' || groupDescription === '') {
-            alert('Group name and description is required')
+            setError('Group name and description are required.')
             return
         }
         onCreateGroup(groupName, groupDescription, user.id)
         setGroupName('')
         setGroupDescription('')
+        setError(null)
     }
 
     return (
-        <div className="create-group-container">
-            <SectionHeader text={"Create Group"} />
+        <div>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
             <form className="create-group-form" onSubmit={handleCreateGroup}>
-                <label>
-                    Group Name:
-                </label>
-                <input type='text' value={groupName} onChange={(e) => setGroupName(e.target.value)} />
-                <label>
-                    Description:
-                </label>
-                <textarea id="group-description-input-textarea" value={groupDescription} onChange={(e) => setGroupDescription(e.target.value)} />
-                <button type='submit'>Create Group</button>
+                <div className="group-fields">
+                    <div className="group-name-field">
+                        <label htmlFor="group_name">Group Name:</label>
+                        <textarea
+                            id="group_name"
+                            value={groupName}
+                            onChange={(e) => setGroupName(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className="group-description-field">
+                        <label htmlFor="group_description">Group Description:</label>
+                        <textarea
+                            id="group_description"
+                            value={groupDescription}
+                            onChange={(e) => setGroupDescription(e.target.value)}
+                            required
+                        />
+                    </div>
+                </div>
+                <button type="submit">Create Group</button>
             </form>
         </div>
     )

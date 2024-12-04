@@ -33,7 +33,7 @@ export default function AllGroups({ groups }) {
     const selectButton = (group_id, owner_id) => {
         if (!user.id) return
         const group = userGroups.find(group => group.group_id === group_id)
-        if (user.id === owner_id) return <span>(Owner)</span>
+        if (user.id === owner_id) return <span><button disabled>Owner cannot leave group</button></span>
         if (group) {
             if (group.pending === true) {
                 return <button type="button" onClick={() => handleLeaveButton(group.invite_id)}>Cancel Request</button> // Request sent
@@ -73,29 +73,25 @@ export default function AllGroups({ groups }) {
     if (error) return <p>{error}</p>
 
     return (
-            <table className="groups-table">
-                <thead>
-                    <tr>
-                        <th>Group Name</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {groups.map((group) => (
-                        <tr key={group.id}>
-                            <td>
-                                {/* If user belongs to group, make group name a link */}
-                                {userGroups.some(userGroup => userGroup.group_id === group.id && !userGroup.pending) ? (
-                                    <Link to={`/group/${group.id}`}>{group.group_name}</Link>
-                                ) : (
-                                    group.group_name
-                                )}
-                            </td>
-                            <td>{group.description}</td>
-                            <td>{selectButton(group.id, group.owner_id)}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-    )
+        <div>
+            {!user.id && <p><i>You must be logged in to join groups.</i></p>}
+            <div className="groups-grid">
+                {groups.map((group) => (
+                    <div key={group.id} className="group-card">
+                        <h3>
+                            {userGroups.some(
+                                (userGroup) => userGroup.group_id === group.id && !userGroup.pending
+                            ) ? (
+                                <Link to={`/group/${group.id}`}>{group.group_name}</Link>
+                            ) : (
+                                group.group_name
+                            )}
+                        </h3>
+                        <p>{group.description}</p>
+                        <div className="group-actions">{selectButton(group.id, group.owner_id)}</div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
 }

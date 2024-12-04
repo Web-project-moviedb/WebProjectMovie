@@ -42,16 +42,17 @@
     align-items: center;
 }
 
-a {
+.nav-links a, .nav-user a {
     text-decoration: none;
-    padding: 5px 10px;
+    color: #5d2062;
+    padding: 10px;
 }
 
 a.active {
     font-weight: bold;
 }
 
-@media (max-width: 550px) {
+@media (max-width: 620px) {
     .navbar {
         padding: 5px;
         height: auto;

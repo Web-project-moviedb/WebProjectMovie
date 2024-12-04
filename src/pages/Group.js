@@ -9,6 +9,7 @@ import GroupDescription from '../components/groups/GroupDescription.js'
 import GroupMembers from '../components/groups/GroupMembers.js'
 import GroupMovies from '../components/groups/GroupMovies.js'
 import GroupShowtimes from '../components/groups/GroupShowtimes.js'
+import './Group.css'
 
 /* Group page
 Only registered and logged in users can enter to group page
@@ -171,7 +172,7 @@ export default function Group() {
             <GroupMembers groupUsers={groupUsers} isOwner={isOwner} ownerId={group.owner_id} onRemoveUser={handleRemoveUser} onAcceptUser={handleAcceptUser} />
             <GroupMovies movies={movies} onRemoveMovie={handleRemoveMovie} />
             <GroupShowtimes group_id={id} />
-            {isOwner && <button type='button' onClick={handleDeleteGroup}>Delete Group</button>}
+            {isOwner && <button type='button' className="major-delete-button" onClick={handleDeleteGroup}>Delete Group</button>}
         </div >
     )
 }
