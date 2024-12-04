@@ -1,18 +1,18 @@
 import axios from "axios"
-
 const url = process.env.REACT_APP_API_URL
 
 // Create group
 const createGroup = async (groupName, ownerId, groupDescription) => {
     try {
         const response = await axios.post(url + '/group', {
-            method: 'POST',
+
             group_name: groupName,
             owner_id: ownerId,
             group_description: groupDescription
         }, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         })
         return response
@@ -24,7 +24,11 @@ const createGroup = async (groupName, ownerId, groupDescription) => {
 // Get all members in group
 const fetchGroupMembers = async (groupId) => {
     try {
-        const response = await axios(url + '/groups/' + groupId)
+        const response = await axios(url + '/groups/' + groupId, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         return response.data
     } catch (error) {
         return error.message
@@ -44,7 +48,13 @@ const fetchGroupById = async (groupId) => {
 // Get all groups
 const fetchAllGroups = async () => {
     try {
-        const response = await axios(url + '/groups')
+        const response = await axios(url + '/groups', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+
         return response
     } catch (error) {
         return error.message
@@ -54,7 +64,11 @@ const fetchAllGroups = async () => {
 // Get all groups for specific user_id
 const fetchAllGroupsByUser = async (userId) => {
     try {
-        const response = await axios(url + '/user/group/' + userId)
+        const response = await axios(url + '/user/group/' + userId, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         return response
     } catch (error) {
         return error.message
@@ -74,7 +88,6 @@ const fetchGroupMovies = async (groupId) => {
 const joinGroup = async (userId, groupId) => {
     try {
         const response = await axios.post(url + '/user/invite', {
-            method: 'POST',
             account_id: userId,
             group_id: groupId
         }, {
@@ -91,8 +104,7 @@ const joinGroup = async (userId, groupId) => {
 // Remove user from group
 const removeUserFromGroup = async (invite_id) => {
     try {
-        const response = await axios(url + '/user/invite/' + invite_id, {
-            method: 'DELETE',
+        const response = await axios.delete(url + '/user/invite/' + invite_id, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -106,8 +118,7 @@ const removeUserFromGroup = async (invite_id) => {
 // Delete group
 const deleteGroup = async (groupId) => {
     try {
-        const response = await axios(url + '/group/' + groupId, {
-            method: 'DELETE',
+        const response = await axios.delete(url + '/group/' + groupId, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -121,10 +132,9 @@ const deleteGroup = async (groupId) => {
 // Delete movie from selected group
 const deletePinnedMovie = async (movie_id, group_id) => {
     try {
-        const pinnedMovies = await axios(url + '/pinned/movie/' + group_id)
+        const pinnedMovies = await axios.delete(url + '/pinned/movie/' + group_id)
         const pinnedMovie = pinnedMovies.data.find(movie => movie.movie_id === movie_id)
         const response = await axios(url + '/pinned/movie/' + pinnedMovie.id, {
-            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -139,7 +149,6 @@ const deletePinnedMovie = async (movie_id, group_id) => {
 const addMovieToGroup = async (movie_id, group_id) => {
     try {
         const response = await axios.post(url + '/pinned/movie', {
-            method: 'POST',
             group_id: group_id,
             movie_id: movie_id
         }, {
@@ -158,8 +167,7 @@ const addMovieToGroup = async (movie_id, group_id) => {
 
 const acceptInvite = async (invite_id) => {
     try {
-        const response = await axios(url + '/user/invite/' + invite_id, {
-            method: 'PUT',
+        const response = await axios.put(url + '/user/invite/' + invite_id, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -172,8 +180,7 @@ const acceptInvite = async (invite_id) => {
 
 const deletePinnedShowtime = async (showtime_id) => {
     try {
-        const response = await axios(url + '/pinned/showtime/' + showtime_id, {
-            method: 'DELETE',
+        const response = await axios.delete(url + '/pinned/showtime/' + showtime_id, {
             headers: {
                 'Content-Type': 'application/json'
             }
