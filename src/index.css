@@ -6,6 +6,9 @@
 
 a {
     color: #5d2062;
+    padding: 0;
+    margin: 0;
+    display: inline;
 }
 
 .main-wrapper {

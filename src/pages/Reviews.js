@@ -3,6 +3,7 @@ import axios from 'axios'
 import { MainHeader } from '../components/header/Header.js'
 import { fetchMovieNames } from '../utils/helperFunctions.js'
 import AllReviews from '../components/reviews/AllReviews.js'
+import './Reviews.css'
 
 function Reviews() {
     const [reviews, setReviews] = useState([])
