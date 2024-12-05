@@ -6,6 +6,8 @@ import axios from 'axios'
 
 import { UseUser } from '../context/UseUser.js'
 
+import './ShowTimes.css'
+
 const url = process.env.REACT_APP_API_URL
 const areaList = finnkinoList
 
@@ -199,7 +201,7 @@ const ShowTimes = () => {
       <table className="showtime-results-table">
         <thead>
           <tr hidden={!search}>
-            <th id="show-time">Show Time</th>
+            <th id="show-time">Time</th>
             <th id="theater">Theater</th>
             <th id="auditorium">Auditorium</th>
             <th>Movie Name</th>
