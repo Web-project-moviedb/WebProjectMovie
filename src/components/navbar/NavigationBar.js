@@ -5,6 +5,7 @@ import { UseUser } from '../../context/UseUser'
 // Outlet is used as a placeholder for the "children" elemenent. in this case the children element the specific Page
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import "./NavigationBar.css"
+import ThemeToggle from '../theme/ThemeToggle';
 
 const NavigationBar = () => {
     const { user, logout, token } = UseUser()
@@ -47,12 +48,13 @@ const NavigationBar = () => {
                             <NavLink to="/groups" activeclassname="current" onClick={closeMenu}>Groups</NavLink>
                             <NavLink to="/showtimes" activeclassname="current" onClick={closeMenu}>Showtimes</NavLink>
                             {logged && <NavLink to="/members" activeclassname="current" onClick={closeMenu}>Members</NavLink>}
+                            <ThemeToggle />
                         </div>
                         <div className="nav-user">
                             {logged ? (
                                 <>
                                     <NavLink to={`/account/${user.id}`} activeclassname="current" onClick={closeMenu}>My Account</NavLink>
-                                    <button onClick={logoutFunction}>Logout</button>
+                                    <button onClick={logoutFunction} id='nav-button'>Logout</button>
                                 </>
                             ) : (
                                 <NavLink to="/signin" activeclassname="current" onClick={closeMenu}>Login</NavLink>
