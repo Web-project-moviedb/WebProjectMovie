@@ -1,0 +1,60 @@
+.showtime-search-table {
+    margin-bottom: 20px;
+    border: none;
+}
+
+.showtime-search-table th, .showtime-search-table td {
+    padding: 6px;
+    border: none;
+}
+
+.showtime-search-table #city, #movie, #date {
+    width: 100%;
+}
+
+.showtime-results-table {
+    table-layout: auto;
+    margin-left: 12px;
+    border-collapse: collapse;
+    border-right: none;
+}
+
+.showtime-results-table td {
+    padding: 8px 12px;
+}
+
+.showtime-results-table select#group {
+    width: 100%;
+    max-width: 150px;
+}
+
+.showtime-results-table th:last-child,
+.showtime-results-table td:last-child {
+    max-width: 200px; /* Adjust the column width as needed */
+}
+
+.showtime-results-table th {
+    padding: 8px;
+    text-align: center;
+}
+
+.showtime-results-table th, td {
+    word-wrap: break-word; /* Ensure content wraps instead of causing overflow */
+}
+
+/* .showtime-results-table #show-time {
+    width: 10%;
+}
+
+.showtime-results-table #auditorium {
+    width: 20%;
+}
+
+.showtime-results-table #theater {
+    width: 25%;
+} */
+
+#pin-button {
+    padding: 4px 10px;
+    margin: 0;
+}

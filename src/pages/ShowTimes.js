@@ -76,9 +76,9 @@ const ShowTimes = () => {
 
   const checkGroupShowtimes = (showId, areaId, showDate, showTime) => {
     if (groupShowtimes.some(showtime => parseInt(showtime.movie_id) === parseInt(showId))) {
-      return <button type="button" disabled>Pinned</button>
+      return <button id="pin-button" type="button" disabled>Pinned</button>
     }
-    return <button type="button" onClick={() => handleShowtimeAdd(showId, areaId, showDate, showTime)}>Pin</button>
+    return <button id="pin-button" type="button" onClick={() => handleShowtimeAdd(showId, areaId, showDate, showTime)}>Pin</button>
   }
 
   const handleSearch = async (e) => {
@@ -143,62 +143,79 @@ const ShowTimes = () => {
     <div>
       <MainHeader text="Finnkino Showtimes" />
       <form onSubmit={handleSearch}>
-        <div>
-          <label>Select City/Theatre:</label>
-          <select
-            id='city'
-            value={areaId}
-            onChange={(e) => setAreaId(e.target.value)}>
-            {areaList.map((areaItem) => (
-              <option key={areaItem.id} value={areaItem.id}>
-                {areaItem.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label>Select Date:</label>
-          <input
-            type="date"
-            value={dt}
-            onChange={(e) => setDt(e.target.value)}
-          />
-        </div>
-        <button type="submit">Search</button>
-        <div hidden={!search}>
-          <label>Movie Name:</label>
-          <input
-            type="text"
-            value={movieName}
-            onChange={(e) => setMovieName(e.target.value)}
-            placeholder="Filter by movie"
-          />
-        </div>
+        <table className="showtime-search-table">
+          <tbody>
+            <tr>
+              <td><label htmlFor="city">Select City/Theater:</label></td>
+              <td>
+                <select
+                  id="city"
+                  value={areaId}
+                  onChange={(e) => setAreaId(e.target.value)}
+                >
+                  {areaList.map((areaItem) => (
+                    <option key={areaItem.id} value={areaItem.id}>
+                      {areaItem.name}
+                    </option>
+                  ))}
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td><label htmlFor="date">Select Date:</label></td>
+              <td>
+                <input
+                  type="date"
+                  id="date"
+                  value={dt}
+                  onChange={(e) => setDt(e.target.value)}
+                />
+              </td>
+            </tr>
+            <tr>
+              <td></td> {/* empty row */} 
+              <td><button type="submit" id="search">Search</button></td> 
+            </tr>
+            {search && (
+              <tr>
+                <td><label htmlFor="movie">Movie Name:</label></td>
+                <td>
+                  <input
+                    type="text"
+                    id="movie"
+                    value={movieName}
+                    onChange={(e) => setMovieName(e.target.value)}
+                    placeholder="Filter by movie"
+                  />
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </form>
 
       {error && <p style={{ color: 'orange' }}>{error}</p>}
 
-      <table>
+      <table className="showtime-results-table">
         <thead>
           <tr hidden={!search}>
-            <th>Show Time</th>
-            <th>Theatre</th>
-            <th>Auditorium</th>
+            <th id="show-time">Show Time</th>
+            <th id="theater">Theater</th>
+            <th id="auditorium">Auditorium</th>
             <th>Movie Name</th>
-            {token ? <th>Pin to Group</th> : <></>}
-            {token ? <th>
+            {token && <th>Pin to Group
               <select
-                id='group'
-                value={selectedGroup}
-                onChange={(e) => setSelectedGroup(e.target.value)}>
-                <option value=""> Select group</option>
-                {groups.map((group) => (
-                  <option key={group.id} value={group.user_group_id}>
-                    {group.group_name}
-                  </option>
-                ))}
-              </select>
-            </th> : <></>}
+                  id="group"
+                  value={selectedGroup}
+                  onChange={(e) => setSelectedGroup(e.target.value)}
+                >
+                  <option value="">Select group</option>
+                  {groups.map((group) => (
+                    <option key={group.id} value={group.user_group_id}>
+                      {group.group_name}
+                    </option>
+                  ))}
+                </select></th>} {/* conditionally render header for pin to group */}
           </tr>
         </thead>
         <tbody>
@@ -208,14 +225,17 @@ const ShowTimes = () => {
               <td>{show.theatreName}</td>
               <td>{show.theatreAuditorium}</td>
               <td>{show.movieName}</td>
-              <td>
-                {token && checkGroupShowtimes(show.showId, show.areaId, show.showDate, show.showTime)}
-              </td>
+              {token && (
+                <td>
+                  {checkGroupShowtimes(show.showId, show.areaId, show.showDate, show.showTime)}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
-      </table>
-    </div>
+      </table>    
+
+</div>
   )
 }
 
