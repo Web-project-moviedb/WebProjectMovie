@@ -14,7 +14,7 @@ const ShowTimes = () => {
   const [shows, setShows] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [dt, setDt] = useState(new Date().toISOString().slice(0, 10))  // päivämäärä
+  const [dt, setDt] = useState(new Date().toISOString().slice(0, 10)) // päivämäärä
   const [movieName, setMovieName] = useState('')
   const [areaId, setAreaId] = useState('1029')
   const [filteredShows, setFilteredShows] = useState([])
@@ -54,6 +54,26 @@ const ShowTimes = () => {
     getGroupShowtimes(selectedGroup)
   }, [selectedGroup])
 
+  // dynamic movie filtering based on movieName input
+  useEffect(() => {
+    if (movieName === '') {
+      setFilteredShows(shows) // Reset filtered shows if the input is cleared
+      setError(null)
+      return
+    }
+
+    const filtered = shows.filter(show =>
+      show.movieName.toLowerCase().includes(movieName.toLowerCase()),
+    )
+    setFilteredShows(filtered)
+
+    if (filtered.length === 0) {
+      setError(`Movie "${movieName}" not found`)
+    } else {
+      setError(null)
+    }
+  }, [movieName, shows])
+
   const checkGroupShowtimes = (showId, areaId, showDate, showTime) => {
     if (groupShowtimes.some(showtime => parseInt(showtime.movie_id) === parseInt(showId))) {
       return <button type="button" disabled>Pinned</button>
@@ -61,7 +81,6 @@ const ShowTimes = () => {
     return <button type="button" onClick={() => handleShowtimeAdd(showId, areaId, showDate, showTime)}>Pin</button>
   }
 
-  // search for showtimes. Area and date are required
   const handleSearch = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -78,21 +97,6 @@ const ShowTimes = () => {
       console.log('Failed to fetch data', error)
     } finally {
       setLoading(false)
-    }
-  }
-
-  const handleMovieSearch = () => {
-    const filtered = shows.filter(show =>
-      show.movieName.toLowerCase().includes(movieName.toLowerCase()),
-    )
-    setFilteredShows(filtered)
-    if (filtered.length === 0) {
-      setError(`Movie named "${movieName}" not found`)
-      console.log(`Movie named "${movieName}" not found`, error)
-      setMovieName('')
-    } else {
-      setError(null)
-      setMovieName('')
     }
   }
 
@@ -133,7 +137,6 @@ const ShowTimes = () => {
     }
   }
 
-
   if (loading) return <p>Loading...</p>
 
   return (
@@ -170,11 +173,9 @@ const ShowTimes = () => {
             onChange={(e) => setMovieName(e.target.value)}
             placeholder="Filter by movie"
           />
-          <button type="button" onClick={handleMovieSearch}>Filter movie</button>
         </div>
       </form>
 
-      {/* Error message if not found movie by gived name */}
       {error && <p style={{ color: 'orange' }}>{error}</p>}
 
       <table>
@@ -198,7 +199,6 @@ const ShowTimes = () => {
                 ))}
               </select>
             </th> : <></>}
-
           </tr>
         </thead>
         <tbody>
@@ -218,4 +218,5 @@ const ShowTimes = () => {
     </div>
   )
 }
+
 export default ShowTimes
