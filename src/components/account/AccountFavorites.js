@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from "react"
 import { UseUser } from '../../context/UseUser.js'
 

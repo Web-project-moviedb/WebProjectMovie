@@ -44,7 +44,7 @@ function ReviewsByUser({ id }) {
     const deleteReview = async (id) => {
         try {
             const headers = { headers: { Authorization: `Bearer ${token}` } }
-            const response = await axios.delete(url + "/Reviews/" + id, headers)
+            await axios.delete(url + "/Reviews/" + id, headers)
             setReviews(reviews.filter(a => a.id !== id))
         }
         catch (error) {

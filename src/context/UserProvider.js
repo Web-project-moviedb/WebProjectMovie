@@ -33,6 +33,10 @@ export default function UserProvider({ children }) {
         }
     }, [user, token])
 
+    useEffect(() => {
+        console.log(token)
+    }, [token])
+
     // Login user API call
     const login = async () => {
         const headers = { headers: { 'Content-Type': 'application/json' } }
@@ -40,15 +44,23 @@ export default function UserProvider({ children }) {
 
         try {
             const response = await axios.post(url + '/user/login', data, headers)
-            const { id, username: uname, token } = response.data         // Save id and username to userData
+            const { id, username: uname } = response.data         // Save id and username to userData
+            const token = await readAuthorizationHeader(response)              // Read token from response
+
             setUser({ id, username: uname })                            // Save id and username to user
             setToken(token)                                            // Save token to token
-
         } catch (error) {
             setUser({ username: '', password: '' })                    // Set user and password fields empty
             setToken(null)                                            // Set token to null
             console.log('Login error: ', error)
             throw error
+        }
+    }
+
+    const readAuthorizationHeader = (response) => {
+        if (response.headers.get('authorization') && 
+            response.headers.get('authorization').split(' ')[0] === 'Bearer') {
+            return response.headers.get('authorization').split(' ')[1]
         }
     }
 
