@@ -144,11 +144,12 @@ const ShowTimes = () => {
   return (
     <div>
       <MainHeader text="Finnkino Showtimes" />
+
       <form onSubmit={handleSearch}>
         <table className="showtime-search-table">
           <tbody>
             <tr>
-              <td><label htmlFor="city">Select City/Theater:</label></td>
+              <td><label htmlFor="city">Select Location:</label></td>
               <td>
                 <select
                   id="city"
@@ -236,6 +237,40 @@ const ShowTimes = () => {
           ))}
         </tbody>
       </table>    
+
+      <div className="showtime-results-grid">
+        {filteredShows.map((show, index) => (
+          <div key={index} className="showtime-result">
+            <div className="showtime-result-item"><strong>Movie Name:</strong> {show.movieName}</div>
+            <div className="showtime-result-item"><strong>Time:</strong> {show.showTime}</div>
+            <div className="showtime-result-item"><strong>Theater:</strong> {show.theatreName}</div>
+            <div className="showtime-result-item"><strong>Auditorium:</strong> {show.theatreAuditorium}</div>
+            {token && (
+              <div className="showtime-result-item">
+                <select
+                  id="group"
+                  value={selectedGroup}
+                  onChange={(e) => setSelectedGroup(e.target.value)} // Update selected group
+                >
+                  <option value="">Select group</option>
+                  {groups.map((group) => (
+                    <option key={group.id} value={group.user_group_id}>
+                      {group.group_name}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  id="pin-button"
+                  type="button"
+                  onClick={() => handleShowtimeAdd(show.showId, show.areaId, show.showDate, show.showTime)}
+                >
+                  Pin
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
 
 </div>
   )
