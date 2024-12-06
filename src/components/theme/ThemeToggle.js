@@ -24,8 +24,8 @@ function ThemeToggle() {
         <div 
             onClick={toggleTheme}
             className="theme-toggle">
-                {darkTheme ? (<span role='img'>🔆</span>) 
-                : <span role='img' >🌙</span>}
+                {darkTheme ? (<span role='img'>☀️</span>) 
+                : <span role='img' >🌒</span>}
             </div>
             
     )
