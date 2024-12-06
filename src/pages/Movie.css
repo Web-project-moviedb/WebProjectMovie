@@ -15,6 +15,10 @@
     justify-content: center;
 }
 
+.group-dropdown-menu {
+    max-width: 150px;
+}
+
 .review-form {
     display: block;
     width: 100%;

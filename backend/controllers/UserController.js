@@ -11,7 +11,7 @@ const postRegistration = async (req, res, next) => {
     try {
         // Username validation
         if (!req.body.username || req.body.username.length === 0) return next(new ApiError('Invalid username', 400))    // Input for username is empty
-        if (req.body.username.length > 50) return next(new ApiError('Username is too long', 400))    // Input for username is too long
+        if (req.body.username.length > 25) return next(new ApiError('Username is too long', 400))    // Input for username is too long
         if (/\s/.test(req.body.username)) return next(new ApiError('Username cannot contain spaces', 400))    // Username contains spaces
 
         // Password validation

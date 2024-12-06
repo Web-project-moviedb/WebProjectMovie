@@ -61,9 +61,7 @@ function ReviewsByUser({ id }) {
             )
         }
         else {
-            return (
-                <></>
-            )
+            return null
         }
     }
 
@@ -78,32 +76,55 @@ function ReviewsByUser({ id }) {
     return (
         <div>
             {reviews.length === 0 ? (
-                <p>No reviews found under this user.</p>
+                <p><i>This user hasn't marked any movies as favorites.</i></p>
             ) : (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Movie</th>
-                            <th>Rating</th>
-                            <th>Title</th>
-                            <th>Review</th>
-                            <th>Time Reviewed</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <>
+                    {/* card layout for smaller screens */}
+                    <div className="user-review-cards">
                         {reviews.map((review) => (
-                            <tr key={review.id}>
-                                <td><Link to={`/movie/${review.movie_id}`}>
-                                    {movies[review.movie_id] || "Unable to Fetch Title"}</Link></td>
-                                <td>{renderStars(review.stars)}</td>
-                                <td>{review.review_title}</td>
-                                <td>{review.review_body}</td>
-                                <td>{formatTimestamp(review.created_at)}</td>
-                                <td>     {checkReviewButton(review.id)} </td>
-                            </tr>
+                            <div key={review.id} className="user-review-card">
+                                <h3><Link to={`/movie/${review.movie_id}`}>{movies[review.movie_id] || 'Unable to Fetch Title'}</Link>: {review.review_title}</h3>
+                                <p>{renderStars(review.stars)}</p>
+                                <p>{review.review_body}</p>
+                                <p><i>Reviewed by <Link to={`/account/${review.account_id}`}>{review.uname}</Link></i></p>
+                                <p><i>{formatTimestamp(review.created_at)}</i></p>
+                                {parseInt(user.id) === parseInt(params.id) && (
+                                    <div className="user-review-card-delete">
+                                        {checkReviewButton(review.id)}
+                                    </div>
+                                )}
+                            </div>
                         ))}
-                    </tbody>
-                </table>
+                    </div>
+
+                    {/* table for larger screens */}
+                    <div className="review-table-container">
+                        <table className="user-reviews-table">
+                            <thead>
+                                <tr>
+                                    <th id="rated-movie">Movie</th>
+                                    <th id="movie-rating">Rating</th>
+                                    <th id="review-title">Title</th>
+                                    <th id="review-body">Review</th>
+                                    <th id="review-timestamp">Time Reviewed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {reviews.map((review) => (
+                                    <tr key={review.id}>
+                                        <td id="rated-movie"><Link to={`/movie/${review.movie_id}`}>
+                                            {movies[review.movie_id] || "Unable to Fetch Title"}</Link></td>
+                                        <td id="movie-rating">{renderStars(review.stars)}</td>
+                                        <td id="review-title">{review.review_title}</td>
+                                        <td id="review-body">{review.review_body}</td>
+                                        <td id="review-timestamp">{formatTimestamp(review.created_at)}</td>
+                                        {parseInt(user.id) === parseInt(params.id) && <td>{checkReviewButton(review.id)}</td>} {/* Conditionally render delete button */}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </>
             )}
         </div>
     )

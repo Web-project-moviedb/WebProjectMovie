@@ -5,6 +5,7 @@ import ReviewsByUser from '../components/reviews/ReviewsByUser.js'
 import { MainHeader, SectionHeader } from "../components/header/Header.js"
 import ProfileFavoriteList from "../components/account/AccountFavorites.js"
 import ProfileGroupList from "../components/account/AccountGroups.js"
+import './AccountPage.css'
 
 function ProfilePage() {
     const { user, token } = UseUser()
@@ -36,26 +37,31 @@ function ProfilePage() {
         }
     }, [id, url])
 
-
-    const checkUserIdforDelete = () => {
-        if (parseInt(user.id) === parseInt(id)) {
-            return <Link to="/delete">Delete account</Link>
-        }
+    const handleDeleteProfile = () => {
+        navigate('/delete')
     }
 
+    const handleFavoritesLink = () => {
+        navigate('/favorites/' + id)
+    }
 
     return (
         <div>
-            <MainHeader text={profileName} /> {/* Add profilename to present this as eg "Profilename Profile" */}
-            <SectionHeader text='Reviews' />
-            <ReviewsByUser id={id} />
+            <MainHeader text={profileName} />
             <SectionHeader text='Favorites' />
             <ProfileFavoriteList id={id} />
-            <Link to={'/favorites/' + id}>Link to my favorites page</Link>
+            <button className="permalink-button" onClick={handleFavoritesLink}>Permalink to My Favorites Page</button>
+
+            <SectionHeader text='Reviews' />
+            <ReviewsByUser id={id} />
+
             <SectionHeader text='Groups' />
             <ProfileGroupList id={id} />
-            {checkUserIdforDelete()}
-        </div >
+
+            {parseInt(user.id) === parseInt(id) && (
+                <button className="major-delete-button" onClick={handleDeleteProfile}>Delete Account</button>
+            )}
+        </div>
     )
 }
 
