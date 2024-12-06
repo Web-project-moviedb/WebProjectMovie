@@ -1,5 +1,6 @@
 import React from "react"
 import { Link } from "react-router-dom"
+import { MainHeader } from "../header/Header"
 
 const FavoriteList = ({ userName, favorites, loading, error }) => {
 
@@ -10,13 +11,13 @@ const FavoriteList = ({ userName, favorites, loading, error }) => {
         return <p style={{ color: "red" }}>{error}</p>
     }
     if (favorites.length === 0) {
-        return <p>No favorites found for this user</p>
+        return <p><i>This list is empty.</i></p>
     }
     
 return (
     <div> 
-        <h3> {userName}'s Favorites</h3>
-        <ul>
+        <MainHeader text={userName + "'s Favorites"} />
+        <ul className="permalink-favorites-list">
             {favorites.map((fav) => (
             <li key={fav.id}>
                 <Link to={`/movie/${fav.movie_id}`}> {fav.movie_name}</Link> 
