@@ -5,7 +5,7 @@ import { insertGroup, deleteGroup, selectAllGroups, selectGroup, selectAllUsersB
 const postGroup = async (req, res, next) => {
     try {
         const response = await insertGroup(req.body.group_name, req.body.owner_id, req.body.group_description)
-        return res.status(201).json(response.rows);
+        return res.status(201).json(response);
     } catch (error) {
         console.log(error)
     }

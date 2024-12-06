@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { UseUser } from '../../context/UseUser.js'
 import { fetchAllGroupsByUser, addMovieToGroup } from '../../api/groupApi.js'
 import { SectionHeader } from '../header/Header.js'
 
 export default function AddMovieToGroup({ movie }) {
-    const { user } = UseUser()
+    const { user, token, readAuthorizationHeader } = UseUser()
     const [groups, setGroups] = useState([])
     const [selectedGroup, setSelectedGroup] = useState('')
+
+    const url = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const getGroups = async () => {
@@ -32,21 +35,40 @@ export default function AddMovieToGroup({ movie }) {
             alert('Please select a group')
             return
         }
-        addMovieToGroup(movie.id, selectedGroup)
+        try {
+            const response = await axios.post(url + '/pinned/movie', {
+                group_id: selectedGroup,
+                movie_id: movie.id
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            await readAuthorizationHeader(response)
+
+            if (response.status === 200) {
+                alert('Movie added to group')
+            }
+        } catch (error) {
+            if (error.status === 409) return alert('Movie already pinned to group')
+            alert('Failed to add movie to group')
+        }
     }
+
     if (!user.id) {
         return (
             <div className="add-movie-to-group-container">
                 <SectionHeader text='Pin Movie to Group' />
                 <p><i>Log in to pin this movie to a group</i></p>
             </div>
-    )
+        )
     }
     return (
         <>
             <div className="add-movie-to-group-container">
                 <SectionHeader text='Pin Movie to Group' />
-                <label> 
+                <label>
                     <select value={selectedGroup} onChange={(e) => onGroupChange(e)}>
                         <option value=''>-- Select Group --</option>
                         {groups.map(group => (

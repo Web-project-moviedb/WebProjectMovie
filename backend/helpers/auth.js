@@ -10,7 +10,7 @@ const auth = (req, res, next) => {
         const accessToken = authHeader.split(' ')[1]
 
         const decodedUser = verify(accessToken, process.env.JWT_SECRET_KEY)
-        const newAccessToken = sign({ username: decodedUser.username }, process.env.JWT_SECRET_KEY, { expiresIn: '1m' })
+        const newAccessToken = sign({ username: decodedUser.username }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' })
 
         res.header('Access-Control-Expose-Headers', 'Authorization')
         res.header('Authorization', 'Bearer ' + newAccessToken)

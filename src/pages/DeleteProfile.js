@@ -6,7 +6,7 @@ import { useState } from "react"
 function DeleteProfile() {
 
     const default_url = process.env.REACT_APP_API_URL
-    const { logout, user } = UseUser()
+    const { logout, user, token, readAuthorizationHeader } = UseUser()
     const [deletePassword, setDeletePassword] = useState('')
     const navigate = useNavigate()
 
@@ -23,9 +23,8 @@ function DeleteProfile() {
                 },
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': `Bearer ${token}`
                 }
-
             })
             await logout()
             navigate('/')

@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useCallback } from "react"
+import axios from "axios"
 import { Link } from 'react-router-dom'
-import { fetchAllGroupsByUser, joinGroup, removeUserFromGroup } from "../../api/groupApi.js"
+import { fetchAllGroupsByUser } from "../../api/groupApi.js"
 import { UseUser } from "../../context/UseUser.js"
 
 // Return all groups in a list
 export default function AllGroups({ groups }) {
-    const { user } = UseUser()
+    const { user, token, readAuthorizationHeader } = UseUser()
     const [userGroups, setUserGroups] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+
+    const url = process.env.REACT_APP_API_URL
 
     // Get all groups that user belongs to
     const fetchGroupMemberships = useCallback(async () => {
@@ -45,23 +48,45 @@ export default function AllGroups({ groups }) {
 
     // Add user to group
     const handleJoinButton = async (group_id) => {
+
+        // Join group as user
         try {
-            await joinGroup(user.id, group_id)
+            const response = await axios.post(url + '/user/invite', {
+                account_id: user.id,
+                group_id: group_id
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            await readAuthorizationHeader(response)
+
             setUserGroups([...userGroups, { account_id: user.id, group_id: group_id, pending: true }])
             fetchGroupMemberships() // Update user groups
+            return response
         } catch (error) {
-            setError('Failed to join group')
+            return error.message
         }
     }
 
     // Remove user from group
     const handleLeaveButton = async (invite_id) => {
         try {
-            await removeUserFromGroup(invite_id)
+            const response = await axios.delete(url + '/user/invite/' + invite_id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            await readAuthorizationHeader(response)
+
             setUserGroups((prevGroups) => prevGroups.filter(group => group.invite_id !== invite_id))
             fetchGroupMemberships() // Update user groups
+            return response
         } catch (error) {
-            setError('Failed to leave group')
+            if (error.response.status === 403) return alert('Owner cannot leave group')
+            return error.message
         }
     }
 
@@ -93,5 +118,5 @@ export default function AllGroups({ groups }) {
                 ))}
             </div>
         </div>
-    );
+    )
 }

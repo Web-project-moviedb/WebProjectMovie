@@ -34,7 +34,6 @@ export default function UserProvider({ children }) {
     }, [user, token])
 
     useEffect(() => {
-        console.log(token)
     }, [token])
 
     // Login user API call
@@ -45,10 +44,8 @@ export default function UserProvider({ children }) {
         try {
             const response = await axios.post(url + '/user/login', data, headers)
             const { id, username: uname } = response.data         // Save id and username to userData
-            const token = await readAuthorizationHeader(response)              // Read token from response
-
-            setUser({ id, username: uname })                            // Save id and username to user
-            setToken(token)                                            // Save token to token
+            const token = await readAuthorizationHeader(response)              // Read token from response header
+            setUser({ id, username: uname })                            // Save id and username to user            
         } catch (error) {
             setUser({ username: '', password: '' })                    // Set user and password fields empty
             setToken(null)                                            // Set token to null
@@ -57,10 +54,12 @@ export default function UserProvider({ children }) {
         }
     }
 
-    const readAuthorizationHeader = (response) => {
+    const readAuthorizationHeader = async (response) => {
+        console.log("Reading authorization header")
         if (response.headers.get('authorization') && 
             response.headers.get('authorization').split(' ')[0] === 'Bearer') {
-            return response.headers.get('authorization').split(' ')[1]
+            const newToken = response.headers.get('authorization').split(' ')[1]
+            updateToken(newToken)
         }
     }
 
@@ -85,8 +84,12 @@ export default function UserProvider({ children }) {
         localStorage.removeItem('token')  // Remove token from session storage
     }
 
+    const updateToken = (newToken) => {
+        setToken(newToken)
+    }
+
     return (
-        <UserContext.Provider value={{ user, setUser, register, login, logout, token }} >
+        <UserContext.Provider value={{ user, setUser, register, login, logout, token, updateToken, readAuthorizationHeader }} >
             {children}
         </UserContext.Provider>
     )

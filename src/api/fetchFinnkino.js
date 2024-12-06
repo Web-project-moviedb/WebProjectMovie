@@ -67,6 +67,10 @@ const fetchFinnkinoDataById = async (group_id) => {
       const delete_response = await axios({
         method: 'delete',
         url: url + '/pinned/showtime/' + value.id,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
       })
       return delete_response
     }

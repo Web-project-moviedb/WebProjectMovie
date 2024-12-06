@@ -52,7 +52,7 @@ const postLogin = async (req, res, next) => {
         const user = userFromDb.rows[0]
         if (!await compare(req.body.password, user.password)) return next(new ApiError(invalid_credentials_message, 401))  // Passwords do not match
 
-        const token = sign({ username: req.body.username}, process.env.JWT_SECRET_KEY, {expiresIn: '1m'})
+        const token = sign({ username: req.body.username}, process.env.JWT_SECRET_KEY, {expiresIn: '1h'})
         return res
         .header('Access-Control-Expose-Headers', 'Authorization')
         .header('Authorization', 'Bearer ' + token)     // Set token in header

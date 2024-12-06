@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { SectionHeader } from '../header/Header.js'
 import { fetchFinnkinoDataById } from '../../api/fetchFinnkino.js'
-import { deletePinnedShowtime } from '../../api/groupApi.js'
+import { UseUser } from '../../context/UseUser.js'
 
 export default function GroupShowtimes({ group_id }) {
     const [showtimes, setShowtimes] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const { token, readAuthorizationHeader } = UseUser()
+
+    const url = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const fetchShowtimes = async () => {
@@ -34,8 +38,15 @@ export default function GroupShowtimes({ group_id }) {
 
     const handleDeleteShowtime = async (showtime_id) => {
         try {
-            const response = await deletePinnedShowtime(showtime_id)
+            const response = await axios.delete(url + '/pinned/showtime/' + showtime_id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
             if (response.status === 200) {
+                await readAuthorizationHeader(response)
                 setShowtimes(showtimes.filter(showtime => showtime.id !== showtime_id))
             }
         } catch (error) {

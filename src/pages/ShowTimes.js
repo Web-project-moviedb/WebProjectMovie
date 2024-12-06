@@ -10,7 +10,7 @@ const url = process.env.REACT_APP_API_URL
 const areaList = finnkinoList
 
 const ShowTimes = () => {
-  const { user, token } = UseUser()
+  const { user, token, readAuthorizationToken } = UseUser()
   const [shows, setShows] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -122,8 +122,9 @@ const ShowTimes = () => {
           date: `${showFullDate}`
         }
       })
-
+      
       if (response.status === 200) {
+        await readAuthorizationToken(response)
         setGroupShowtimes([...groupShowtimes, { movie_id: showid, area_id: areaid, date: showFullDate }])
       }
     } catch (error) {

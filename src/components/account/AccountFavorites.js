@@ -9,7 +9,7 @@ const url = process.env.REACT_APP_API_URL
 
 function ProfileFavoriteList({ id }) {
     const [favorites, setFavorites] = useState([])
-    const { user, token } = UseUser()
+    const { user, token, readAuthorizationHeader } = UseUser()
     const [error, setError] = useState(null)  // state to handle errors
     const [loading, setLoading] = useState(true)  // state to manage loading state
 
@@ -69,6 +69,7 @@ function ProfileFavoriteList({ id }) {
                     'Authorization': 'Bearer ' + token
                 }
             })
+            await readAuthorizationHeader()
             setFavorites(favorites.filter(a => a.id !== id))
         }
         catch (error) {

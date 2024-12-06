@@ -1,26 +1,48 @@
 import React from "react"
 import { UseUser } from "../../context/UseUser.js"
+import axios from 'axios'
 
-export default function CreateGroupForm({ onCreateGroup }) {
-    const { user } = UseUser()
+export default function CreateGroupForm({ setGroups }) {
+    const { user, token, readAuthorizationHeader } = UseUser()
     const [groupName, setGroupName] = React.useState('')
     const [groupDescription, setGroupDescription] = React.useState('')
     const [error, setError] = React.useState(null)
+
+    const url = process.env.REACT_APP_API_URL
 
     if (!user.id) {
         return <div><i>You must be logged in to create a group.</i></div>
     }
 
-    const handleCreateGroup = (e) => {
+    const handleCreateGroup = async (e) => {
         e.preventDefault()
         if (groupName === '' || groupDescription === '') {
             setError('Group name and description are required.')
             return
         }
-        onCreateGroup(groupName, groupDescription, user.id)
-        setGroupName('')
-        setGroupDescription('')
-        setError(null)
+        
+        try {
+            const response = await axios.post(url + '/group', {
+                group_name: groupName,
+                owner_id: user.id,
+                group_description: groupDescription
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            setGroups((prevGroups) => [...prevGroups, { id: response.data.id, group_name: groupName, owner_id: user.id, description: groupDescription }])
+            // Update token if it is returned in the response
+            await readAuthorizationHeader(response)
+            return response
+        } catch (error) {
+            return error.message
+        } finally {
+            setGroupName('')
+            setGroupDescription('')
+            setError(null)
+        }
     }
 
     return (
