@@ -17,7 +17,7 @@ export default function GroupShowtimes({ group_id }) {
             if (!group_id) return
 
             try {
-                const response = await fetchFinnkinoDataById(group_id)
+                const response = await fetchFinnkinoDataById(group_id, token)
 
                 if (Array.isArray(response)) {
                     setShowtimes(response)
