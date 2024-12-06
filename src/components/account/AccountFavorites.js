@@ -88,19 +88,24 @@ function ProfileFavoriteList({ id }) {
     return (
         <div>
             {favorites.length === 0 ? (
-                <p>No favorites found for this user</p>
+                <p><i>This user hasn't saved any favorite movies.</i></p>
             ) : (
-                <ul>
-                    {favorites.map((favorite) => (
-                        <li key={favorite.id}>
-                            <Link to={`/movie/${favorite.movie_id}`}>{favorite.movie_name}</Link>
-                            {checkFavoriteButton(favorite.id)}
-                        </li>
-                    ))
-                    }
-                </ul>
+                <table className="user-favorites-table">
+                    <tbody>
+                        {favorites.map((favorite) => (
+                            <tr key={favorite.id}>
+                                <td>
+                                • <Link to={`/movie/${favorite.movie_id}`}>{favorite.movie_name}</Link>
+                                </td>
+                                <td>
+                                    {checkFavoriteButton(favorite.id)}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             )}
-        </div >
+        </div>
     )
 }
 

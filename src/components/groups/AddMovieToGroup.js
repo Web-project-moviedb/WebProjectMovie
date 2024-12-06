@@ -47,8 +47,11 @@ export default function AddMovieToGroup({ movie }) {
             <div className="add-movie-to-group-container">
                 <SectionHeader text='Pin Movie to Group' />
                 <label> 
-                    <select value={selectedGroup} onChange={(e) => onGroupChange(e)}>
-                        <option value=''>-- Select Group --</option>
+                    <select 
+                        className="group-dropdown-menu"
+                        value={selectedGroup} 
+                        onChange={(e) => onGroupChange(e)}>
+                        <option value=''>Select Group</option>
                         {groups.map(group => (
                             <option key={group.id} value={group.user_group_id}>{group.group_name}</option>
                         ))}

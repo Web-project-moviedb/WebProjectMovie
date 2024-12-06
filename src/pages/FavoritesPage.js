@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import FavoriteList from "../components/favorites/FavoriteList";
+import './FavoritesPage.css'
 
 const url = process.env.REACT_APP_API_URL
 

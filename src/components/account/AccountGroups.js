@@ -76,7 +76,7 @@ function ProfileGroupList({ id }) {
             // Check if currently logger in user is owner of group
             if (parseInt(user.id) === parseInt(owner_id)) {
                 return (
-                    <p> Owner</p>
+                    <button disabled>Owner</button>
                 )
             }
 
@@ -96,20 +96,24 @@ function ProfileGroupList({ id }) {
             )
         }
     }
+
     return (
         <div>
             {groups.length === 0 ? (
-                <p>No groups for this user</p>
+                <p><i>This user hasn't joined any groups.</i></p>
             ) : (
-                <ul>
-                    {groups.map((group) => (
-                        <li key={group.id}>
-                            <h4>{group.group_name}</h4>
-                            {checkGroupButton(group.id, group.owner_id, group.pending)}
-                        </li>
-                    ))
-                    }
-                </ul>
+                <div className="groups-table-container">
+                    <table className="groups-table">
+                        <tbody>
+                            {groups.map((group) => (
+                                <tr key={group.id}>
+                                    <td className="group-name-cell">• {group.group_name}</td>
+                                    <td>{checkGroupButton(group.id, group.owner_id, group.pending)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     )
