@@ -34,7 +34,7 @@ export default function GroupShowtimes({ group_id }) {
             }
         }
         fetchShowtimes()
-    }, [group_id])
+    }, [group_id, token])
 
     const handleDeleteShowtime = async (showtime_id) => {
         try {

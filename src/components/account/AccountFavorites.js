@@ -100,7 +100,7 @@ function ProfileFavoriteList({ id }) {
                         {favorites.map((favorite) => (
                             <tr key={favorite.id}>
                                 <td>
-                                • <Link to={`/movie/${favorite.movie_id}`}>{favorite.movie_name}</Link>
+                                    <Link to={`/movie/${favorite.movie_id}`}>{favorite.movie_name}</Link>
                                 </td>
                                 <td>
                                     {checkFavoriteButton(favorite.id)}
