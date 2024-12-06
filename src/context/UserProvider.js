@@ -44,7 +44,7 @@ export default function UserProvider({ children }) {
         try {
             const response = await axios.post(url + '/user/login', data, headers)
             const { id, username: uname } = response.data         // Save id and username to userData
-            const token = await readAuthorizationHeader(response)              // Read token from response header
+            await readAuthorizationHeader(response)        // Read token from response header
             setUser({ id, username: uname })                            // Save id and username to user            
         } catch (error) {
             setUser({ username: '', password: '' })                    // Set user and password fields empty
@@ -55,7 +55,6 @@ export default function UserProvider({ children }) {
     }
 
     const readAuthorizationHeader = async (response) => {
-        console.log("Reading authorization header")
         if (response.headers.get('authorization') && 
             response.headers.get('authorization').split(' ')[0] === 'Bearer') {
             const newToken = response.headers.get('authorization').split(' ')[1]

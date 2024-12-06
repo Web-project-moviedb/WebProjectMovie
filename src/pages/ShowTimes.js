@@ -41,7 +41,6 @@ const ShowTimes = () => {
 
   useEffect(() => {
     if (!selectedGroup) return
-
     const getGroupShowtimes = async (groupId) => {
       try {
         const response = await axios.get(url + "/pinned/showtime/" + groupId)
@@ -54,6 +53,7 @@ const ShowTimes = () => {
     getGroupShowtimes(selectedGroup)
   }, [selectedGroup])
 
+  // Check if showtime is already pinned to group
   const checkGroupShowtimes = (showId, areaId, showDate, showTime) => {
     if (groupShowtimes.some(showtime => parseInt(showtime.movie_id) === parseInt(showId))) {
       return <button type="button" disabled>Pinned</button>
@@ -106,35 +106,29 @@ const ShowTimes = () => {
     const showdateFormat = showdate.split(':').reverse().join('-')
     const showtimeFormat = showtime.toString()
     const showFullDate = [showdateFormat, showtimeFormat].join('T')
-    const posturl = url + '/pinned/showtime/' + selectedGroup
 
     try {
-      const response = await axios({
-        method: 'post',
-        url: posturl,
+      const response = await axios.post(url + '/pinned/showtime/' + selectedGroup, {
+        movie_id: `${showid}`,
+        area_id: `${areaid}`,
+        date: `${showFullDate}`
+      }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
-        },
-        data: {
-          movie_id: `${showid}`,
-          area_id: `${areaid}`,
-          date: `${showFullDate}`
         }
       })
-      
-      if (response.status === 200) {
-        await readAuthorizationToken(response)
-        setGroupShowtimes([...groupShowtimes, { movie_id: showid, area_id: areaid, date: showFullDate }])
-      }
+      await readAuthorizationToken(response)
+
     } catch (error) {
       if (error.status === 409) {
         alert('Show already pinned to this Group')  // Should not happen, prevented by checking if show is already pinned in checkGroupShowtimes
         return
       }
+    } finally{
+      setGroupShowtimes([...groupShowtimes, { movie_id: showid, area_id: areaid, date: showFullDate }])
     }
   }
-
 
   if (loading) return <p>Loading...</p>
 

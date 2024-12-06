@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { UseUser } from '../../context/UseUser.js'
-import { fetchAllGroupsByUser, addMovieToGroup } from '../../api/groupApi.js'
+import { fetchAllGroupsByUser } from '../../api/groupApi.js'
 import { SectionHeader } from '../header/Header.js'
 
 export default function AddMovieToGroup({ movie }) {
