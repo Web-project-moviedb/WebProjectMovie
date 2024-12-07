@@ -8,7 +8,7 @@ import { UseUser } from '../../context/UseUser.js'
 
 
 function ReviewsByUser({ id }) {
-    const { user } = UseUser()
+    const { user, token, readAuthorizationHeader } = UseUser()
     const [reviews, setReviews] = useState([]) // State to store user reviews
     const [movies, setMovies] = useState({}) // State to store movie names
     const [loading, setLoading] = useState(true) // State to track loading
@@ -43,9 +43,10 @@ function ReviewsByUser({ id }) {
 
     const deleteReview = async (id) => {
         try {
-            const response = await axios.delete(url + "/Reviews/" + id)
+            const headers = { headers: { Authorization: `Bearer ${token}` } }
+            const response = await axios.delete(url + "/Reviews/" + id, headers)
+            await readAuthorizationHeader(response)    // update token if it is returned in the response
             setReviews(reviews.filter(a => a.id !== id))
-            console.log(response)
         }
         catch (error) {
             console.error('Error', error)

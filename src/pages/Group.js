@@ -1,10 +1,11 @@
 import './Group.css'
 import React, { useState, useEffect, useCallback } from 'react'
+import axios from 'axios'
 import { useParams, useNavigate } from 'react-router-dom'
 import { UseUser } from '../context/UseUser.js'
 import { fetchMovieById } from '../api/fetchTMDB.js'
 import { MainHeader } from '../components/header/Header.js'
-import { fetchGroupMembers, fetchAllGroupsByUser, removeUserFromGroup, deleteGroup, fetchGroupById, deletePinnedMovie, acceptInvite, fetchGroupMovies } from '../utils/groupFunctions.js'
+import { fetchGroupMembers, fetchAllGroupsByUser, fetchGroupById, fetchGroupMovies } from '../api/groupApi.js'
 import GroupDescription from '../components/groups/GroupDescription.js'
 import GroupMembers from '../components/groups/GroupMembers.js'
 import GroupMovies from '../components/groups/GroupMovies.js'
@@ -19,7 +20,7 @@ Group owner can accept or decline join invitations other from users
 */
 
 export default function Group() {
-    const { user, token } = UseUser()
+    const { user, token, readAuthorizationHeader } = UseUser()
     const { id } = useParams() // group_id from URL
     const [isOwner, setIsOwner] = useState(false)
     const [group, setGroup] = useState(' ')
@@ -27,8 +28,10 @@ export default function Group() {
     const [movies, setMovies] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-
     const navigate = useNavigate()
+
+    const url = process.env.REACT_APP_API_URL
+
     useEffect(() => {
         const fetchInitialData = async () => {
             try {
@@ -111,8 +114,15 @@ export default function Group() {
         const confirmDelete = window.confirm('Are you sure you want to delete this group?')
         if (!confirmDelete) return
         try {
-            await deleteGroup(id)
+            const response = await axios.delete(url + '/group/' + id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            await readAuthorizationHeader(response)
             navigate('/groups')
+            return response
         } catch (error) {
             console.log(error)
             setError('Failed to delete group')
@@ -122,22 +132,36 @@ export default function Group() {
     // Handle Accept user
     const handleAcceptUser = async (userId) => {
         try {
-            const response = await fetchAllGroupsByUser(userId) // Returns all groups for user
-            const group = response.data.find(group => String(group.user_group_id) === String(id)) // This group
-            await acceptInvite(group.id) // Remove user from group by account_user_group table id (relation table)
+            const userGroups = await fetchAllGroupsByUser(userId) // Returns all groups for user
+            const group = userGroups.data.find(group => String(group.user_group_id) === String(id)) // This group
+            //await acceptInvite(group.id) // Remove user from group by account_user_group table id (relation table)
+            const response = await axios.put(url + '/user/invite/' + group.id, {}, {    // PUT method needs empty body as second parameter
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            await readAuthorizationHeader(response)
             getGroupMembers()  // Refresh members
         } catch (error) {
             console.log(error)
-            setError('Failed to remove user from group')
+            setError('Failed to accept user to group')
         }
     }
 
     // Handle remove user from group
     const handleRemoveUser = async (userId) => {
         try {
-            const response = await fetchAllGroupsByUser(userId) // Returns all groups for user
-            const group = response.data.find(group => String(group.user_group_id) === String(id)) // This group
-            await removeUserFromGroup(group.id) // Remove user from group by account_user_group table id (relation table)
+            const userGroups = await fetchAllGroupsByUser(userId) // Returns all groups for user
+            const group = userGroups.data.find(group => String(group.user_group_id) === String(id)) // This group
+            //await removeUserFromGroup(group.id) // Remove user from group by account_user_group table id (relation table)
+            const response = await axios.delete(url + '/user/invite/' + group.id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            await readAuthorizationHeader(response)
             getGroupMembers()  // Refresh members
         } catch (error) {
             console.log(error)
@@ -147,8 +171,22 @@ export default function Group() {
 
     // Handle remove movie from group
     const handleRemoveMovie = async (movieId) => {
-        await deletePinnedMovie(movieId, id)
-        getGroupMovies()    // Refresh movies
+        try {
+            const pinnedMovies = await axios.get(url + '/pinned/movie/' + id)
+            const pinnedMovie = pinnedMovies.data.find(movie => movie.movie_id === movieId)
+            const response = await axios.delete(url + '/pinned/movie/' + pinnedMovie.id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            await readAuthorizationHeader(response)
+
+            getGroupMovies()    // Refresh movies
+        } catch (error) {
+            console.log(error)
+            setError('Failed to remove movie from group')
+        }
     }
 
     useEffect(() => {

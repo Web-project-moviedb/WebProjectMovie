@@ -1,6 +1,6 @@
 import axios from 'axios'
-const url = process.env.REACT_APP_API_URL
 
+const url = process.env.REACT_APP_API_URL
 
 const fetchFinnkinoData = async (areaId, date) => {
   try {
@@ -54,7 +54,7 @@ const fetchFinnkinoData = async (areaId, date) => {
 }
 
 // Fetch pinned showtimes for selected group
-const fetchFinnkinoDataById = async (group_id) => {
+const fetchFinnkinoDataById = async (group_id, token) => {
   let date_now = new Date();
   const pinnedMovies = await axios.get(url + "/pinned/showtime/" + group_id)
   const returnArray = []
@@ -64,11 +64,14 @@ const fetchFinnkinoDataById = async (group_id) => {
     let date_object = new Date(value.showdate)
 
     if (date_now > date_object) {
-      const delete_response = await axios({
+      await axios({
         method: 'delete',
         url: url + '/pinned/showtime/' + value.id,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
       })
-      return delete_response
     }
 
     // Format the date to match the Finnkino API

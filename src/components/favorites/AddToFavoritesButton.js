@@ -5,7 +5,7 @@ import { UseUser } from "../../context/UseUser";
 const url = process.env.REACT_APP_API_URL
 
 const AddToFavoritesButton = ({ movie }) => {
-    const { user, token } = UseUser()
+    const { user, token, readAuthorizationHeader } = UseUser()
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
     const [isFavorites, setIsFavorites] = useState(false)
@@ -50,7 +50,7 @@ const AddToFavoritesButton = ({ movie }) => {
             if (!response.ok) {
                 throw new Error("Failed to add favorite")
             }
-
+            readAuthorizationHeader(response)
             setSuccess(true)
             setError(null)
             setIsFavorites(true)

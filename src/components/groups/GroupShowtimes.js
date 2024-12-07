@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { SectionHeader } from '../header/Header.js'
 import { fetchFinnkinoDataById } from '../../api/fetchFinnkino.js'
-import { deletePinnedShowtime } from '../../utils/groupFunctions.js'
+import { UseUser } from '../../context/UseUser.js'
 
 export default function GroupShowtimes({ group_id }) {
     const [showtimes, setShowtimes] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const { token, readAuthorizationHeader } = UseUser()
+
+    const url = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         const fetchShowtimes = async () => {
             if (!group_id) return
 
             try {
-                const response = await fetchFinnkinoDataById(group_id)
+                const response = await fetchFinnkinoDataById(group_id, token)
 
                 if (Array.isArray(response)) {
                     setShowtimes(response)
@@ -30,12 +34,19 @@ export default function GroupShowtimes({ group_id }) {
             }
         }
         fetchShowtimes()
-    }, [group_id])
+    }, [group_id, token])
 
     const handleDeleteShowtime = async (showtime_id) => {
         try {
-            const response = await deletePinnedShowtime(showtime_id)
+            const response = await axios.delete(url + '/pinned/showtime/' + showtime_id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
             if (response.status === 200) {
+                await readAuthorizationHeader(response)
                 setShowtimes(showtimes.filter(showtime => showtime.id !== showtime_id))
             }
         } catch (error) {

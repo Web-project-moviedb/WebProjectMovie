@@ -8,7 +8,7 @@ const url = process.env.REACT_APP_API_URL
 
 
 function ProfileGroupList({ id }) {
-    const { user, token } = UseUser()
+    const { user, token, readAuthorizationHeader } = UseUser()
     const [loading, setLoading] = useState(true)  // state to manage loading state
     const [error, setError] = useState(null)  // state to handle errors
     const [groups, setGroups] = useState([])
@@ -59,7 +59,12 @@ function ProfileGroupList({ id }) {
     const deleteGroup = async (id) => {
 
         try {
-            await axios.delete(url + "/user/invite/" + id)
+            const response = await axios.delete(url + "/user/invite/" + id, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            await readAuthorizationHeader(response)
             setGroups(groups.filter(a => a.id !== id))
         }
         catch (error) {

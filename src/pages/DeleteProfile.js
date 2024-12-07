@@ -6,11 +6,11 @@ import { useState } from "react"
 function DeleteProfile() {
 
     const default_url = process.env.REACT_APP_API_URL
-    const { logout, user } = UseUser()
+    const { logout, user, token } = UseUser()
     const [deletePassword, setDeletePassword] = useState('')
     const navigate = useNavigate()
 
-    
+
     const deleteFunction = async () => {
         try {
             await axios({
@@ -20,14 +20,18 @@ function DeleteProfile() {
                     "id": user.id,
                     "password": deletePassword,
                     "username": user.username
+                },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
-
             })
             await logout()
             navigate('/')
-            alert('Account deleted')
+            alert('Account deleted successfully')
         }
         catch (error) {
+            setDeletePassword('')
             console.log('Error', error)
             alert("Incorrect password")
             setDeletePassword('')

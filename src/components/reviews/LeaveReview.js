@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export default function LeaveReview({ movieId, reviews, refreshReviews }) {
 
-    const { user, token } = UseUser()   // access the user and token from context
+    const { user, token, readAuthorizationHeader } = UseUser()   // access the user and token from context
     const [review, setReview] = useState({ stars: 0, review_title: '', review_body: '' }); // initial review state
     const [error, setError] = useState(null)
     const [hasReviewed, setHasReviewed] = useState(false)
@@ -35,7 +35,8 @@ export default function LeaveReview({ movieId, reviews, refreshReviews }) {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
             }
-            await axios.post(url + '/reviews', reviewData, { headers })
+            const response = await axios.post(url + '/reviews', reviewData, { headers })
+            await readAuthorizationHeader(response)    // update token if it is returned in the response
             setReview({ stars: 0, review_title: '', review_body: '' })
             alert('Review submitted successfully!');
             refreshReviews()

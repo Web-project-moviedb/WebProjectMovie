@@ -12,7 +12,7 @@ const url = process.env.REACT_APP_API_URL
 const areaList = finnkinoList
 
 const ShowTimes = () => {
-  const { user, token } = UseUser()
+  const { user, token, readAuthorizationToken } = UseUser()
   const [shows, setShows] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -43,7 +43,6 @@ const ShowTimes = () => {
 
   useEffect(() => {
     if (!selectedGroup) return
-
     const getGroupShowtimes = async (groupId) => {
       try {
         const response = await axios.get(url + "/pinned/showtime/" + groupId)
@@ -112,30 +111,27 @@ const ShowTimes = () => {
     const showdateFormat = showdate.split(':').reverse().join('-')
     const showtimeFormat = showtime.toString()
     const showFullDate = [showdateFormat, showtimeFormat].join('T')
-    const posturl = url + '/pinned/showtime/' + selectedGroup
 
     try {
-      const response = await axios({
-        method: 'post',
-        url: posturl,
+      const response = await axios.post(url + '/pinned/showtime/' + selectedGroup, {
+        movie_id: `${showid}`,
+        area_id: `${areaid}`,
+        date: `${showFullDate}`
+      }, {
         headers: {
-          'Content-Type': 'application/json'
-        },
-        data: {
-          movie_id: `${showid}`,
-          area_id: `${areaid}`,
-          date: `${showFullDate}`
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         }
       })
+      await readAuthorizationToken(response)
 
-      if (response.status === 200) {
-        setGroupShowtimes([...groupShowtimes, { movie_id: showid, area_id: areaid, date: showFullDate }])
-      }
     } catch (error) {
       if (error.status === 409) {
         alert('Show already pinned to this Group')  // Should not happen, prevented by checking if show is already pinned in checkGroupShowtimes
         return
       }
+    } finally{
+      setGroupShowtimes([...groupShowtimes, { movie_id: showid, area_id: areaid, date: showFullDate }])
     }
   }
 

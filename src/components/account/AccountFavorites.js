@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from "react"
 import { UseUser } from '../../context/UseUser.js'
 
@@ -9,7 +9,7 @@ const url = process.env.REACT_APP_API_URL
 
 function ProfileFavoriteList({ id }) {
     const [favorites, setFavorites] = useState([])
-    const { user, token } = UseUser()
+    const { user, token, readAuthorizationHeader } = UseUser()
     const [error, setError] = useState(null)  // state to handle errors
     const [loading, setLoading] = useState(true)  // state to manage loading state
 
@@ -62,9 +62,14 @@ function ProfileFavoriteList({ id }) {
     }
 
     const deleteFavorite = async (id) => {
-
         try {
-            await axios.delete(url + "/favorites/" + id)
+            await axios.delete(url + "/favorites/" + id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                }
+            })
+            await readAuthorizationHeader()
             setFavorites(favorites.filter(a => a.id !== id))
         }
         catch (error) {
@@ -95,7 +100,7 @@ function ProfileFavoriteList({ id }) {
                         {favorites.map((favorite) => (
                             <tr key={favorite.id}>
                                 <td>
-                                • <Link to={`/movie/${favorite.movie_id}`}>{favorite.movie_name}</Link>
+                                    <Link to={`/movie/${favorite.movie_id}`}>{favorite.movie_name}</Link>
                                 </td>
                                 <td>
                                     {checkFavoriteButton(favorite.id)}
