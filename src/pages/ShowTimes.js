@@ -214,7 +214,7 @@ const ShowTimes = () => {
                       {group.group_name}
                     </option>
                   ))}
-                </select></th>} {/* conditionally render header for pin to group */}
+                </select></th>}
           </tr>
         </thead>
         <tbody>

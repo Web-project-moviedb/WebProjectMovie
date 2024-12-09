@@ -98,7 +98,7 @@ function ReviewsByUser({ id }) {
                     </div>
 
                     {/* table for larger screens */}
-                    <div className="review-table-container">
+                    <div className="user-review-table-container">
                         <table className="user-reviews-table highlight-box">
                             <thead>
                                 <tr>

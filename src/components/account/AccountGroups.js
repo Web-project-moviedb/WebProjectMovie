@@ -108,7 +108,7 @@ function ProfileGroupList({ id }) {
                 <p><i>This user hasn't joined any groups.</i></p>
             ) : (
                 <div className="groups-table-container">
-                    <table className="groups-table">
+                    <table className="user-groups-table">
                         <tbody>
                             {groups.map((group) => (
                                 <tr key={group.id}>

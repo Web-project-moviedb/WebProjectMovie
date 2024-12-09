@@ -94,33 +94,59 @@ img {
     background-color: #f2f5f7;
 }
 
+.button:disabled {
+    cursor: not-allowed;
+}
 
-/* ************* DARK ************** */
-body.dark-theme{
-    background-color: #121212e6;
-    color: #be8513f6;
-}
-.dark-theme button:not(#nav-button) {
-    background-color: #919090f9;
-    color: black;
-}
-.dark-theme a {
-    color: #5b1f60;
-}
-.dark-theme input {
-    background-color: #b4b2b2f9;
-    color: black;
-}
-.dark-theme select {
-    background-color: #919090f9;
-    color: black;
-}
-.dark-theme textarea {
-    background-color: #b4b2b2f9;
-    color: black;
-}
 .theme-toggle {
     cursor: pointer;
+}
+
+
+/* ************* DARK ************** */
+
+body.dark-theme{
+    background-color: #090913;
+    color: #eff3f6;
+}
+
+.dark-theme button {
+    background-color: #351010;
+    color: #d2e3ef;
+    border: 1px solid #2d3235;
+}
+.dark-theme a {
+    color: #a0c5e2;
+}
+
+.dark-theme textarea, 
+.dark-theme input, 
+.dark-theme select {
+    background-color: #130e0e;
+    color: #d2e3ef;
+    border: 1px solid #596369;
+}
+
+::placeholder {
+    color: #848e95;
+} 
+
+.dark-theme .highlight-box {
+    background-color: #1d0d0de6;
+    border: 1px solid #6f5050e6;
+}
+
+.dark-theme table {
+    border: #93a1ab 1px solid;
+}
+
+.dark-theme table th, .dark-theme table td {
+    border: #93a1ab 1px solid;
+}
+
+.dark-theme button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
 }
 
 /* ************* DARK END ************** */

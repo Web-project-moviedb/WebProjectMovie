@@ -9,12 +9,12 @@
     margin-top: 30px;
 }
 
-.browse-table, .search-table {
+.movie-browse-table, .movie-search-table {
     border: none;
     table-layout: fixed;
 }
 
-.browse-table td, .browse-table th, .search-table td, .search-table th {
+.movie-browse-table td, .movie-browse-table th, .movie-search-table td, .movie-search-table th {
     border: none;
 }
 
@@ -24,20 +24,20 @@
     border-collapse: collapse;
 }
 
-.browse-table td:first-child, .search-table td:first-child {
+.movie-browse-table td:first-child, .movie-search-table td:first-child {
     width: 20%; /* First column (label) is narrower */
 }
 
-.browse-table td:nth-child(2), .search-table td:nth-child(2) {
+.movie-browse-table td:nth-child(2), .movie-search-table td:nth-child(2) {
     width: 65%; /* Middle column (input) takes more space */
 }
 
-.browse-table td:last-child, .search-table td:last-child {
+.movie-browse-table td:last-child, .movie-search-table td:last-child {
     width: 15%; /* Last column (button) is narrower */
 }
 
-.browse-table input, .search-table input,
-.browse-table select, .search-table select {
+.movie-browse-table input, .movie-search-table input,
+.movie-browse-table select, .movie-search-table select {
     width: 100%; /* Ensure the input fields and dropdowns fill the second column */
     box-sizing: border-box; /* Include padding in the width calculation */
     border-radius: 3px;
@@ -76,6 +76,18 @@
 
 .movie-item img.movie-poster {
     max-width: 100%;
+}
+
+.movie-search-table,
+.movie-search-table th,
+.movie-search-table td {
+    border: none !important;
+}
+
+.movie-browse-table,
+.movie-browse-table th,
+.movie-browse-table td {
+    border: none !important;
 }
 
 /* Responsive styles */
