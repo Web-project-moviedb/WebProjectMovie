@@ -138,38 +138,52 @@ describe('POST register account', () => {
 
 })
 
-describe('DELETE delete account', () => {
+let token  // declare token at a higher scope for use in multiple tests
 
+describe('DELETE delete account', () => {
     const name = 'DeleteTest'
     const pword = 'DeleteTest123'
-    let userId  // let instead of const because value will be assigned in before block
+    let userId
 
     before(async () => {
         await initializeTestDB()
         await insertTestUser(name, pword)
         const user = await getUserByUsername(name)
         userId = user.id
+
+        // get the token from the login process
+        const response = await axios.post(base_url + '/login', {
+            username: name,
+            password: pword
+        })
+        token = response.headers['authorization']
     })
 
     it('should not delete an account with an invalid password', async () => {
-      try {
-        const response = await axios.delete(base_url + '/delete', {
-            data: {
-                id: userId,
-                username: name,
-                password: 'InvalidPassword' 
-            }
-        })
-        expect(response.status).to.equal(401);
-        expect(response.data).to.be.an('object');
-        expect(response.data).to.have.property('error', 'Incorrect password')
-      } catch (error) {
-        // console.error('Error:', error.response ? error.response.data : error.message)
-      }  
+        try {
+            const response = await axios.delete(base_url + '/delete', {
+                headers: {
+                    'Authorization': token
+                },
+                data: {
+                    id: userId,
+                    username: name,
+                    password: 'InvalidPassword'
+                }
+            })
+            expect(response.status).to.equal(401)
+            expect(response.data).to.be.an('object')
+            expect(response.data).to.have.property('error', 'Incorrect password')
+        } catch (error) {
+            // console.error('Error:', error.response ? error.response.data : error.message)
+        }
     })
 
     it('should delete an account with correct password', async () => {
         const response = await axios.delete(base_url + '/delete', {
+            headers: {
+                'Authorization': token  // Include the token here
+            },
             data: {
                 id: userId,
                 username: name,
@@ -181,7 +195,7 @@ describe('DELETE delete account', () => {
         expect(response.data.rows).to.be.an('array')
         expect(response.data.rows[0]).to.have.property('id', userId)
     })
-
+    
 })
 
 describe('POST login', () => {
@@ -230,7 +244,9 @@ describe('POST login', () => {
         const data = response.data
         expect(response.status).to.equal(200)
         expect(data).to.be.an('object')
-        expect(data).to.include.all.keys('id', 'username', 'token')
+        expect(response.headers).to.have.property('authorization') // Check for the token in the Authorization header
+        const token = response.headers['authorization']  // You can extract the token here if needed
+        expect(token).to.be.a('string')
     })
 
 })
