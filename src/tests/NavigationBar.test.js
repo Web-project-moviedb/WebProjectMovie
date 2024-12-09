@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'  // functions to render the component and interact with it
 import { UseUser } from '../context/UseUser.js'                     // context to mock it
-import NavigationBar from '../components/NavigationBar.js'          // component to test
+import NavigationBar from '../components/navbar/NavigationBar.js'          // component to test
 import { BrowserRouter as Router } from 'react-router-dom'          // these are used to wrap the components in the Router
 
 // instead of using the real useuser context, we mock it to simulate different states of the user
