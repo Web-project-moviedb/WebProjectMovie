@@ -121,8 +121,7 @@
     }
 }
 
-/* Optional: make the button smaller on mobile */
-@media (max-width: 480px) {
+@media (max-width: 550px) {
 
     .showtime-results-grid {
         display: block;

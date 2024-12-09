@@ -59,6 +59,10 @@
     width: 100%;
 }
 
+.delete-account-button {
+    color: rgb(199, 0, 0);
+}
+
 @media (max-width: 768px) {
     .review-table-container {
         display: none;

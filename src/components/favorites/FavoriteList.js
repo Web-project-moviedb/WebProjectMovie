@@ -16,7 +16,7 @@ const FavoriteList = ({ userName, favorites, loading, error }) => {
     
 return (
     <div> 
-        <MainHeader text={userName + "'s Favorites"} />
+        <MainHeader text={userName + "'s Favorite Movies"} />
         <ul className="permalink-favorites-list">
             {favorites.map((fav) => (
             <li key={fav.id}>

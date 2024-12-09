@@ -76,7 +76,7 @@ function ReviewsByUser({ id }) {
     return (
         <div>
             {reviews.length === 0 ? (
-                <p><i>This user hasn't marked any movies as favorites.</i></p>
+                <p><i>This user hasn't reviewed any movies.</i></p>
             ) : (
                 <>
                     {/* card layout for smaller screens */}
@@ -99,7 +99,7 @@ function ReviewsByUser({ id }) {
 
                     {/* table for larger screens */}
                     <div className="review-table-container">
-                        <table className="user-reviews-table">
+                        <table className="user-reviews-table highlight-box">
                             <thead>
                                 <tr>
                                     <th id="rated-movie">Movie</th>

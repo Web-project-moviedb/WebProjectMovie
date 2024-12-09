@@ -85,7 +85,7 @@ export default function AllGroups({ groups }) {
             fetchGroupMemberships() // Update user groups
             return response
         } catch (error) {
-            if (error.response.status === 403) return alert('Owner cannot leave group')
+            if (error.response.status === 403) return alert('Owner cannot leave group.')
             return error.message
         }
     }

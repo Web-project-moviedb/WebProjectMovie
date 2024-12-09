@@ -1,4 +1,4 @@
-.showtime-grid {
+.group-showtime-grid {
     display: none;
 }
 
@@ -8,23 +8,10 @@
 
 .group-members-table {
     border: 0;
-    max-width: 500px;
 }
 
 .group-members-table th, .group-members-table td {
     border: 0;
-}
-
-.group-members-table td:first-child {
-    width: 33.33%;
-}
-
-.group-members-table td:nth-child(2) {
-    width: 33.33%;
-}
-
-.group-members-table td:last-child {
-    width: 33.33%;
 }
 
 .group-movies-table {
@@ -48,23 +35,21 @@
     width: 50%;
 }
 
-
-.showtime-grid {
+.group-showtime-grid {
     flex-wrap: wrap;
     gap: 12px;
     justify-content: center;
 }
 
-.showtime-card {
+.group-showtime-card {
     border: 1px solid #ddd;
     padding: 12px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    /* width: calc(33.33% - 16px); */ /* Three cards per row on larger screens */
     box-sizing: border-box;
     margin-right: 12px;
 }
 
-.showtime-card p {
+.group-showtime-card p {
     margin: 12px; /* Reduces vertical spacing between paragraphs */
 }
 
@@ -75,11 +60,11 @@
         display: none;
     }
 
-    .showtime-grid {
+    .group-showtime-grid {
         display: flex;
     }
 
-    .showtime-card {
+    .group-showtime-card {
         width: 100%; /* Full width for narrow screens */
     }
 }
