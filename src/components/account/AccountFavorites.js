@@ -63,13 +63,13 @@ function ProfileFavoriteList({ id }) {
 
     const deleteFavorite = async (id) => {
         try {
-            await axios.delete(url + "/favorites/" + id, {
+            const response = await axios.delete(url + "/favorites/" + id, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token
                 }
             })
-            await readAuthorizationHeader()
+            await readAuthorizationHeader(response)
             setFavorites(favorites.filter(a => a.id !== id))
         }
         catch (error) {
