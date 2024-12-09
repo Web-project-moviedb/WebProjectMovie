@@ -24,36 +24,6 @@ html, body {
     padding: 0;
 }
 
-/* ************* DARK ************** */
-body.dark-theme{
-    background-color: #121212e6;
-    color: #be8513f6;
-}
-.dark-theme button:not(#nav-button) {
-    background-color: #919090f9;
-    color: black;
-}
-.dark-theme a {
-    color: #5b1f60;
-}
-.dark-theme input {
-    background-color: #b4b2b2f9;
-    color: black;
-}
-.dark-theme select {
-    background-color: #919090f9;
-    color: black;
-}
-.dark-theme textarea {
-    background-color: #b4b2b2f9;
-    color: black;
-}
-.theme-toggle {
-    cursor: pointer;
-}
-
-/* ************* DARK END ************** */
-
 
 body {
     transition: 0.4s, color 0.4s;
@@ -119,6 +89,42 @@ img {
     padding: 12px;
     color: #ae0000;
 }
+
+.highlight-box {
+    background-color: #f7fafc;
+}
+
+
+/* ************* DARK ************** */
+body.dark-theme{
+    background-color: #121212e6;
+    color: #be8513f6;
+}
+.dark-theme button:not(#nav-button) {
+    background-color: #919090f9;
+    color: black;
+}
+.dark-theme a {
+    color: #5b1f60;
+}
+.dark-theme input {
+    background-color: #b4b2b2f9;
+    color: black;
+}
+.dark-theme select {
+    background-color: #919090f9;
+    color: black;
+}
+.dark-theme textarea {
+    background-color: #b4b2b2f9;
+    color: black;
+}
+.theme-toggle {
+    cursor: pointer;
+}
+
+/* ************* DARK END ************** */
+
 
 @media (max-width: 480px) {
 

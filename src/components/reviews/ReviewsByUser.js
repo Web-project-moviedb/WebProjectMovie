@@ -82,7 +82,7 @@ function ReviewsByUser({ id }) {
                     {/* card layout for smaller screens */}
                     <div className="user-review-cards">
                         {reviews.map((review) => (
-                            <div key={review.id} className="user-review-card">
+                            <div key={review.id} className="user-review-card highlight-box">
                                 <h3><Link to={`/movie/${review.movie_id}`}>{movies[review.movie_id] || 'Unable to Fetch Title'}</Link>: {review.review_title}</h3>
                                 <p>{renderStars(review.stars)}</p>
                                 <p>{review.review_body}</p>
@@ -112,13 +112,12 @@ function ReviewsByUser({ id }) {
                             <tbody>
                                 {reviews.map((review) => (
                                     <tr key={review.id}>
-                                        <td id="rated-movie"><Link to={`/movie/${review.movie_id}`}>
-                                            {movies[review.movie_id] || "Unable to Fetch Title"}</Link></td>
+                                        <td id="rated-movie"><Link to={`/movie/${review.movie_id}`}>{movies[review.movie_id] || "Unable to Fetch Title"}</Link></td>
                                         <td id="movie-rating">{renderStars(review.stars)}</td>
                                         <td id="review-title">{review.review_title}</td>
                                         <td id="review-body">{review.review_body}</td>
                                         <td id="review-timestamp">{formatTimestamp(review.created_at)}</td>
-                                        {parseInt(user.id) === parseInt(params.id) && <td>{checkReviewButton(review.id)}</td>} {/* Conditionally render delete button */}
+                                        {parseInt(user.id) === parseInt(params.id) && <td>{checkReviewButton(review.id)}</td>}
                                     </tr>
                                 ))}
                             </tbody>

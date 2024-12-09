@@ -195,7 +195,7 @@ const ShowTimes = () => {
 
       {error && <p style={{ color: 'orange' }}>{error}</p>}
 
-      <table className="showtime-results-table">
+      <table className="showtime-results-table highlight-box">
         <thead>
           <tr hidden={!search}>
             <th id="show-time">Time</th>
@@ -236,7 +236,7 @@ const ShowTimes = () => {
 
       <div className="showtime-results-grid">
         {filteredShows.map((show, index) => (
-          <div key={index} className="showtime-result">
+          <div key={index} className="showtime-result highlight-box">
             <div className="showtime-result-item"><strong>Movie Name:</strong> {show.movieName}</div>
             <div className="showtime-result-item"><strong>Time:</strong> {show.showTime}</div>
             <div className="showtime-result-item"><strong>Theater:</strong> {show.theatreName}</div>
