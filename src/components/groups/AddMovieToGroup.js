@@ -32,7 +32,7 @@ export default function AddMovieToGroup({ movie }) {
 
     const handleAddMovie = async () => {
         if (!selectedGroup) {
-            alert('Please select a group')
+            alert('Please select your group first.')
             return
         }
         try {
@@ -51,8 +51,8 @@ export default function AddMovieToGroup({ movie }) {
                 alert('Movie added to group')
             }
         } catch (error) {
-            if (error.status === 409) return alert('Movie already pinned to group')
-            alert('Failed to add movie to group')
+            if (error.status === 409) return alert('Movie already pinned to group.')
+            alert('Failed to add movie to group. Please try again.')
         }
     }
 

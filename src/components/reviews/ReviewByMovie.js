@@ -24,7 +24,7 @@ function ReviewByMovie ({reviews}) {
             ) : (
                 <div className="reviews-container">
                     {sortedReviews.map((review) => (
-                        <div key={review.id} className="review-box">
+                        <div key={review.id} className="highlight-box review-box">
                             <div className="review-item">
                                 {renderStars(review.stars)}
                             </div>

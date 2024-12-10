@@ -1,6 +1,7 @@
 .user-favorites-table {
     border: none;
     margin: 12px;
+    max-width: 600px;
 }
 
 .user-favorites-table th, .user-favorites-table td {
@@ -9,26 +10,34 @@
     text-align: left;
 }
 
+
+.user-favorites-table td:first-child {
+    width: 50%;  /* Make the first column take up to 50% of the table width */
+}
+
+.user-favorites-table th,
+.user-favorites-table td {
+    word-wrap: break-word;
+}
+
 .permalink-button {
     margin-left: 12px;
     padding: 6px;
 }
 
-.review-table-container {
+.user-review-table-container {
     display: block;
+    padding: 12px;
 }
 
 .user-review-cards {
     display: none;
 }
 
-.review-table-container {
-    padding: 12px;
-}
-
 .user-reviews-table {
     width: 100%;
     table-layout: auto;
+    border: 1px solid #93a1ab !important;
 }
 
 .user-reviews-table th, .user-reviews-table td {
@@ -44,19 +53,32 @@
     margin: 12px;
 }
 
-.groups-table {
-    border: none;
+.user-groups-table {
+    border: none !important;
     margin: 12px;
 }
 
-.groups-table th, .groups-table td {
-    border: none;
+.user-groups-table th, .user-groups-table td {
+    border: none !important;
     padding: 4px;
     text-align: left;
 }
 
-.groups-table button {
+.user-groups-table button {
     width: 100%;
+}
+
+.delete-account-button {
+    color: rgb(199, 0, 0);
+}
+
+.dark-theme .user-favorites-table {
+    border: none !important;
+}
+
+.dark-theme .user-favorites-table th,
+.dark-theme .user-favorites-table td {
+    border: none !important;
 }
 
 @media (max-width: 768px) {

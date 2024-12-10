@@ -72,26 +72,6 @@
     margin-bottom: 16px;
 }
 
-/* #reviews-by-movie-table {
-    width: 100%;
-    max-width: 1000px;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-} */
-
-/* #reviews-by-movie-table th, #reviews-by-movie-table td {
-    padding: 8px;
-    text-align: left;
-}
-
-#reviews-by-movie-table tr:nth-child(even) {
-    background-color: #f6f8fa;
-}
-
-#reviews-by-movie-table th {
-    background-color: #f6f8fa;
-} */
-
 .review-box {
     border: 1px solid #ddd;  /* Add a border around the review item */
     padding: 16px;  /* Add padding to the review item */

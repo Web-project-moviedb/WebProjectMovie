@@ -57,7 +57,7 @@ export default function GroupShowtimes({ group_id }) {
     if (loading) return (
         <>
             <SectionHeader text="Pinned Showtimes" />
-            <p>Loading pinned showtimes...</p>
+            <p><i>Loading pinned showtimes...</i></p>
         </>
     )
 
@@ -82,7 +82,7 @@ export default function GroupShowtimes({ group_id }) {
             <SectionHeader text="Pinned Showtimes" />
             <div className="group-section-container">
 
-                <table className="group-showtime-table">
+                <table className="group-showtime-table highlight-box">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -114,9 +114,9 @@ export default function GroupShowtimes({ group_id }) {
                     </tbody>
                 </table>
 
-                <div className="showtime-grid">
+                <div className="group-showtime-grid">
                 {Array.isArray(showtimes) && showtimes.map((showtime, index) => (
-                    <div key={index} className="showtime-card">
+                    <div key={index} className="group-showtime-card highlight-box">
                         <p><strong>Movie:</strong> {showtime.movieName}</p>
                         <p><strong>Date:</strong> {showtime.showDate}</p>
                         <p><strong>Time:</strong> {showtime.showTime}</p>

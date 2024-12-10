@@ -65,7 +65,7 @@ function ReviewList({ reviews, movies }) {
 
                     {/* table for larger screens */}
                     <div className="review-table-container">
-                        <table>
+                        <table className="highlight-box">
                             <thead>
                                 <tr>
                                     <th onClick={() => requestSort('movie_title')}>Movie Title</th>
@@ -102,7 +102,7 @@ function ReviewList({ reviews, movies }) {
                     {/* card layout for smaller screens */}
                     <div className="review-cards">
                         {filteredReviews.map((review) => (
-                            <div key={review.id} className="review-card">
+                            <div key={review.id} className="review-card highlight-box">
                                 <h3><Link to={`/movie/${review.movie_id}`}>{movies[review.movie_id] || 'Unable to Fetch Title'}</Link>: {review.review_title}</h3>
                                 <p>{renderStars(review.stars)}</p>
                                 <p>{review.review_body}</p>

@@ -12,7 +12,7 @@ function MovieList({ movies, title }) {
                 <br /><h2>{title}</h2>  {/* Dynamically set the title */} <br />
                 <div className="movie-grid">
                     {movies.map((movie) => (
-                        <div key={movie.id} className="movie-item">
+                        <div key={movie.id} className="movie-item highlight-box">
                             <h3>
                                 <Link to={`/movie/${movie.id}`}>{movie.title}</Link>
                             </h3>
