@@ -46,7 +46,7 @@ const NavigationBar = () => {
                     </button>
                     <div className={`menu-container ${menuOpen ? 'open' : ''}`}>
                         <div className="nav-links">
-                            <NavLink to="/" activeclassname="current" onClick={closeMenu}>Home</NavLink>
+                            <NavLink to="/" activeclassname="current" onClick={closeMenu}>Movies</NavLink>
                             <NavLink to="/reviews" activeclassname="current" onClick={closeMenu}>Reviews</NavLink>
                             <NavLink to="/groups" activeclassname="current" onClick={closeMenu}>Groups</NavLink>
                             <NavLink to="/showtimes" activeclassname="current" onClick={closeMenu}>Showtimes</NavLink>

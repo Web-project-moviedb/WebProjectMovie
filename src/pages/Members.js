@@ -50,7 +50,7 @@ function Members() {
           <p>No users found</p>
         ) : (
           users.map((user) => (
-            <li key={user.id} className="member-box">
+            <li key={user.id} className="highlight-box member-box">
               <Link to={`/account/${user.id}`}>
                 {user.uname}
               </Link>

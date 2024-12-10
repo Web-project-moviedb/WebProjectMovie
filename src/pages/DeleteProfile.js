@@ -2,6 +2,7 @@ import { UseUser } from '../context/UseUser.js'
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react"
+import { MainHeader, SectionHeader } from '../components/header/Header.js';
 
 function DeleteProfile() {
 
@@ -46,12 +47,13 @@ function DeleteProfile() {
 
     return (
         <div>
-            <h3>Are you sure you want to delete your account? All data will be permanently lost</h3>
+            <MainHeader text="Delete Account" />
+            <SectionHeader text="Are you sure you want to delete your account? This cannot be undone." />
             <div>
-                <label>Type your password</label>
+                <label>Password:</label>
                 <input type='password' value={deletePassword || ''} onChange={e => setDeletePassword(e.target.value)} />
             </div>
-            <button onClick={() => deleteFunction()}>Delete</button>
+            <button className="delete-account-button" onClick={() => deleteFunction()}>Delete</button>
             <button onClick={() => returnFunction()}>Cancel</button>
         </div>
 

@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom'
 
 export default function GroupMovies({ movies, onRemoveMovie }) {
     if (movies.length === 0) return (
-        <>
-            <div className="group-section-container">
+        <div className="group-movies-container">
                 <SectionHeader text='Pinned Movies' />
-                <p><i>This group has not pinned any movies!</i></p>
-            </div>
-        </>
+                <div className="group-section-container">
+                    <p><i>This group has not pinned any movies!</i></p>
+                </div>
+        </div>
     )
 
     return (

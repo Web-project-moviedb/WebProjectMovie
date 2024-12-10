@@ -52,7 +52,28 @@ a.active {
     font-weight: bold;
 }
 
-@media (max-width: 620px) {
+
+
+/*  DARK MODE  */
+
+.dark-theme .navbar {
+    background-color: #1d0d0de6;
+    color: #eff3f6;
+}
+
+.dark-theme .nav-links a, .dark-theme .nav-user a {
+    color: #bad8ef;
+}
+
+.dark-theme .menu-container {
+    background-color: #1d0d0de6;
+}
+
+/*  END DARK MODE  */  
+
+
+
+@media (max-width: 600px) {
     .navbar {
         padding: 5px;
         height: auto;

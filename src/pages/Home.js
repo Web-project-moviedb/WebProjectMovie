@@ -50,7 +50,7 @@ function Home() {
             <SectionHeader text="Search for Movies" />
 
             {/* Search form in table format */}
-            <table className="search-table">
+            <table className="movie-search-table">
                 <tbody>
                     <tr>
                         <td><label>Name:</label></td>
@@ -74,7 +74,7 @@ function Home() {
             
             <SectionHeader text="Or browse by:" />
 
-            <table className="browse-table">
+            <table className="movie-browse-table">
                 <tbody>
                     <tr>
                         <td><label>Year:</label></td>

@@ -85,7 +85,7 @@ export default function AllGroups({ groups }) {
             fetchGroupMemberships() // Update user groups
             return response
         } catch (error) {
-            if (error.response.status === 403) return alert('Owner cannot leave group')
+            if (error.response.status === 403) return alert('Owner cannot leave group.')
             return error.message
         }
     }
@@ -102,7 +102,7 @@ export default function AllGroups({ groups }) {
             {!user.id && <p><i>You must be logged in to join groups.</i></p>}
             <div className="groups-grid">
                 {groups.map((group) => (
-                    <div key={group.id} className="group-card">
+                    <div key={group.id} className="group-card highlight-box">
                         <h3>
                             {userGroups.some(
                                 (userGroup) => userGroup.group_id === group.id && !userGroup.pending

@@ -89,6 +89,12 @@
     box-sizing: border-box;
 }
 
+.showtime-search-table, 
+.showtime-search-table th, 
+.showtime-search-table td {
+    border: none !important;
+}
+
 /* Responsive Design for Narrow Screens */
 @media (max-width: 768px) {
 
@@ -121,8 +127,7 @@
     }
 }
 
-/* Optional: make the button smaller on mobile */
-@media (max-width: 480px) {
+@media (max-width: 550px) {
 
     .showtime-results-grid {
         display: block;

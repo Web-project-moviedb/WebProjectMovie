@@ -93,7 +93,7 @@ function ProfileFavoriteList({ id }) {
     return (
         <div>
             {favorites.length === 0 ? (
-                <p><i>This user hasn't saved any favorite movies.</i></p>
+                <p><i>This user hasn't marked any movies as favorites.</i></p>
             ) : (
                 <table className="user-favorites-table">
                     <tbody>
