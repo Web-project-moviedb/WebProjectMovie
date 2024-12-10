@@ -82,7 +82,7 @@
 }
 
 @media (max-width: 768px) {
-    .review-table-container {
+    .user-review-table-container {
         display: none;
     }
 
