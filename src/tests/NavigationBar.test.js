@@ -53,6 +53,10 @@ describe('Logout from NavBar', () => {
     expect(UseUser().user.id).toBeNull()
     expect(UseUser().user.username).toBe('')
     expect(UseUser().token).toBeNull()
+    // Verify that the component reflects the cleared state
+    expect(screen.queryByText('Logout')).toBeNull()   // logout button should not appear
+
+
   })
 })
 
